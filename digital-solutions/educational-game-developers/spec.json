@@ -1,0 +1,106 @@
+{
+  "industry": "Education Technology (EdTech)",
+  "services": [
+    {
+      "name": "Curriculum Alignment AI",
+      "overview": "The Curriculum Alignment AI is a service designed to automatically analyze educational game content and align it with specific educational standards and learning objectives. This service addresses the significant challenges associated with manual curriculum alignment, which is often time-consuming, resource-intensive, and susceptible to human error. By leveraging advanced AI techniques, the service analyzes game mechanics, narrative elements, challenges, and learning activities to identify relevant curriculum standards such as Common Core, state-specific standards, and international educational frameworks. The output is a comprehensive report detailing the alignment, highlighting areas of strength, and providing actionable recommendations for developers to improve the game's educational relevance and marketability. This ultimately reduces development time, expands the game's market reach by ensuring compliance and relevance, and fosters wider adoption in educational institutions. The service supports various game formats and educational content types, making it a versatile tool for developers and publishers across the EdTech landscape. It bridges the gap between engaging game design and rigorous educational requirements, empowering creators to develop effective and pedagogically sound learning experiences. The system also includes features for users to refine the AI's analysis and provide feedback to improve accuracy and relevance over time.",
+      "problems_addressed": [
+        "Time-consuming and expensive manual curriculum alignment processes.",
+        "Inconsistent and error-prone alignment due to human subjectivity.",
+        "Limited market reach for educational games due to lack of clear curriculum alignment."
+      ],
+      "target_users": [
+        "Educational Game Developers",
+        "Curriculum Designers",
+        "Educational Publishers",
+        "Teachers and Educators seeking aligned educational resources"
+      ],
+      "core_features": [
+        "Automated Curriculum Alignment – AI-powered analysis of game content (text, mechanics, challenges) to automatically identify and match relevant curriculum standards (Common Core, state standards, etc.).",
+        "Detailed Alignment Report – Comprehensive report outlining the degree of alignment with specific standards, highlighting areas of strength and weakness. This report provides a clear overview of the game's educational value.",
+        "Personalized Recommendations – AI-generated suggestions on how to modify game content and mechanics to better align with specific learning objectives. These recommendations offer practical guidance for improving educational relevance.",
+        "Curriculum Standard Library – A regularly updated database of educational standards from various regions and subject areas, ensuring the AI has access to the latest curriculum guidelines. This database is crucial for accurate and up-to-date alignment.",
+        "User Feedback Mechanism – A system for users to provide feedback on the AI's alignment results, allowing for continuous improvement and refinement of the service's accuracy and relevance."
+      ],
+      "user_journeys": [
+        "A game developer uploads their game's content (description, mechanics, learning objectives). The AI analyzes the content and generates an alignment report. The developer reviews the report, identifies areas for improvement based on the AI's recommendations, and implements changes to enhance curriculum alignment. Finally, the developer downloads the updated report for marketing and compliance purposes."
+      ],
+      "ai_capabilities": [
+        "Natural Language Processing (NLP) for analyzing game text, dialogue, and narrative elements to identify relevant concepts and learning objectives.",
+        "Machine Learning (ML) for pattern recognition and matching game mechanics to specific curriculum standards.",
+        "Knowledge Graph to represent and reason about the relationships between game elements and curriculum standards."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Game Content (text, descriptions, narrative)",
+          "Game Mechanics (rules, actions, challenges)",
+          "Learning Objectives (intended educational outcomes)"
+        ],
+        "data_schema_recommendations": [
+          "Game Content Table: game_id (INT), content_type (ENUM: 'text', 'mechanic', 'objective'), content_value (TEXT)",
+          "Curriculum Standards Table: standard_id (INT), standard_name (VARCHAR), standard_description (TEXT), grade_level (INT), subject_area (VARCHAR)",
+          "Alignment Results Table: game_id (INT), standard_id (INT), alignment_score (FLOAT), justification (TEXT)"
+        ],
+        "data_sources": [
+          "User-uploaded game content.",
+          "Publicly available curriculum standard databases (e.g., Common Core, state education websites).",
+          "Potentially integrate with existing educational resource platforms."
+        ],
+        "privacy_and_compliance": "Compliance with COPPA (Children's Online Privacy Protection Act) and FERPA (Family Educational Rights and Privacy Act) is crucial. Data anonymization and secure storage practices are required."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Learning Management Systems (LMS) like Canvas, Blackboard, Moodle to facilitate content sharing and assessment.",
+          "Content Management Systems (CMS) to streamline the upload and management of game content.",
+          "Payment Gateways (Stripe, PayPal) for subscription payments."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for secure API authentication. Consider Clerk or Auth0 for user management and authentication workflows."
+      },
+      "technical_specifications": {
+        "architecture": "The architecture consists of a frontend for user interaction, a backend API for processing requests and managing data, a database for storing game content and curriculum standards, and an AI pipeline for performing the curriculum alignment analysis.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions, OpenAI API",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes: (See data schema recommendations)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing uploaded game content.",
+          "AI": "OpenAI API for NLP tasks. Embeddings for semantic similarity. Vector DB (Pinecone/Supabase vectors) for efficient standard matching.",
+          "APIs": "REST API for communication between frontend and backend.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /api/align - Analyzes game content and returns an alignment report. Payload: { game_content: { text: string, mechanics: string, objectives: string } }, Response: { alignment_report: { standard_id: int, alignment_score: float, justification: string } }",
+          "GET /api/standards - Retrieves a list of curriculum standards. Query Params: { subject_area: string, grade_level: int }, Response: { standards: [{ standard_id: int, standard_name: string, standard_description: string }] }",
+          "POST /api/feedback - Submits user feedback on alignment results. Payload: { game_id: int, standard_id: int, feedback_text: string }"
+        ],
+        "frontend_components": [
+          "Upload Form – UI component for uploading game content (text, mechanics, learning objectives).",
+          "Alignment Report Viewer – Displays the alignment report with detailed scores and justifications.",
+          "Recommendation Engine - Suggests ways to modify game content to better align with curriculum."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend (Next.js), /backend (Node.js / Serverless functions), /database (SQL schema).",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY.",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on push.",
+        "Build outputs: Next.js static site for frontend, serverless functions for backend API."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on usage (number of games analyzed per month).",
+          "Freemium model with limited features for free users and premium features for paid subscribers.",
+          "Enterprise pricing for custom integrations and dedicated support."
+        ],
+        "customer_segments": [
+          "Small independent game developers.",
+          "Mid-sized educational game studios.",
+          "Large educational publishers."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of games analyzed per month, API response time, system uptime.",
+        "AI performance KPIs: Alignment accuracy (percentage of correct alignments), user feedback score.",
+        "Adoption/engagement KPIs: Number of active users, subscription renewal rate, user engagement with alignment reports and recommendations."
+      ]
+    }
+  ]
+}

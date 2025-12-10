@@ -1,0 +1,119 @@
+{
+  "industry": "Robotics & Manufacturing",
+  "services": [
+    {
+      "name": "Predictive Maintenance AI Platform",
+      "overview": "The Predictive Maintenance AI Platform is designed to minimize downtime and optimize the performance of robots in manufacturing and other industrial settings. This platform leverages machine learning algorithms to analyze sensor data collected from robots, including vibration, temperature, current, and other relevant metrics. By detecting anomalies and patterns indicative of potential failures, the platform enables proactive maintenance scheduling, reducing unplanned downtime, lowering maintenance costs, extending robot lifespan, and improving overall production efficiency. The system provides actionable insights to maintenance engineers and factory managers, allowing them to address issues before they escalate into costly breakdowns. The platform integrates seamlessly with existing industrial control systems and provides a user-friendly interface for monitoring robot health and scheduling maintenance tasks. Real-time alerts and predictive analytics empower users to make data-driven decisions, optimize maintenance strategies, and maximize the return on investment in robotic automation.",
+      "problems_addressed": [
+        "High costs associated with unscheduled downtime of robots.",
+        "Inefficient reactive maintenance practices.",
+        "Reduced robot lifespan due to undetected component degradation.",
+        "Loss of production efficiency and revenue due to robot failures."
+      ],
+      "target_users": [
+        "Robot Operators: Responsible for day-to-day robot operation and monitoring.",
+        "Maintenance Engineers: Tasked with robot maintenance, repair, and upkeep.",
+        "Factory Managers: Oversee overall production efficiency and cost management."
+      ],
+      "core_features": [
+        "Real-time Sensor Data Monitoring: Continuous collection and visualization of sensor data from robots, including vibration, temperature, current, and other relevant parameters.",
+        "Anomaly Detection: AI-powered algorithms to identify deviations from normal operating patterns, indicating potential failures or performance degradation.",
+        "Predictive Failure Analysis: Machine learning models to predict the likelihood and timing of specific component failures based on historical data and real-time sensor inputs.",
+        "Maintenance Scheduling: Automated generation of maintenance schedules based on predicted failure probabilities and recommended maintenance procedures.",
+        "Alerting and Notifications: Real-time alerts and notifications to maintenance engineers and factory managers when anomalies are detected or failures are predicted.",
+        "Reporting and Analytics: Comprehensive reporting and analytics dashboards to track robot health, maintenance performance, and cost savings."
+      ],
+      "user_journeys": [
+        "A maintenance engineer logs into the platform, views the dashboard showing the health status of all robots in the factory. They receive an alert indicating a potential bearing failure in a robotic arm. They drill down into the sensor data for that robot, analyze the anomaly detected by the AI, and schedule a maintenance task to replace the bearing before it causes a breakdown."
+      ],
+      "ai_capabilities": [
+        "Anomaly Detection: Utilizes unsupervised machine learning techniques, such as autoencoders or isolation forests, to identify anomalous sensor data patterns indicative of potential failures.",
+        "Predictive Failure Analysis: Employs supervised machine learning algorithms, such as Random Forests, Gradient Boosting Machines (GBM), or neural networks, trained on historical sensor data and failure records to predict the likelihood of specific component failures.",
+        "Model Selection: Initial model selection will prioritize explainability and interpretability for ease of integration and user trust. Fine-tuning with domain-specific data will improve accuracy. Consider using OpenAI embeddings for feature extraction and vector search for similar failure patterns. Use GPT models for report generation based on the analysis."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Time-series sensor data (vibration, temperature, current, voltage, pressure, etc.)",
+          "Robot operating parameters (speed, load, cycle time, etc.)",
+          "Maintenance records (repair history, replacement dates, downtime events)",
+          "Robot specifications (manufacturer, model, serial number, component list)"
+        ],
+        "data_schema_recommendations": [
+          "Sensor Data Table: robot_id (INT), timestamp (TIMESTAMP), sensor_type (VARCHAR), sensor_value (FLOAT)",
+          "Maintenance Records Table: robot_id (INT), timestamp (TIMESTAMP), event_type (VARCHAR), description (TEXT), component (VARCHAR)",
+          "Robot Specifications Table: robot_id (INT), manufacturer (VARCHAR), model (VARCHAR), serial_number (VARCHAR), component_list (JSON)"
+        ],
+        "data_sources": [
+          "Robot control systems (PLCs, industrial PCs)",
+          "SCADA systems",
+          "Enterprise Asset Management (EAM) systems",
+          "Historian databases",
+          "IoT platforms"
+        ],
+        "privacy_and_compliance": "Ensure compliance with data privacy regulations (e.g., GDPR, CCPA) when collecting and processing sensor data. Implement data anonymization techniques where necessary. Adhere to industry-specific data security standards."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Industrial Control Systems (ICS): Direct integration with PLCs and other control systems to collect real-time sensor data.",
+          "Enterprise Asset Management (EAM) Systems: Integration with EAM systems to access maintenance records and robot specifications.",
+          "SCADA Systems: Integration with SCADA systems for centralized data monitoring and control.",
+          "Notification Systems: Integration with email and SMS providers for alerting and notifications."
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API access. JWT for internal service authentication. Consider Clerk or Auth0 for user management and authentication."
+      },
+      "technical_specifications": {
+        "architecture": "Multi-layered architecture comprising a data ingestion layer, a data processing and storage layer, an AI modeling layer, an API layer, and a user interface layer. Data is ingested from various sources, processed and stored in a time-series database, analyzed by AI models, and exposed through APIs for consumption by the user interface and other systems.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes optimized for time-series data.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing model artifacts, reports, and other data.",
+          "AI": "OpenAI API (GPT for report generation), embeddings, vector DB (Pinecone/Supabase vectors) for similarity search of failure patterns. PyTorch or TensorFlow for model training and deployment.",
+          "APIs": "REST APIs for data ingestion, model prediction, and user management.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /api/ingest_data: Ingest sensor data from robots. Payload: { robot_id: INT, timestamp: TIMESTAMP, sensor_data: JSON }",
+          "GET /api/robot_health/{robot_id}: Retrieve health status and predictive failure analysis for a specific robot. Response: { robot_id: INT, health_status: VARCHAR, failure_predictions: JSON }",
+          "POST /api/schedule_maintenance: Schedule a maintenance task for a robot. Payload: { robot_id: INT, task_type: VARCHAR, schedule_date: TIMESTAMP }",
+          "GET /api/report/{robot_id}: Generates a report detailing the robot's health and predicted failures.  Uses GPT model to summarize data."
+        ],
+        "frontend_components": [
+          "Dashboard: Displays overall robot health status and key performance indicators.",
+          "Robot Details Page: Provides detailed sensor data, failure predictions, and maintenance history for a specific robot.",
+          "Alerting Panel: Displays real-time alerts and notifications.",
+          "Maintenance Schedule: Displays upcoming maintenance tasks and allows users to schedule new tasks."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /data, /models, /docs",
+        "Environment variables: OPENAI_API_KEY, DB_URL, SENSOR_DATA_API_KEY, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET",
+        "Vercel deployment: Configure Vercel to automatically deploy the frontend and backend from the GitHub repository. Set environment variables in Vercel.",
+        "Build outputs: /frontend/.next, /backend/dist",
+        "Runtime settings: Configure node version and memory limits for serverless functions."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of robots monitored and the level of AI capabilities provided.",
+          "Usage-based pricing for API access and data storage.",
+          "Per-seat pricing for user access to the platform.",
+          "Add-ons for advanced analytics and custom model development."
+        ],
+        "customer_segments": [
+          "Small businesses with a small number of robots.",
+          "Mid-market companies with a moderate number of robots and dedicated maintenance teams.",
+          "Enterprises with large-scale robotic automation deployments and complex maintenance requirements."
+        ]
+      },
+      "success_metrics": [
+        "Reduction in unscheduled downtime (percentage).",
+        "Decrease in maintenance costs (percentage).",
+        "Increase in robot lifespan (years).",
+        "Improvement in overall equipment effectiveness (OEE).",
+        "AI Model Accuracy (Precision, Recall, F1-score)",
+        "Number of maintenance tasks scheduled proactively.",
+        "User engagement (daily/monthly active users)."
+      ]
+    }
+  ]
+}

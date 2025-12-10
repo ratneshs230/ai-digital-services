@@ -1,0 +1,128 @@
+{
+  "industry": "OEM Parts Supply",
+  "services": [
+    {
+      "name": "Predictive Inventory Optimization for OEM Parts",
+      "overview": "This service provides an AI-powered inventory management solution specifically tailored for OEM parts suppliers. It addresses the critical challenges of balancing inventory levels to meet demand while minimizing holding costs and preventing stockouts. By leveraging machine learning algorithms, the system analyzes historical sales data, market trends, and customer forecasts to accurately predict demand for specific parts. This enables automated adjustments to inventory levels and the generation of optimized purchase orders, leading to significant improvements in efficiency and profitability. The solution integrates seamlessly with existing ERP and CRM systems to provide a holistic view of the supply chain.",
+      "problems_addressed": [
+        "High inventory holding costs due to overstocking of slow-moving parts.",
+        "Frequent stockouts of critical components leading to production delays and customer dissatisfaction.",
+        "Inefficient manual processes for demand forecasting and purchase order generation.",
+        "Lack of visibility into real-time inventory levels across multiple locations.",
+        "Inability to adapt quickly to changing market conditions and customer demand."
+      ],
+      "target_users": [
+        "Inventory Managers: Responsible for overseeing inventory levels and ensuring parts availability.",
+        "Supply Chain Planners: Focus on optimizing the flow of goods from suppliers to customers.",
+        "Procurement Teams: Tasked with sourcing and purchasing parts at the best possible prices.",
+        "Operations Managers: Responsible for the overall efficiency of the supply chain."
+      ],
+      "core_features": [
+        "Demand Forecasting: Uses machine learning algorithms (time series analysis, regression models) to predict demand for each part based on historical sales data, seasonality, market trends, and external factors (e.g., automotive production forecasts).",
+        "Inventory Optimization: Automatically calculates optimal inventory levels (reorder points, safety stock levels) for each part, considering lead times, demand variability, and cost factors. Utilizes optimization algorithms to minimize total inventory costs.",
+        "Automated Purchase Order Generation: Generates purchase orders automatically based on predicted demand and inventory levels, taking into account supplier lead times, minimum order quantities, and pricing agreements. Purchase orders are routed for approval based on predefined rules.",
+        "Real-time Inventory Tracking: Provides a real-time view of inventory levels across all locations, including warehouses, distribution centers, and manufacturing plants. Integrates with existing warehouse management systems (WMS) to capture inventory movements.",
+        "Alerting and Notifications: Sends alerts and notifications to relevant stakeholders when inventory levels fall below safety stock levels, when demand exceeds forecasts, or when there are potential supply chain disruptions. Configurable alert thresholds and delivery methods.",
+        "Reporting and Analytics: Provides comprehensive reporting and analytics dashboards that track key inventory metrics, such as inventory turnover, fill rates, stockout rates, and inventory holding costs. Generates customized reports to identify trends and opportunities for improvement."
+      ],
+      "user_journeys": [
+        "1. Inventory Manager logs into the system.\n2. Navigates to the inventory dashboard to view current stock levels, demand forecasts, and purchase order status.\n3. Reviews alerts for parts with low stock levels or potential stockouts.\n4. Drills down into a specific part to view its demand history, forecast, and inventory optimization recommendations.\n5. Approves or modifies automatically generated purchase orders.\n6. Monitors the status of purchase orders and inventory levels in real-time.\n7. Runs reports to analyze inventory performance and identify areas for improvement."
+      ],
+      "ai_capabilities": [
+        "Time Series Analysis (e.g., ARIMA, Exponential Smoothing) for demand forecasting based on historical sales data. Considers seasonality, trends, and cyclical patterns.",
+        "Regression Models (e.g., Linear Regression, Random Forest) to predict demand based on various factors, such as market trends, promotional activities, and external data sources.",
+        "Optimization Algorithms (e.g., Linear Programming, Genetic Algorithms) to calculate optimal inventory levels and minimize total inventory costs.",
+        "Anomaly Detection to identify unusual demand patterns or supply chain disruptions that may require attention.",
+        "Model Selection Notes: Use of Prophet for initial time-series forecasting, with potential for fine-tuning using Random Forest or Gradient Boosting if external features significantly impact demand. Embeddings and vector search are not directly applicable, but demand signals can be used as features for future model enhancements."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Historical sales data (date, part number, quantity sold, price)",
+          "Inventory data (location, part number, quantity on hand, reorder point, lead time)",
+          "Supplier data (supplier ID, part number, lead time, minimum order quantity, price)",
+          "Customer order data (customer ID, part number, quantity ordered, order date)",
+          "Market data (market trends, economic indicators, competitor pricing)",
+          "Production schedules (automotive production forecasts, component usage)"
+        ],
+        "data_schema_recommendations": [
+          "Parts Table: part_id (INT, PRIMARY KEY), part_number (VARCHAR), description (VARCHAR), unit_cost (DECIMAL)",
+          "Sales Table: sale_id (INT, PRIMARY KEY), part_id (INT, FOREIGN KEY), sale_date (DATE), quantity (INT), price (DECIMAL)",
+          "Inventory Table: inventory_id (INT, PRIMARY KEY), part_id (INT, FOREIGN KEY), location_id (INT, FOREIGN KEY), quantity_on_hand (INT), reorder_point (INT), safety_stock (INT)",
+          "Suppliers Table: supplier_id (INT, PRIMARY KEY), supplier_name (VARCHAR), lead_time (INT), min_order_quantity (INT)",
+          "Location Table: location_id (INT, PRIMARY KEY), location_name (VARCHAR), location_type (VARCHAR)"
+        ],
+        "data_sources": [
+          "Internal ERP systems (e.g., SAP, Oracle)",
+          "Internal CRM systems (e.g., Salesforce, Microsoft Dynamics)",
+          "Supplier portals",
+          "Market research reports",
+          "Third-party data providers (e.g., IHS Markit, Bloomberg)"
+        ],
+        "privacy_and_compliance": "Compliance with data privacy regulations (e.g., GDPR, CCPA) is essential, especially when handling customer order data. Secure data storage and access controls are required to protect sensitive information. Implement data masking and anonymization techniques where necessary. Adherence to industry-specific standards for data security and privacy."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "ERP systems (SAP, Oracle, NetSuite) for inventory data, sales data, and supplier data.",
+          "CRM systems (Salesforce, Microsoft Dynamics) for customer order data and sales forecasts.",
+          "Warehouse management systems (WMS) for real-time inventory tracking.",
+          "Supplier portals for purchase order management and supplier collaboration.",
+          "Business intelligence (BI) tools (Tableau, Power BI) for reporting and analytics."
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure integration with third-party systems. JWT (JSON Web Tokens) for internal authentication and authorization. Consider Clerk or Auth0 for simplified user management and authentication."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture, with separate services for demand forecasting, inventory optimization, purchase order generation, and reporting. The frontend will be a web application built using Next.js, providing a user-friendly interface for managing inventory and viewing reports. The backend will be implemented using Node.js and Express, with a REST API for communication between the frontend and backend services. A PostgreSQL database will be used to store inventory data, sales data, and supplier data. The AI pipeline will consist of data ingestion, preprocessing, model training, and model deployment.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions.  Consider using React Query for efficient data fetching and caching.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions, Express.js, REST API, TypeScript. Implement proper error handling and logging.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes as defined above. Ensure proper indexing for performance.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing reports and other files.",
+          "AI": "OpenAI API, scikit-learn, pandas, numpy, statsmodels. Consider cloud-based machine learning platforms such as AWS SageMaker or Google AI Platform for model training and deployment.  Implement model versioning and monitoring.",
+          "APIs": "REST API for communication between frontend and backend services.  Use OpenAPI/Swagger for API documentation.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline. Implement automated testing (unit tests, integration tests) to ensure code quality."
+        },
+        "API_design": [
+          "GET /parts: Returns a list of all parts.",
+          "GET /parts/{part_id}: Returns details for a specific part.",
+          "GET /inventory: Returns current inventory levels for all parts.",
+          "GET /inventory/{part_id}: Returns current inventory level for a specific part.",
+          "GET /forecast/{part_id}: Returns the demand forecast for a specific part.",
+          "POST /purchase_orders: Creates a new purchase order.",
+          "GET /purchase_orders/{purchase_order_id}: Returns details for a specific purchase order."
+        ],
+        "frontend_components": [
+          "Inventory Dashboard: Displays current inventory levels, demand forecasts, and purchase order status.",
+          "Part Details Page: Displays detailed information for a specific part, including demand history, forecast, and inventory optimization recommendations.",
+          "Purchase Order Management Page: Allows users to create, view, and approve purchase orders.",
+          "Reporting Dashboard: Provides access to various reports and analytics dashboards."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /frontend (Next.js app), /backend (Node.js API), /database (SQL scripts), /ai (Python scripts for AI models)",
+        "Environment Variables: DATABASE_URL, OPENAI_API_KEY, API_KEY (for integrating with 3rd party APIs), VERCEL_GIT_COMMIT_SHA, VERCEL_ENV",
+        "Vercel Deployment: Connect the GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on push.",
+        "Build Outputs: Frontend: Next.js static files, Backend: Node.js serverless functions. Runtime settings: Node.js version, memory limits."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of parts managed or the number of users.",
+          "Usage-based pricing based on the volume of purchase orders generated.",
+          "Add-ons for advanced features, such as custom reporting and integration with specific ERP systems.",
+          "Enterprise pricing for large OEM parts suppliers with complex requirements."
+        ],
+        "customer_segments": [
+          "Small to medium-sized OEM parts suppliers",
+          "Large OEM parts suppliers with multiple locations",
+          "Automotive manufacturers",
+          "Aerospace manufacturers",
+          "Industrial equipment manufacturers"
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Inventory turnover rate, fill rate, stockout rate, inventory holding costs, purchase order processing time.",
+        "AI performance KPIs: Demand forecast accuracy (e.g., Mean Absolute Percentage Error - MAPE), inventory optimization effectiveness (e.g., reduction in inventory holding costs), purchase order automation rate.",
+        "Adoption/engagement KPIs: Number of active users, frequency of use, user satisfaction (measured through surveys and feedback forms)."
+      ]
+    }
+  ]
+}

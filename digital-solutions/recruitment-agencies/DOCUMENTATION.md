@@ -1,0 +1,152 @@
+# AI-Powered Candidate Sourcing
+
+## Industry: Recruitment agencies
+
+### Overview
+Automatically identifies and ranks potential candidates from various online sources using AI-driven search and matching algorithms.
+
+### Problem It Solves
+Time-consuming manual candidate sourcing and difficulty in finding qualified candidates.
+
+### Core Solution
+Crawls job boards, social media, and company websites to identify potential candidates based on job descriptions and required skills, then ranks them based on relevance and fit.
+
+### Target Users
+Recruiters, talent acquisition specialists.
+
+### Business Impact
+Reduces time spent on sourcing, increases candidate pool size, and improves the quality of candidates.
+
+### Example Use Case
+A recruiter needs to find a software engineer with specific experience in AI/ML. The AI tool automatically identifies and ranks potential candidates from LinkedIn, GitHub, and Stack Overflow.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Human Resources & Recruiting",
+  "services": [
+    {
+      "name": "AI-Powered Candidate Sourcing Platform",
+      "overview": "This platform leverages AI to automate and enhance the candidate sourcing process. It addresses the common challenges of time-consuming manual sourcing and the difficulty in identifying highly qualified candidates from a vast pool of online resources. The system intelligently crawls job boards, professional social networks, online developer communities, and company websites, extracting relevant candidate profiles based on specified job descriptions and required skills. Advanced AI algorithms analyze candidate data, rank them based on their relevance and fit, and provide recruiters and talent acquisition specialists with a prioritized list of potential hires. This accelerates the sourcing process, expands the candidate pool, and improves the overall quality of candidates considered for open positions.",
+      "problems_addressed": [
+        "Time-consuming manual candidate sourcing processes.",
+        "Difficulty in identifying qualified candidates from a large volume of online data.",
+        "Limited reach of traditional sourcing methods.",
+        "Inconsistent candidate evaluation criteria.",
+        "High cost per hire due to inefficient sourcing."
+      ],
+      "target_users": [
+        "Recruiters at staffing agencies",
+        "Talent acquisition specialists in corporate HR departments",
+        "Hiring managers at small to medium-sized businesses"
+      ],
+      "core_features": [
+        "Automated Candidate Crawling: Continuously crawls job boards (LinkedIn, Indeed, Glassdoor), professional networks (LinkedIn, Xing), developer platforms (GitHub, Stack Overflow), and company websites to identify potential candidates based on predefined criteria.",
+        "AI-Driven Candidate Matching: Employs natural language processing (NLP) and machine learning (ML) algorithms to analyze job descriptions and candidate profiles, identifying matching skills, experience, and qualifications.",
+        "Intelligent Candidate Ranking: Ranks candidates based on their relevance to the job description, considering factors such as skills match, experience level, education, and location.",
+        "Candidate Profile Enrichment: Automatically gathers additional information about candidates from various online sources to create a comprehensive profile.",
+        "Customizable Search Filters: Allows recruiters to refine search criteria using filters such as skills, experience, location, education, and industry.",
+        "Real-time Candidate Alerts: Notifies recruiters when new candidates matching their search criteria are identified.",
+        "Integration with ATS Systems: Integrates seamlessly with existing Applicant Tracking Systems (ATS) to streamline the hiring process.",
+        "Analytics and Reporting: Provides insights into sourcing effectiveness, candidate quality, and time-to-hire."
+      ],
+      "user_journeys": [
+        "A recruiter logs into the platform, creates a new job requisition by entering the job title, description, and required skills. The system automatically identifies and ranks potential candidates from LinkedIn, GitHub, and Stack Overflow. The recruiter reviews the top-ranked candidates, examines their profiles, and adds them to the ATS for further evaluation. The recruiter receives daily alerts about new candidates matching the requisition criteria. After two weeks, the recruiter closes the requisition with a successful hire."
+      ],
+      "ai_capabilities": [
+        "NLP for Job Description and Resume Parsing: Uses NLP techniques to extract key information from job descriptions and resumes, including skills, experience, education, and job titles. Models like BERT or RoBERTa can be fine-tuned for this specific task.",
+        "ML for Candidate Matching and Ranking: Employs machine learning algorithms, such as Random Forests or Gradient Boosting, to predict the relevance of a candidate to a job description based on extracted features. This can be formulated as a classification or ranking problem.",
+        "Semantic Similarity for Skill Matching: Uses pre-trained word embeddings (e.g., Word2Vec, GloVe, or fastText) or sentence embeddings (e.g., Sentence-BERT) to measure the semantic similarity between skills listed in the job description and those mentioned in candidate profiles. Vector databases like Pinecone or Weaviate can be used to efficiently search for candidates with similar skills.",
+        "AI Model Selection: Initial models can be trained on publicly available datasets of resumes and job descriptions. Fine-tuning on proprietary data can further improve accuracy. Consider using OpenAI embeddings for semantic search and similarity scoring."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Job descriptions (text)",
+          "Candidate profiles (text, including resumes, LinkedIn profiles, GitHub profiles)",
+          "Skills lists (text)"
+        ],
+        "data_schema_recommendations": [
+          "Job Requisition Table: requisition_id (INT, PK), job_title (VARCHAR), job_description (TEXT), required_skills (TEXT), location (VARCHAR), date_created (TIMESTAMP)",
+          "Candidate Profile Table: candidate_id (INT, PK), name (VARCHAR), headline (VARCHAR), profile_url (VARCHAR), skills (TEXT), experience (TEXT), education (TEXT)",
+          "Skills Table: skill_id (INT, PK), skill_name (VARCHAR)",
+          "Requisition_Candidate Table: requisition_id (INT, FK), candidate_id (INT, FK), match_score (FLOAT)"
+        ],
+        "data_sources": [
+          "LinkedIn API",
+          "Indeed API",
+          "Glassdoor API",
+          "GitHub API",
+          "Stack Overflow API",
+          "Company websites (web scraping)",
+          "ATS systems (integration required)"
+        ],
+        "privacy_and_compliance": "GDPR, CCPA, and other relevant data privacy regulations. Ensure compliance with data scraping policies of target websites. Obtain necessary consent for processing personal data."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Applicant Tracking Systems (ATS) - e.g., Workday, Taleo, Greenhouse",
+          "LinkedIn Recruiter",
+          "HRIS systems",
+          "Email providers (for alerts)"
+        ],
+        "authentication_strategy": "OAuth 2.0 for integrating with external APIs (LinkedIn, Indeed, etc.). JWT for internal API authentication. Consider Clerk or Auth0 for user management."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-tier architecture consisting of a frontend, backend API, database, and AI pipeline. The frontend provides a user interface for recruiters. The backend API handles requests from the frontend, interacts with the database, and orchestrates the AI pipeline. The database stores job requisitions, candidate profiles, and search results. The AI pipeline processes job descriptions and candidate profiles to identify and rank potential candidates.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, embeddings, vector DB (Pinecone/Supabase vectors), Python for model training and data processing (if custom models are needed)",
+          "APIs": "REST",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /requisitions: Creates a new job requisition (payload: job_title, job_description, required_skills, location)",
+          "GET /requisitions/{requisition_id}: Retrieves a job requisition by ID",
+          "GET /candidates?requisition_id={requisition_id}: Retrieves a list of candidates matching a job requisition, ranked by relevance",
+          "GET /candidates/{candidate_id}: Retrieves a candidate profile by ID"
+        ],
+        "frontend_components": [
+          "Job Requisition Form: A form for creating new job requisitions.",
+          "Candidate List: A list of candidates matching a job requisition, with ranking and filtering options.",
+          "Candidate Profile: A detailed view of a candidate's profile, including skills, experience, and education."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /data, /scripts",
+        "Environment variables: OPENAI_API_KEY, LINKEDIN_API_KEY, INDEED_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on Git push.",
+        "Build outputs: Frontend: Next.js static export. Backend: Serverless functions.",
+        "Runtime settings: Node.js version 18 or higher. Python 3.9 or higher (if custom AI models are used)."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic (limited candidate searches), Pro (unlimited searches, ATS integration), Enterprise (custom features, dedicated support)",
+          "Usage-based pricing: Pay-per-candidate-view",
+          "Per-seat pricing: Charge per recruiter using the platform"
+        ],
+        "customer_segments": [
+          "Small businesses with limited HR resources",
+          "Mid-sized companies with growing hiring needs",
+          "Large enterprises with complex recruiting processes",
+          "Staffing agencies"
+        ]
+      },
+      "success_metrics": [
+        "Time-to-hire (reduction in days)",
+        "Cost-per-hire (reduction in $)",
+        "Number of candidates sourced per requisition",
+        "Quality of candidates hired (based on performance reviews)",
+        "User adoption rate (number of active recruiters)",
+        "Candidate match score (average score of matched candidates)",
+        "AI model accuracy (precision and recall of candidate matching)"
+      ]
+    }
+  ]
+}
+```

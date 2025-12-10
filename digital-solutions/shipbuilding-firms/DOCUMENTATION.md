@@ -1,0 +1,153 @@
+# AI-Powered Predictive Maintenance
+
+## Industry: Shipbuilding firms
+
+### Overview
+Predict equipment failures and optimize maintenance schedules using AI-driven analysis of sensor data.
+
+### Problem It Solves
+Unplanned downtime and costly repairs due to unexpected equipment failures on ships.
+
+### Core Solution
+An AI model that analyzes real-time data from sensors on critical ship components (engines, pumps, etc.) to predict potential failures and recommend proactive maintenance.
+
+### Target Users
+Shipyard maintenance teams, ship operators, and fleet managers.
+
+### Business Impact
+Reduces downtime, lowers maintenance costs, extends equipment lifespan, and improves operational efficiency.
+
+### Example Use Case
+The AI predicts an impeller failure in a cooling pump based on vibration and temperature data, allowing the crew to replace it during scheduled maintenance, avoiding a costly emergency repair at sea.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Maritime",
+  "services": [
+    {
+      "name": "AI-Powered Predictive Maintenance for Ships",
+      "overview": "This service provides an AI-driven predictive maintenance solution specifically tailored for maritime vessels. It leverages real-time sensor data from critical shipboard equipment to forecast potential failures and recommend proactive maintenance actions. The system aims to minimize unplanned downtime, reduce maintenance costs, extend the lifespan of essential components, and ultimately improve the operational efficiency and safety of the vessel. By analyzing patterns and anomalies in data streams such as temperature, vibration, pressure, and flow rates, the AI model identifies subtle indicators of impending failures that might otherwise go unnoticed. This enables maintenance teams to schedule repairs and replacements during planned maintenance windows, avoiding costly emergency interventions at sea and ensuring continuous, reliable operation.\n\nThe core of the service lies in its ability to learn the normal operating conditions of each piece of equipment and detect deviations that signal potential problems. The system utilizes a combination of machine learning algorithms, including time series analysis, anomaly detection, and predictive modeling, to achieve accurate and timely failure predictions. The AI model is continuously updated and refined with new data, ensuring that it remains accurate and effective over time. The service also provides a user-friendly interface that allows maintenance teams to easily access and interpret the AI-generated insights, enabling them to make informed decisions about maintenance scheduling and resource allocation.\n\nFurthermore, the system offers a comprehensive reporting and analytics dashboard that provides a clear overview of equipment health, predicted failure probabilities, and recommended maintenance actions. This dashboard can be customized to meet the specific needs of different users, such as shipyard maintenance teams, ship operators, and fleet managers. The service also integrates seamlessly with existing maintenance management systems, enabling a streamlined and efficient workflow. By empowering maritime organizations with the ability to anticipate and prevent equipment failures, this AI-powered predictive maintenance solution helps them to optimize their operations, reduce costs, and enhance the safety and reliability of their vessels.",
+      "problems_addressed": [
+        "Unplanned downtime due to unexpected equipment failures",
+        "High maintenance costs associated with reactive repairs",
+        "Reduced equipment lifespan due to lack of proactive maintenance",
+        "Inefficient maintenance scheduling and resource allocation",
+        "Safety risks associated with critical equipment failures at sea"
+      ],
+      "target_users": [
+        "Shipyard maintenance teams",
+        "Ship operators",
+        "Fleet managers"
+      ],
+      "core_features": [
+        "Real-time sensor data analysis: Continuously monitors and analyzes data from sensors on critical ship components.",
+        "AI-driven failure prediction: Uses machine learning models to predict potential equipment failures based on sensor data patterns.",
+        "Proactive maintenance recommendations: Provides specific recommendations for maintenance actions to prevent failures.",
+        "User-friendly interface: Offers an intuitive dashboard for accessing and interpreting AI-generated insights.",
+        "Reporting and analytics: Generates comprehensive reports on equipment health, predicted failure probabilities, and maintenance recommendations.",
+        "Integration with existing systems: Seamlessly integrates with existing maintenance management systems for streamlined workflows.",
+        "Customizable alerts: Configurable alerts to notify users of potential failures and recommended actions."
+      ],
+      "user_journeys": [
+        "A ship operator logs into the system. The dashboard displays a list of all vessels in the fleet. The operator selects a specific vessel. The system shows a list of critical equipment on that vessel, along with their current health status (e.g., 'Healthy,' 'Warning,' 'Critical'). The operator clicks on a component marked 'Warning' (e.g., 'Cooling Pump Impeller'). The system displays detailed sensor data for that component (vibration, temperature, pressure). The AI model predicts a high probability of failure within the next two weeks. The system recommends replacing the impeller during the next scheduled maintenance window. The operator schedules the maintenance task in the integrated maintenance management system. The failure is averted, avoiding costly emergency repairs at sea."
+      ],
+      "ai_capabilities": [
+        "Time series analysis: Analyzes sensor data over time to identify trends and anomalies.",
+        "Anomaly detection: Detects deviations from normal operating conditions that may indicate potential failures.",
+        "Predictive modeling: Uses machine learning algorithms to predict the probability of equipment failure.",
+        "OpenAI models are not directly applicable here. Embeddings may be used to cluster similar failure patterns for faster diagnosis in the future but is not a core component. The core models are custom-trained ML models. Consider using a platform like Azure Machine Learning or AWS SageMaker for model training and deployment.",
+        "Model Selection Notes: Choose regression models (e.g., Random Forest, Gradient Boosting) for predicting time-to-failure or classification models (e.g., Logistic Regression, SVM) for predicting failure probability. Consider using ensemble methods to improve prediction accuracy. The model needs continuous retraining as the equipment ages and environmental conditions change. Fine-tuning will be required as new sensor data is collected."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Temperature data (degrees Celsius/Fahrenheit)",
+          "Vibration data (mm/s, g)",
+          "Pressure data (kPa, psi)",
+          "Flow rate data (L/min, GPM)",
+          "Oil analysis data (viscosity, wear debris)",
+          "Electrical current/voltage data (Amps, Volts)",
+          "Equipment operating hours",
+          "Maintenance history (repairs, replacements)"
+        ],
+        "data_schema_recommendations": [
+          "Table: sensor_data",
+          "Columns: timestamp (TIMESTAMP), equipment_id (VARCHAR), sensor_type (VARCHAR), sensor_value (FLOAT)",
+          "Table: equipment",
+          "Columns: equipment_id (VARCHAR), equipment_name (VARCHAR), equipment_type (VARCHAR), installation_date (DATE), manufacturer (VARCHAR)",
+          "Table: maintenance_history",
+          "Columns: maintenance_id (VARCHAR), equipment_id (VARCHAR), maintenance_date (DATE), maintenance_type (VARCHAR), description (TEXT)"
+        ],
+        "data_sources": [
+          "Existing shipboard sensor systems (e.g., SCADA, DCS)",
+          "Manual data entry (e.g., maintenance logs)",
+          "External APIs (e.g., weather data, vessel location data)"
+        ],
+        "privacy_and_compliance": "Data privacy regulations may apply to the collection and processing of personal data of crew members (e.g., GDPR). Ensure compliance with maritime-specific regulations regarding data security and safety."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Existing shipboard sensor systems (SCADA, DCS)",
+          "Maintenance management systems (e.g., SAP, Maximo)",
+          "Vessel tracking systems (AIS)",
+          "Weather data providers (e.g., NOAA)"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API access. Consider Clerk or Auth0 for managing user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The architecture consists of a data ingestion pipeline, a data processing and storage layer, an AI model training and deployment layer, and a user interface. Sensor data is ingested from various sources, preprocessed, and stored in a database. The AI model is trained on historical data and deployed as an API endpoint. The user interface allows users to access and interpret the AI-generated insights.\nAPI Layer: REST API for data ingestion, model prediction, and data retrieval.\nFrontend: User interface for visualizing sensor data, predicted failures, and maintenance recommendations.\nBackend: Handles data processing, model training, and API requests.\nDatabase: Stores sensor data, equipment information, and maintenance history.\nAI Pipeline: Data preprocessing, feature engineering, model training, and model deployment.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "Python, scikit-learn, TensorFlow/PyTorch, Azure Machine Learning / AWS SageMaker",
+          "APIs": "REST",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /api/sensor_data: Accepts sensor data from shipboard systems. Payload: {equipment_id: string, sensor_type: string, sensor_value: float, timestamp: datetime}",
+          "GET /api/predictions/{equipment_id}: Returns failure prediction for a given equipment ID. Response: {equipment_id: string, failure_probability: float, time_to_failure: datetime, recommendation: string}",
+          "GET /api/equipment/{equipment_id}: Returns equipment details. Response: {equipment_id: string, equipment_name: string, equipment_type: string, installation_date: date, manufacturer: string}"
+        ],
+        "frontend_components": [
+          "Dashboard: Displays an overview of vessel and equipment health.",
+          "Equipment details page: Shows detailed sensor data and failure predictions for a specific piece of equipment.",
+          "Maintenance recommendations page: Lists recommended maintenance actions.",
+          "Alerts page: Displays a list of active alerts and notifications."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /data, /models",
+        "Environment variables: DATABASE_URL, AI_MODEL_API_KEY, SENSOR_DATA_API_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables. Enable automatic deployments on code changes.",
+        "Build outputs: Static frontend files in /frontend/out, serverless functions in /backend/api.",
+        "Runtime settings: Node.js runtime for backend, Python runtime for AI model API."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of vessels or equipment monitored.",
+          "Usage-based pricing based on the volume of sensor data processed.",
+          "Add-ons for advanced features such as custom reporting and integration with specific maintenance management systems."
+        ],
+        "customer_segments": [
+          "Small shipping companies with a few vessels.",
+          "Mid-sized fleet operators.",
+          "Large shipping corporations with extensive fleets."
+        ]
+      },
+      "success_metrics": [
+        "Reduction in unplanned downtime (percentage)",
+        "Reduction in maintenance costs (percentage)",
+        "Increase in equipment lifespan (percentage)",
+        "Accuracy of failure predictions (precision, recall)",
+        "Adoption rate of maintenance recommendations (percentage)",
+        "User engagement with the platform (daily/monthly active users)"
+      ]
+    }
+  ]
+}
+```

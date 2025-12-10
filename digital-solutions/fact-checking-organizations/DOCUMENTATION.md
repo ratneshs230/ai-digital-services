@@ -1,0 +1,151 @@
+# Claim Prioritization AI
+
+## Industry: Fact-checking organizations
+
+### Overview
+AI-powered tool to automatically identify and prioritize the most viral and potentially harmful claims circulating online.
+
+### Problem It Solves
+Fact-checkers struggle to manually sift through massive amounts of online content to identify the most impactful misinformation.
+
+### Core Solution
+Uses NLP and machine learning to analyze the velocity, reach, and potential harm of online claims, ranking them by importance for fact-checking.
+
+### Target Users
+Fact-checking organizations, journalists, media outlets.
+
+### Business Impact
+Increases the efficiency and impact of fact-checking efforts, focusing resources on the most critical misinformation.
+
+### Example Use Case
+Identifies a rapidly spreading false claim about vaccine safety on social media, allowing fact-checkers to quickly debunk it before it goes viral.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Media and Journalism",
+  "services": [
+    {
+      "name": "Claim Prioritization AI",
+      "overview": "Claim Prioritization AI is an AI-powered service designed to automatically identify, analyze, and prioritize viral and potentially harmful claims circulating online. This tool addresses the significant challenge faced by fact-checking organizations, journalists, and media outlets in manually sifting through vast amounts of online content to pinpoint the most impactful misinformation. By leveraging Natural Language Processing (NLP) and machine learning, the system analyzes the velocity, reach, sentiment, and potential harm associated with online claims, providing a prioritized ranking that enables rapid and effective fact-checking. This service is designed to significantly increase the efficiency and impact of fact-checking efforts, ensuring that resources are focused on debunking the most critical and widespread misinformation.",
+      "problems_addressed": [
+        "Overwhelm of information: Fact-checkers are inundated with massive amounts of online content, making it difficult to identify the most impactful misinformation.",
+        "Slow response times: Manual identification and prioritization processes lead to delays in debunking misinformation, allowing it to spread rapidly.",
+        "Inefficient resource allocation: Fact-checking efforts are often spread across a wide range of claims, diluting the impact and effectiveness of the response.",
+        "Difficulty assessing potential harm: Determining the potential societal impact of a false claim is challenging without automated analysis tools."
+      ],
+      "target_users": [
+        "Fact-checking organizations",
+        "Journalists and media outlets",
+        "Social media platforms (for content moderation)",
+        "Government agencies (for public health and safety)"
+      ],
+      "core_features": [
+        "Real-time claim monitoring: Continuously monitors social media, news articles, blogs, and other online sources for emerging claims.",
+        "Velocity and reach analysis: Analyzes the speed at which a claim is spreading and the number of people it is reaching, identifying potential viral content.",
+        "Sentiment analysis: Determines the emotional tone and public perception surrounding a claim, helping to assess its potential impact.",
+        "Harm assessment: Evaluates the potential harm a claim could cause based on its content and target audience, considering factors such as public health, safety, and social cohesion.",
+        "Prioritization ranking: Ranks claims based on a combination of velocity, reach, sentiment, and harm assessment, providing a clear prioritization for fact-checking.",
+        "Automated reporting: Generates reports summarizing the top prioritized claims, including key metrics and insights, facilitating rapid decision-making.",
+        "API access: Provides API access for integration with existing fact-checking workflows and tools, allowing seamless incorporation into existing systems."
+      ],
+      "user_journeys": [
+        "A fact-checker logs into the Claim Prioritization AI dashboard. The dashboard displays a ranked list of the most viral and potentially harmful claims currently circulating online. The fact-checker selects a high-priority claim related to vaccine safety. The system provides detailed metrics on the claim's reach, velocity, and sentiment. The fact-checker uses this information to quickly assess the claim's potential impact and initiates the fact-checking process, leveraging the provided data to create a timely and effective debunking article."
+      ],
+      "ai_capabilities": [
+        "NLP for claim extraction and sentiment analysis: Uses NLP to extract claims from online text and analyze the sentiment surrounding those claims.  Specifically, it uses transformer models like BERT or RoBERTa fine-tuned for sentiment analysis of news and social media content.  Libraries like Hugging Face Transformers will be utilized.",
+        "Machine learning for harm assessment: Employs a machine learning model trained on a dataset of labeled claims to predict the potential harm of a new claim. Features include claim content, source credibility, target audience, and historical impact of similar claims.  Consider using a classification model like XGBoost or LightGBM.",
+        "Velocity and reach prediction: Utilizes time-series analysis and predictive modeling to forecast the future spread of a claim based on its current velocity and reach.  ARIMA or Prophet models could be suitable.",
+        "Vector Database for Semantic Search: Pinecone or Weaviate to store claim embeddings for semantic similarity search against a knowledge base of verified facts."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Social media posts (Twitter, Facebook, etc.)",
+          "News articles",
+          "Blog posts",
+          "Online forum discussions",
+          "User comments",
+          "Fact-checking articles (for training)"
+        ],
+        "data_schema_recommendations": [
+          "Claims table: claim_id (UUID), claim_text (TEXT), source_url (VARCHAR), timestamp (TIMESTAMP), velocity (INT), reach (INT), sentiment (FLOAT), harm_score (FLOAT), priority_score (FLOAT)",
+          "Sources table: source_id (UUID), source_name (VARCHAR), source_type (ENUM ['social_media', 'news', 'blog', 'forum']), credibility_score (FLOAT)",
+          "Fact_checks table: fact_check_id (UUID), claim_id (UUID), fact_check_url (VARCHAR), verdict (ENUM ['true', 'false', 'misleading', 'partly_true'])"
+        ],
+        "data_sources": [
+          "Twitter API",
+          "Facebook API",
+          "News API (e.g., NewsAPI.org)",
+          "Google News",
+          "Common Crawl",
+          "Fact-checking organization databases (e.g., PolitiFact, Snopes)"
+        ],
+        "privacy_and_compliance": "GDPR, CCPA compliance, ensuring data anonymization and secure storage of user data. Implement appropriate data retention policies."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Social media APIs (Twitter, Facebook, etc.)",
+          "News aggregation APIs",
+          "Fact-checking organization APIs (if available)",
+          "Slack/Microsoft Teams (for notifications)",
+          "Analytics platforms (e.g., Google Analytics, Mixpanel)"
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for API authentication. Clerk or Auth0 for user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture, comprising data ingestion, NLP processing, harm assessment, prioritization, and API layers. Data ingestion services will collect data from various online sources. NLP services will extract claims and perform sentiment analysis. The harm assessment service will utilize machine learning models to predict potential harm. The prioritization service will rank claims based on velocity, reach, sentiment, and harm. The API layer will expose endpoints for accessing prioritized claims and related data.  Frontend will consume the APIs to present the data in a dashboard.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (see data_schema_recommendations)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing large text files and training data.",
+          "AI": "OpenAI API (for text embeddings), Hugging Face Transformers (for NLP models), Pinecone/Supabase vectors (for vector database)",
+          "APIs": "REST APIs with JSON payloads",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "GET /claims: Returns a list of prioritized claims with optional filtering and sorting parameters (e.g., /claims?sort=priority&order=desc&limit=10)",
+          "GET /claims/{claim_id}: Returns detailed information about a specific claim, including metrics and related fact-checks.",
+          "POST /claims/feedback: Allows users to provide feedback on the accuracy and usefulness of the claim prioritization.",
+          "GET /sources: Returns a list of known sources and their credibility scores.",
+          "GET /fact_checks/{claim_id}: Returns list of fact-checks related to a specific claim."
+        ],
+        "frontend_components": [
+          "Prioritized claim list: A sortable and filterable list of claims with key metrics displayed.",
+          "Claim detail view: A detailed view of a specific claim with all relevant information and related fact-checks.",
+          "Dashboard: A dashboard providing an overview of the most critical claims and trends.",
+          "Source credibility management:  A component for managing and updating the credibility scores of different sources."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /data, /models",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, TWITTER_API_KEY, FACEBOOK_API_KEY, NEWS_API_KEY, CLERK_SECRET_KEY, PINECONE_API_KEY, PINECONE_ENVIRONMENT",
+        "Vercel deployment: Configure Vercel to automatically deploy from the GitHub repository.  Set environment variables in Vercel project settings.",
+        "Build outputs: The backend should expose REST APIs. The frontend should be a static site generated by Next.js.",
+        "Runtime settings:  Configure Vercel serverless function memory and timeout settings as needed."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic, Standard, Premium, based on the number of claims processed per month and the level of support provided.",
+          "Usage-based pricing: Charge per claim analyzed or per API request.",
+          "Add-ons: Premium support, custom training data, dedicated infrastructure"
+        ],
+        "customer_segments": [
+          "Small and medium-sized fact-checking organizations",
+          "Large media outlets",
+          "Social media platforms",
+          "Government agencies"
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of claims processed per day, API response time, system uptime.",
+        "AI performance KPIs: Precision and recall of harm assessment, accuracy of sentiment analysis, correlation between predicted and actual claim velocity.",
+        "Adoption/engagement KPIs: Number of active users, frequency of use, user satisfaction, time saved by fact-checkers."
+      ]
+    }
+  ]
+}
+```

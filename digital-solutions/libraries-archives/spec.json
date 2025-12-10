@@ -1,0 +1,126 @@
+{
+  "industry": "Archival Science",
+  "services": [
+    {
+      "name": "Archival Metadata Extractor",
+      "overview": "The Archival Metadata Extractor is an AI-powered service designed to automate and enhance the process of extracting and enriching metadata from scanned archival documents. It addresses the critical challenge of manual metadata creation, which is time-consuming, resource-intensive, and susceptible to human error. By leveraging advanced Optical Character Recognition (OCR) and Natural Language Processing (NLP) techniques, the service intelligently analyzes scanned documents to identify and extract key metadata fields such as dates, names, locations, subjects, and relationships. This extracted metadata is then enriched through integration with external knowledge graphs and controlled vocabularies, significantly improving the discoverability and accessibility of archival materials.\n\nThe service aims to transform how archives, libraries, and research institutions manage and provide access to their collections. It provides a scalable and cost-effective solution to unlock the hidden value within vast collections of digitized documents. By automating metadata creation, the service reduces the burden on archivists and librarians, freeing up their time for more strategic tasks such as collection development, preservation, and user engagement.\n\nThe core value proposition of the Archival Metadata Extractor lies in its ability to deliver high-quality, consistent, and enriched metadata at scale. This enhanced metadata not only improves the searchability of archival collections but also facilitates deeper analysis and interpretation of historical materials. The service is designed to seamlessly integrate with existing archival management systems and workflows, ensuring a smooth transition and minimal disruption to current practices.\n\nFurthermore, the service is committed to adhering to industry standards and best practices for metadata creation and preservation. It supports a wide range of metadata schemas and formats, including Dublin Core, MODS, and EAD, and is designed to be interoperable with other archival systems and platforms. The system can be deployed as a cloud-based service or on-premise, depending on the specific needs and infrastructure of the institution.\n\nUltimately, the Archival Metadata Extractor empowers archives and libraries to provide enhanced access to their collections, promote research and scholarship, and engage with broader audiences. By harnessing the power of AI, the service transforms the way archival materials are discovered, used, and understood.",
+      "problems_addressed": [
+        "Time-consuming and labor-intensive manual metadata creation.",
+        "Inconsistent metadata quality due to human error and variability.",
+        "Limited discoverability of archival materials due to incomplete or inadequate metadata.",
+        "Difficulty in analyzing and interpreting historical materials due to lack of structured data.",
+        "High cost of managing and providing access to large digitized collections."
+      ],
+      "target_users": [
+        "Archivists responsible for managing and describing archival collections.",
+        "Librarians providing access to digitized historical materials.",
+        "Researchers seeking to discover and analyze archival resources.",
+        "Museum curators managing and cataloging historical documents and artifacts."
+      ],
+      "core_features": [
+        "Automated Metadata Extraction – Uses OCR and NLP to automatically identify and extract key metadata fields from scanned documents, including dates, names, locations, subjects, and relationships.  The system handles various document types, handwriting styles, and image qualities with configurable OCR engines.",
+        "Metadata Enrichment – Enriches extracted metadata with linked data from external knowledge graphs (e.g., Wikidata, Library of Congress Subject Headings) and controlled vocabularies, enhancing discoverability and context. The enrichment process uses fuzzy matching and entity disambiguation techniques to ensure accuracy.",
+        "Customizable Metadata Schemas – Supports a wide range of metadata schemas and formats, including Dublin Core, MODS, and EAD, allowing users to tailor the system to their specific needs. The system allows defining custom extraction rules and mappings for different document types.",
+        "User-Friendly Interface – Provides a web-based interface for uploading documents, reviewing extracted metadata, and making corrections or additions. Users can batch process documents and monitor the progress of extraction jobs.",
+        "API Integration – Offers a RESTful API for seamless integration with existing archival management systems and workflows. The API allows programmatically uploading documents, retrieving extracted metadata, and managing extraction tasks."
+      ],
+      "user_journeys": [
+        "1. Archivist logs into the Archival Metadata Extractor web interface.\n2. Archivist uploads a batch of scanned historical letters to the system.\n3. The system automatically processes the letters using OCR and NLP to extract metadata fields such as recipient, sender, date, and subject.\n4. The system enriches the extracted metadata with linked data from Wikidata, identifying the individuals and locations mentioned in the letters.\n5. The archivist reviews the extracted and enriched metadata in the web interface, making any necessary corrections or additions.\n6. The archivist exports the metadata in Dublin Core format and imports it into the archive's collection management system.\n7. Researchers can now easily search and discover the historical letters by recipient, sender, date, subject, and related entities."
+      ],
+      "ai_capabilities": [
+        "OCR (Optical Character Recognition) for converting scanned images and PDFs into machine-readable text. Tesseract OCR with fine-tuning for historical fonts is a good starting point. Pre-processing steps like noise reduction, deskewing, and binarization are essential.",
+        "NLP (Natural Language Processing) for identifying and extracting key metadata fields from the extracted text. This includes Named Entity Recognition (NER) for identifying people, locations, and organizations; relationship extraction for identifying relationships between entities; and topic modeling for identifying the main subjects of the document. SpaCy with custom training on archival documents.",
+        "Knowledge Graph Integration for enriching extracted metadata with linked data from external sources. This involves entity linking to Wikidata, Library of Congress Subject Headings, and other relevant knowledge graphs.  Implement fuzzy matching and disambiguation to resolve ambiguous entities. Use SPARQL queries to fetch linked data and enrich metadata.",
+        "Model Selection: Consider OpenAI models for zero-shot classification tasks (e.g., determining document type). Embeddings and vector search (Pinecone/Supabase vectors) will be valuable for similarity searches and document clustering. Fine-tuning smaller models on archival data can improve accuracy and reduce costs."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Scanned images of archival documents (TIFF, JPEG, PNG).",
+          "PDF files containing scanned documents or born-digital text.",
+          "Metadata schemas (Dublin Core, MODS, EAD).",
+          "Controlled vocabularies (Library of Congress Subject Headings, Getty Thesaurus of Geographic Names)."
+        ],
+        "data_schema_recommendations": [
+          "Database tables for documents, metadata fields, extracted entities, and knowledge graph links.",
+          "Consider using a graph database (e.g., Neo4j) to represent relationships between entities.",
+          "Document Table: `document_id (UUID)`, `file_name (VARCHAR)`, `file_path (VARCHAR)`, `upload_date (TIMESTAMP)`, `metadata_schema (VARCHAR)`",
+          "Metadata Field Table: `metadata_field_id (UUID)`, `document_id (UUID)`, `field_name (VARCHAR)`, `field_value (TEXT)`, `extraction_confidence (FLOAT)`",
+          "Entity Table: `entity_id (UUID)`, `entity_name (VARCHAR)`, `entity_type (VARCHAR)`, `start_index (INTEGER)`, `end_index (INTEGER)`",
+          "Knowledge Graph Link Table: `link_id (UUID)`, `entity_id (UUID)`, `knowledge_graph (VARCHAR)`, `entity_uri (VARCHAR)`, `confidence (FLOAT)`"
+        ],
+        "data_sources": [
+          "Internal archival management systems.",
+          "External knowledge graphs (Wikidata, Library of Congress Subject Headings).",
+          "Third-party datasets of historical names and locations."
+        ],
+        "privacy_and_compliance": "Adherence to privacy regulations regarding the handling of sensitive personal information contained in archival documents. Compliance with copyright laws and restrictions on access to certain materials. Consider GDPR, HIPAA, and other relevant regulations depending on the content of the archives."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Archival management systems (e.g., ArchivesSpace, CollectiveAccess).",
+          "Digital asset management systems (DAMS).",
+          "Search platforms (e.g., Solr, Elasticsearch).",
+          "Knowledge graphs (Wikidata, Library of Congress Subject Headings)."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for secure authentication and authorization. Implement role-based access control (RBAC) to restrict access to sensitive data and functionality. Consider Clerk or Auth0 for user management and authentication."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture, with separate services for OCR, NLP, knowledge graph integration, and API management. The frontend will be a single-page application built with React. The backend will be built with Node.js and Express.js. The database will be PostgreSQL with PostGIS extension for geospatial data. An AI pipeline will orchestrate the OCR, NLP, and enrichment steps.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, embeddings, vector DB (Pinecone/Supabase vectors)",
+          "APIs": "REST or GraphQL recommendations",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /documents: Uploads a document for metadata extraction.",
+          "  Payload: { file: File, metadata_schema: string }",
+          "  Response: { document_id: string }",
+          "GET /documents/{document_id}: Retrieves the extracted metadata for a document.",
+          "  Response: { metadata: { [field_name: string]: string } }",
+          "PUT /documents/{document_id}: Updates the extracted metadata for a document.",
+          "  Payload: { metadata: { [field_name: string]: string } }",
+          "GET /entities/{entity_id}: Retrieves information about an entity from a knowledge graph.",
+          "  Response: { entity_name: string, entity_description: string, entity_uri: string }"
+        ],
+        "frontend_components": [
+          "Document upload form with drag-and-drop functionality.",
+          "Metadata review table with editable fields.",
+          "Entity linking interface for connecting extracted entities to knowledge graph entries.",
+          "Searchable metadata display for browsing extracted metadata."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /ai_pipeline, /database.",
+        "Environment variables: OPENAI_API_KEY, DB_URL, SUPABASE_URL, SUPABASE_ANON_KEY, KNOWLEDGE_GRAPH_API_KEY.",
+        "Vercel deployment: Connect the GitHub repository to Vercel and configure environment variables.  Set up automatic deployments on Git push.  Configure build settings for frontend and backend.",
+        "Build outputs: Frontend: /frontend/out, Backend: /backend/dist, AI Pipeline: Docker container.",
+        "Runtime settings: Node.js 18 or higher, PostgreSQL 14 or higher, Docker runtime for AI pipeline."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of documents processed per month.",
+          "Usage-based pricing for API access.",
+          "Enterprise licenses for on-premise deployments."
+        ],
+        "customer_segments": [
+          "Small archives with limited budgets.",
+          "Mid-sized libraries and museums.",
+          "Large research institutions with extensive digitized collections."
+        ]
+      },
+      "success_metrics": [
+        "Percentage reduction in manual metadata creation time.",
+        "Improvement in metadata quality (accuracy and completeness).",
+        "Increase in the number of archival materials accessed and used by researchers.",
+        "Number of API calls and integrations with external systems.",
+        "Adoption rate of the service among target users.",
+        "F1-score of Named Entity Recognition (NER) model on archival documents.",
+        "Precision and recall of entity linking to knowledge graphs."
+      ]
+    }
+  ]
+}

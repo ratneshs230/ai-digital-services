@@ -1,0 +1,155 @@
+# AI-Powered Resume Parser & Analyzer
+
+## Industry: Background verification companies
+
+### Overview
+Automatically extracts, structures, and analyzes resume data to identify inconsistencies and potential red flags.
+
+### Problem It Solves
+Manual resume screening is time-consuming, error-prone, and struggles with unstructured data.
+
+### Core Solution
+Uses NLP and machine learning to parse resumes, extract key information, and compare it against job requirements and public data sources.
+
+### Target Users
+HR departments, recruiters, background check specialists.
+
+### Business Impact
+Reduces screening time, improves accuracy, and identifies potentially fraudulent candidates faster.
+
+### Example Use Case
+A recruiter uploads 100 resumes and the system automatically identifies the top 10 candidates based on skills and experience, flagging 3 resumes with potential discrepancies.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Human Resources & Recruitment",
+  "services": [
+    {
+      "name": "AI-Powered Resume Parser & Analyzer",
+      "overview": "This service automates and enhances the resume screening process by leveraging AI to parse, structure, and analyze resume data. It addresses the inefficiencies and inaccuracies inherent in manual resume review, enabling recruiters and HR professionals to quickly identify top candidates, uncover potential discrepancies, and reduce time-to-hire. The system utilizes advanced NLP and machine learning techniques to extract key information from resumes, standardize the data, and compare it against job requirements and public data sources. This leads to more informed hiring decisions and a significant reduction in administrative overhead.\n\nSpecifically, the system aims to solve the challenges associated with unstructured resume formats and the difficulty in quickly extracting relevant information. By automating the parsing process, the service eliminates the need for manual data entry and reduces the risk of human error. Furthermore, the AI-powered analysis helps to identify candidates who are the best fit for a particular role, based on their skills, experience, and qualifications. The system also incorporates fraud detection capabilities, alerting recruiters to potential inconsistencies or red flags in a candidate's background.\n\nThe service integrates seamlessly with existing HR systems and applicant tracking systems (ATS), providing a unified platform for managing the entire recruitment process. It is designed to be scalable and adaptable to the needs of organizations of all sizes, from small businesses to large enterprises. The platform offers a user-friendly interface that allows recruiters to easily upload resumes, view parsed data, and generate reports. The system provides customized recommendations and insights, helping recruiters make more data-driven decisions and improve the overall quality of their hires.\n\nThe ultimate goal of this service is to transform the resume screening process from a time-consuming and manual task into an efficient, accurate, and automated workflow. By leveraging the power of AI, the service empowers recruiters to focus on building relationships with top candidates and driving strategic talent acquisition initiatives. This leads to improved hiring outcomes, reduced costs, and a competitive advantage in the talent market.\n\nThe service will be deployed on Vercel and will utilize a Planetscale database for storing processed resume data and analysis results. The AI models will be served via the OpenAI API and potentially fine-tuned on proprietary datasets to enhance accuracy and relevance for specific industries or roles.",
+      "problems_addressed": [
+        "Time-consuming manual resume screening processes",
+        "Inaccuracies and inconsistencies in manual data extraction",
+        "Difficulty in handling unstructured resume formats",
+        "Challenges in identifying top candidates quickly and efficiently",
+        "Risk of overlooking potentially fraudulent or unqualified candidates"
+      ],
+      "target_users": [
+        "HR departments",
+        "Recruiters (both internal and agency)",
+        "Background check specialists",
+        "Talent acquisition teams"
+      ],
+      "core_features": [
+        "Automated Resume Parsing – Accurately extracts key information (skills, experience, education, contact details) from various resume formats (PDF, DOC, DOCX, TXT) using NLP.",
+        "Skills Extraction and Categorization – Identifies and categorizes skills based on industry standards and job requirements, allowing for easy filtering and matching.",
+        "Experience Analysis – Analyzes work experience to determine relevance, tenure, and career progression, highlighting key accomplishments and responsibilities.",
+        "Education Verification – Verifies educational qualifications and credentials, ensuring accuracy and identifying potential discrepancies.",
+        "Skills Gap Analysis – Compares candidate skills and experience against job requirements, identifying any gaps and highlighting areas of strength.",
+        "Candidate Ranking and Scoring – Automatically ranks and scores candidates based on their overall fit for a specific role, considering skills, experience, and qualifications.",
+        "Fraud Detection – Identifies potential red flags and inconsistencies in a candidate's resume, such as fabricated experience, inflated skills, or questionable educational claims. This includes cross-referencing with public data sources and social media profiles.",
+        "Customizable Scoring Algorithms – Allows recruiters to customize the scoring algorithms based on their specific needs and priorities, ensuring that the system accurately reflects their hiring criteria.",
+        "Integration with ATS – Seamlessly integrates with existing Applicant Tracking Systems (ATS) to streamline the recruitment workflow and avoid data silos.",
+        "Reporting and Analytics – Provides comprehensive reports and analytics on the resume screening process, including time-to-hire, candidate quality, and areas for improvement."
+      ],
+      "user_journeys": [
+        "A recruiter logs into the platform, uploads a batch of resumes in PDF format. The system automatically parses each resume, extracts key information (skills, experience, education), and stores the data in a structured format. The recruiter then selects a specific job posting and the system automatically ranks the uploaded candidates based on their fit for the role, highlighting the top 10 candidates. The recruiter reviews the top candidates, examines the flagged resumes for potential discrepancies, and schedules interviews with the most promising candidates."
+      ],
+      "ai_capabilities": [
+        "NLP for resume parsing and information extraction – Uses transformer-based models (e.g., BERT, RoBERTa) to accurately extract key information from resumes, including skills, experience, education, and contact details.",
+        "Machine learning for skills categorization and experience analysis – Employs supervised learning algorithms to categorize skills based on industry standards and analyze work experience to determine relevance and career progression.",
+        "Fraud detection using anomaly detection and pattern recognition – Uses machine learning techniques to identify potential red flags and inconsistencies in a candidate's resume, such as fabricated experience or inflated skills. Also can incorporate third-party APIs to check for public records.",
+        "Candidate ranking and scoring based on job requirements – Develops a custom scoring algorithm that considers various factors, such as skills, experience, education, and qualifications, to rank candidates based on their overall fit for a specific role.",
+        "Model Selection: OpenAI's GPT models for initial parsing and Named Entity Recognition. Fine-tuning on a dataset of resumes with tagged entities to improve accuracy. Embeddings of job descriptions and resumes for semantic similarity matching using a vector database (Pinecone or Supabase Vectors)."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Resume files (PDF, DOC, DOCX, TXT)",
+          "Job descriptions (text)",
+          "Candidate data from ATS (JSON, CSV)"
+        ],
+        "data_schema_recommendations": [
+          "Resumes Table: resume_id (UUID), file_name (TEXT), file_type (TEXT), upload_date (TIMESTAMP), parsed_data (JSONB)",
+          "Skills Table: skill_id (UUID), skill_name (TEXT), skill_category (TEXT)",
+          "Experience Table: experience_id (UUID), resume_id (UUID), company_name (TEXT), job_title (TEXT), start_date (DATE), end_date (DATE), responsibilities (TEXT)",
+          "Education Table: education_id (UUID), resume_id (UUID), institution_name (TEXT), degree_name (TEXT), graduation_date (DATE)"
+        ],
+        "data_sources": [
+          "Uploaded resume files",
+          "ATS API integration",
+          "Public data sources (e.g., LinkedIn, Glassdoor)",
+          "Third-party data providers for background checks"
+        ],
+        "privacy_and_compliance": "GDPR, CCPA compliance for handling personal data; SOC 2 compliance for data security."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Applicant Tracking Systems (ATS) – Workday, Taleo, Greenhouse, Lever",
+          "CRM systems - Salesforce",
+          "Background check providers - Checkr, HireRight",
+          "Email providers – Gmail, Outlook",
+          "Analytics tools – Google Analytics, Mixpanel"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API access, JWT for session management, Clerk/Auth0 for user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "Multi-tier architecture: Frontend (Next.js), Backend (Node.js/Next.js API Routes), Database (Planetscale), AI Pipeline (OpenAI API, Vector Database). The frontend interacts with the backend via REST APIs. The backend orchestrates data access, business logic, and AI model interactions. The AI pipeline processes resumes, extracts features, and performs analysis.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (see Data Requirements)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, embeddings, vector DB (Pinecone/Supabase vectors)",
+          "APIs": "REST APIs for communication between frontend and backend.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /api/resumes – Upload a resume file and initiate parsing. Request body: { file: File, job_id: string }. Response: { resume_id: string, status: string }",
+          "GET /api/resumes/{resume_id} – Retrieve parsed resume data. Response: { resume_data: JSON }",
+          "POST /api/jobs – Create a new job posting. Request body: { job_title: string, job_description: string, required_skills: string[] }. Response: { job_id: string }",
+          "GET /api/jobs/{job_id}/candidates – Retrieve ranked candidates for a job. Response: { candidates: [{ resume_id: string, score: number, flags: string[] }] }"
+        ],
+        "frontend_components": [
+          "Resume Uploader – Drag-and-drop interface for uploading resume files.",
+          "Parsed Data Viewer – Displays the extracted resume data in a structured format.",
+          "Candidate Ranking Table – Presents the ranked candidates based on their fit for a specific role.",
+          "Job Posting Form – Allows recruiters to create new job postings with detailed descriptions and required skills."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /app (Next.js frontend), /pages/api (Next.js API routes), /lib (utility functions), /db (database schema definitions).",
+        "Environment Variables: OPENAI_API_KEY, PLANETSCALE_DB_URL, SUPABASE_URL, SUPABASE_ANON_KEY, CLERK_SECRET_KEY, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET",
+        "Vercel Deployment: Connect the GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on push.",
+        "Build Outputs: Next.js build outputs are automatically handled by Vercel. Runtime Settings: Node.js version 18.x or later."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of resumes processed per month (e.g., Basic, Pro, Enterprise).",
+          "Usage-based pricing for exceeding the monthly resume processing limit.",
+          "Add-ons for advanced features, such as background check integration and custom scoring algorithms."
+        ],
+        "customer_segments": [
+          "Small businesses with limited HR resources.",
+          "Mid-sized companies with growing recruitment needs.",
+          "Large enterprises with high-volume hiring requirements.",
+          "Recruitment agencies and staffing firms."
+        ]
+      },
+      "success_metrics": [
+        "Resume processing time (average time to parse a resume).",
+        "Accuracy of data extraction (percentage of correctly extracted data points).",
+        "Fraud detection rate (percentage of fraudulent resumes identified).",
+        "Time-to-hire (reduction in the average time to fill a job opening).",
+        "Candidate quality (improvement in the performance of hired candidates).",
+        "Number of active users and resume uploads per month.",
+        "Customer satisfaction (measured through surveys and feedback).",
+        "AI model precision and recall."
+      ]
+    }
+  ]
+}
+```

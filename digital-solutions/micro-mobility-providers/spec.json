@@ -1,0 +1,114 @@
+{
+  "industry": "Micromobility",
+  "services": [
+    {
+      "name": "AI-Powered Fleet Rebalancing",
+      "overview": "This service provides predictive rebalancing of shared micromobility fleets (scooters, bikes) using machine learning models. It analyzes historical usage data, real-time event information, and environmental factors to forecast demand and proactively optimize vehicle distribution. The goal is to improve vehicle availability in high-demand areas, reduce operational costs associated with manual rebalancing, and increase overall customer satisfaction by minimizing instances of vehicles being unavailable when and where needed.",
+      "problems_addressed": [
+        "Uneven distribution of scooters/bikes leading to lost revenue.",
+        "Customer frustration due to lack of vehicle availability in key areas.",
+        "High operational costs associated with manual fleet rebalancing.",
+        "Suboptimal vehicle utilization rates."
+      ],
+      "target_users": [
+        "Operations Managers: Responsible for fleet logistics and efficiency.",
+        "Fleet Management Teams: Involved in the day-to-day management and redistribution of vehicles."
+      ],
+      "core_features": [
+        "Demand Forecasting: Machine learning models predict demand for scooters/bikes at specific locations and times based on historical data, weather patterns, event schedules, and real-time demand signals.",
+        "Automated Rebalancing Recommendations: The system generates optimal rebalancing recommendations, including the number of vehicles to move to specific locations and the recommended time to move them.",
+        "Real-time Monitoring Dashboard: Provides a visual overview of fleet distribution, predicted demand hotspots, and rebalancing progress.  Includes alerts for critical imbalances.",
+        "Manual Override: Allows operations managers to manually adjust rebalancing plans based on their own insights or unforeseen circumstances.",
+        "Rebalancing Task Management: System creates and assigns rebalancing tasks to field operators, tracking progress and completion.",
+        "Route Optimization:  Calculates the most efficient routes for rebalancing vehicles, minimizing travel time and fuel costs."
+      ],
+      "user_journeys": [
+        "1. Operations Manager logs into the Fleet Management System.\n2. Reviews the Real-time Monitoring Dashboard to identify potential imbalances.\n3. Examines the AI-powered Rebalancing Recommendations for specific areas.\n4. Adjusts the rebalancing plan based on local knowledge (e.g., unexpected road closures).\n5. System automatically assigns rebalancing tasks to field operators.\n6. Field operators receive tasks on their mobile devices, including optimized routes.\n7. Field operators complete the rebalancing tasks, updating the system in real-time.\n8. Operations Manager monitors progress on the dashboard and makes further adjustments as needed.\n9. System generates reports on rebalancing performance, including vehicle utilization rates and operational costs."
+      ],
+      "ai_capabilities": [
+        "Demand Forecasting Model: Uses time series forecasting (e.g., ARIMA, Prophet, or LSTM neural networks) to predict demand based on historical usage data, weather patterns, event schedules, and real-time demand signals. Features include time-of-day, day-of-week, location coordinates, weather conditions (temperature, precipitation), event attendance estimates, and promotions.",
+        "Rebalancing Optimization Model: Uses a linear programming or mixed-integer programming approach to optimize vehicle distribution, considering constraints such as vehicle capacity, travel time, and operational costs.",
+        "Anomaly Detection: Identifies unusual demand patterns that deviate from historical trends, triggering alerts for operations managers to investigate.",
+        "Model Selection: Start with Prophet for time series forecasting due to its robustness and ease of use.  Evaluate LSTM networks for improved accuracy if sufficient data is available.  Use a dedicated optimization library (e.g., Google OR-Tools) for the rebalancing optimization model.  Consider fine-tuning models with local operational data for improved accuracy."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Historical trip data (start/end locations, timestamps, duration, distance).",
+          "Weather data (temperature, precipitation, wind speed).",
+          "Event schedules (location, time, estimated attendance).",
+          "Scooter/bike location data (GPS coordinates).",
+          "Real-time demand signals (e.g., app usage, search queries)."
+        ],
+        "data_schema_recommendations": [
+          "Trips Table: trip_id (UUID), user_id (UUID), scooter_id (UUID), start_location (GEOGRAPHY), end_location (GEOGRAPHY), start_time (TIMESTAMP), end_time (TIMESTAMP), duration (INTEGER), distance (FLOAT)",
+          "Weather Table: timestamp (TIMESTAMP), location (GEOGRAPHY), temperature (FLOAT), precipitation (FLOAT), wind_speed (FLOAT)",
+          "Events Table: event_id (UUID), location (GEOGRAPHY), start_time (TIMESTAMP), end_time (TIMESTAMP), estimated_attendance (INTEGER)",
+          "Scooters Table: scooter_id (UUID), location (GEOGRAPHY), battery_level (FLOAT), status (ENUM: available, in_use, maintenance)",
+          "DemandSignals Table: timestamp (TIMESTAMP), location (GEOGRAPHY), demand_score (FLOAT)"
+        ],
+        "data_sources": [
+          "Internal trip data (from the micromobility operator's app).",
+          "Weather APIs (e.g., OpenWeatherMap, AccuWeather).",
+          "Event data APIs (e.g., Ticketmaster, Eventbrite) or manual event data entry.",
+          "Scooter/bike location data (telemetry from vehicles)."
+        ],
+        "privacy_and_compliance": "GDPR, CCPA – Ensure anonymization of user data and compliance with data privacy regulations regarding location tracking and data retention. Obtain user consent for location data collection."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Micromobility operator's app (API for accessing trip data and vehicle locations).",
+          "Weather API.",
+          "Event data API.",
+          "Mapping service (e.g., Google Maps, Mapbox) for displaying vehicle locations and routes.",
+          "Task management system (e.g., Jira, Asana) for assigning rebalancing tasks."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for secure API authentication. OAuth 2.0 for integration with third-party services like weather APIs and event data APIs. Clerk/Auth0 for user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture, with separate services for data ingestion, demand forecasting, rebalancing optimization, and API endpoints. The frontend will be a web application for operations managers. The backend will consist of REST APIs for communication between the frontend and the microservices. The database will store historical trip data, weather data, event schedules, and vehicle locations. An AI pipeline will be responsible for training and deploying the demand forecasting and rebalancing optimization models.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (see Data Schema Recommendations)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing model artifacts and large datasets.",
+          "AI": "OpenAI API (if using language models for event description processing), Scikit-learn/TensorFlow/PyTorch for demand forecasting, Google OR-Tools for rebalancing optimization.",
+          "APIs": "REST APIs using Next.js API routes.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "GET /api/v1/demand-forecast: Returns demand forecast for a given location and time range. Payload: {location: {latitude, longitude}, start_time: TIMESTAMP, end_time: TIMESTAMP}. Response: {forecast: [ {timestamp: TIMESTAMP, demand: FLOAT} ] }",
+          "POST /api/v1/rebalancing-recommendations: Generates rebalancing recommendations. Payload: {area: {latitude, longitude, radius}, num_vehicles: INTEGER}. Response: {recommendations: [ {scooter_id: UUID, destination: {latitude, longitude}, eta: INTEGER} ] }",
+          "GET /api/v1/fleet-status: Returns the current status of the fleet. Payload: None. Response: { scooters: [ {scooter_id: UUID, location: {latitude, longitude}, battery_level: FLOAT, status: ENUM} ] }"
+        ],
+        "frontend_components": [
+          "Map Component: Displays vehicle locations, demand hotspots, and rebalancing routes.",
+          "Dashboard: Shows key performance indicators (KPIs) such as vehicle utilization, rebalancing costs, and customer satisfaction.",
+          "Rebalancing Task Management Table:  Lists assigned rebalancing tasks with status and details.",
+          "Demand Forecast Visualization:  Presents predicted demand in a chart or graph."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend (Next.js app), /backend (Next.js API routes and supporting functions), /models (trained AI models), /data (sample data for testing)",
+        "Environment variables: OPENWEATHERMAP_API_KEY, EVENTBRITE_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY.",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables in Vercel project settings. Enable automatic deployments on Git push.",
+        "Build outputs: Ensure Next.js app is built correctly and API routes are accessible.  Deploy models to a cloud storage service (e.g., Supabase Storage, AWS S3) and configure the application to load models from that location."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Tiered pricing based on the number of vehicles in the fleet or the number of rebalancing recommendations generated.",
+          "Usage-based pricing: Charge per rebalancing recommendation or per API call.",
+          "Add-ons: Premium support, custom model training, integration with other systems."
+        ],
+        "customer_segments": [
+          "Small to medium-sized micromobility operators.",
+          "Large-scale micromobility providers operating in major cities."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Reduction in manual rebalancing costs (%), Increase in vehicle utilization (%), Decrease in out-of-service vehicles due to low battery (%), Average rebalancing time.",
+        "AI performance KPIs: Demand forecast accuracy (Mean Absolute Error, Root Mean Squared Error), Rebalancing optimization effectiveness (improvement in vehicle distribution).",
+        "Adoption/engagement KPIs: Number of active users of the rebalancing system, Frequency of rebalancing recommendations implemented, Customer satisfaction (measured through surveys or app store reviews)."
+      ]
+    }
+  ]
+}

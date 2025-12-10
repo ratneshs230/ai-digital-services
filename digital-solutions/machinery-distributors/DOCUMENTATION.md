@@ -1,0 +1,142 @@
+# Equipment Recommendation Engine
+
+## Industry: Machinery distributors
+
+### Overview
+AI-powered tool to suggest optimal machinery configurations based on customer needs and project specifications.
+
+### Problem It Solves
+Sales teams struggle to quickly identify the best equipment combinations, leading to missed opportunities and longer sales cycles.
+
+### Core Solution
+Machine learning models analyze customer requirements, project parameters, and historical data to recommend the most suitable machinery and attachments.
+
+### Target Users
+Sales representatives, application engineers, and customers.
+
+### Business Impact
+Increases sales conversion rates, reduces sales cycle time, and improves customer satisfaction.
+
+### Example Use Case
+A construction company uploads blueprints for a new building; the engine recommends specific excavators, cranes, and concrete mixers with appropriate capacity and features.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Construction Equipment Sales",
+  "services": [
+    {
+      "name": "Construction Equipment Recommendation Engine",
+      "overview": "The Construction Equipment Recommendation Engine is an AI-powered tool designed to optimize equipment selection for construction projects. It addresses the inefficiencies and complexities involved in manually identifying the best machinery configurations. By leveraging machine learning models, the engine analyzes project specifications, customer needs, and historical data to provide tailored recommendations. This leads to improved sales conversion rates, reduced sales cycle times, and enhanced customer satisfaction. The engine provides a user-friendly interface for sales representatives, application engineers, and customers to input project details and receive optimal equipment suggestions. It supports a variety of equipment types, including excavators, cranes, concrete mixers, and attachments, ensuring comprehensive coverage for diverse project requirements. The system will integrate seamlessly with existing CRM and ERP systems to provide a holistic view of customer interactions and project lifecycles.",
+      "problems_addressed": [
+        "Inefficient equipment selection process leading to missed sales opportunities.",
+        "Long sales cycles due to manual identification of optimal equipment configurations.",
+        "Potential for human error in equipment selection resulting in suboptimal project outcomes."
+      ],
+      "target_users": [
+        "Sales Representatives",
+        "Application Engineers",
+        "Customers (Construction Project Managers, Procurement Officers)"
+      ],
+      "core_features": [
+        "Project Specification Input – Users can upload blueprints, project descriptions, and specific requirements via a structured form or document upload. The system will parse this data for relevant parameters.",
+        "AI-Powered Recommendation Engine – Utilizes machine learning models to analyze project specifications, historical sales data, equipment performance metrics, and customer preferences to generate a ranked list of recommended equipment configurations.",
+        "Equipment Configuration Visualization – Presents recommended equipment configurations with detailed specifications, images, and interactive 3D models to provide a clear understanding of the proposed solutions.",
+        "Cost Estimation – Provides estimated costs for recommended equipment configurations, including purchase price, rental fees, maintenance costs, and operational expenses, enabling informed decision-making.",
+        "Integration with CRM/ERP – Integrates with existing CRM and ERP systems to streamline sales processes, track customer interactions, and manage equipment inventory and availability."
+      ],
+      "user_journeys": [
+        "A construction project manager logs into the system, uploads blueprints and project specifications, and selects the 'Generate Recommendations' option. The AI engine analyzes the data and provides a ranked list of recommended equipment configurations, including excavators, cranes, and concrete mixers, with detailed specifications and estimated costs. The project manager reviews the recommendations, adjusts parameters as needed, and generates a final equipment list for procurement."
+      ],
+      "ai_capabilities": [
+        "Machine Learning Model: Recommends optimal equipment configurations based on project specifications, historical sales data, and equipment performance metrics. Utilizes a combination of collaborative filtering, content-based filtering, and regression models.",
+        "NLP: Processes unstructured project descriptions and extracts relevant parameters using natural language processing techniques. Employs named entity recognition and sentiment analysis to understand customer needs and preferences.",
+        "Computer Vision: Analyzes blueprints and extracts key dimensions, structural elements, and site characteristics using computer vision algorithms. Leverages object detection and image segmentation to identify relevant features."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Blueprints (PDF, CAD)",
+          "Project Descriptions (Text)",
+          "Equipment Specifications (Structured Data)",
+          "Historical Sales Data (CSV, SQL)",
+          "Customer Preferences (Structured Data)"
+        ],
+        "data_schema_recommendations": [
+          "Project Table: project_id (INT, PRIMARY KEY), customer_id (INT, FOREIGN KEY), project_name (VARCHAR), project_description (TEXT), blueprint_url (VARCHAR), location (GEOMETRY)",
+          "Equipment Table: equipment_id (INT, PRIMARY KEY), equipment_type (VARCHAR), manufacturer (VARCHAR), model (VARCHAR), specifications (JSONB)",
+          "Recommendation Table: recommendation_id (INT, PRIMARY KEY), project_id (INT, FOREIGN KEY), equipment_id (INT, FOREIGN KEY), score (FLOAT)"
+        ],
+        "data_sources": [
+          "Internal CRM system",
+          "Internal ERP system",
+          "External equipment databases (e.g., Ritchie Bros. Auctioneers)",
+          "Customer-provided blueprints and project specifications"
+        ],
+        "privacy_and_compliance": "Ensure compliance with data privacy regulations such as GDPR and CCPA. Implement data encryption and access controls to protect sensitive project information."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Salesforce (CRM)",
+          "SAP (ERP)",
+          "DocuSign (Electronic Signature)",
+          "Google Maps API (Location Services)"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure integration with third-party systems. JWT for internal API authentication. Clerk for user management and authentication."
+      },
+      "technical_specifications": {
+        "architecture": "The system follows a microservices architecture, comprising a frontend service, a backend API service, a machine learning service, and a database service. The frontend service provides the user interface, the backend API service handles requests and orchestrates data flow, the machine learning service performs equipment recommendations, and the database service stores project data and equipment specifications.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions, TypeScript",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions, Express.js, TypeScript",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API for NLP tasks, scikit-learn for machine learning models, Pinecone for vector database",
+          "APIs": "REST API for communication between frontend and backend services",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /projects: Creates a new project with project specifications (blueprint URL, description, etc.).",
+          "GET /projects/{project_id}: Retrieves project details by ID.",
+          "POST /recommendations/{project_id}: Generates equipment recommendations for a given project ID.",
+          "GET /recommendations/{project_id}: Retrieves equipment recommendations for a given project ID."
+        ],
+        "frontend_components": [
+          "Project Upload Form: Allows users to upload blueprints and enter project specifications.",
+          "Equipment Recommendation List: Displays a ranked list of recommended equipment configurations with detailed specifications and estimated costs.",
+          "Equipment Configuration Viewer: Provides an interactive 3D view of the recommended equipment configurations.",
+          "Integration with mapping tools to visualize equipment in project location context"
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /frontend, /backend, /models, /database",
+        "Environment Variables: OPENAI_API_KEY, DATABASE_URL, CRM_API_KEY, ERP_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY",
+        "Vercel Deployment Steps: Connect GitHub repository to Vercel, configure environment variables, enable automatic deployments.",
+        "Build Outputs: /frontend/.next, /backend/dist",
+        "Runtime Settings: Node.js 18.x, PostgreSQL 14.x"
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of projects, users, and AI model complexity.",
+          "Usage-based pricing for API calls and data storage.",
+          "Per-seat pricing for sales representatives and application engineers."
+        ],
+        "customer_segments": [
+          "Small to medium-sized construction companies",
+          "Large construction enterprises",
+          "Equipment rental companies"
+        ]
+      },
+      "success_metrics": [
+        "Sales Conversion Rate: Percentage of leads converted into sales after using the recommendation engine.",
+        "Sales Cycle Time: Reduction in the time taken to close a sale after implementing the recommendation engine.",
+        "Customer Satisfaction: Measured through customer surveys and feedback forms.",
+        "AI Model Accuracy: Precision and recall of equipment recommendations based on project specifications.",
+        "System Uptime: Availability and reliability of the recommendation engine."
+      ]
+    }
+  ]
+}
+```

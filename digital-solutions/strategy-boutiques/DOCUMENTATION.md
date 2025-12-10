@@ -1,0 +1,151 @@
+# StratAI Competitive Monitor
+
+## Industry: Strategy boutiques
+
+### Overview
+AI-powered platform that monitors competitors' strategies, predicts their moves, and identifies emerging threats/opportunities.
+
+### Problem It Solves
+Difficulty in keeping up with rapidly changing competitive landscapes and anticipating competitor actions.
+
+### Core Solution
+Uses NLP to analyze competitor communications (earnings calls, press releases, social media), predicts strategic shifts using machine learning, and provides real-time alerts and insights.
+
+### Target Users
+Strategy consultants, analysts, and partners at strategy boutiques.
+
+### Business Impact
+Improves competitive intelligence, enhances strategic recommendations, and enables proactive decision-making, leading to higher client satisfaction and retention.
+
+### Example Use Case
+A strategy boutique uses StratAI to predict a competitor's entry into a new market segment, allowing them to advise their client to preemptively strengthen their position.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Management Consulting",
+  "services": [
+    {
+      "name": "StratAI Competitive Monitor",
+      "overview": "StratAI Competitive Monitor is an AI-powered platform designed to provide management consulting firms with a significant competitive edge. It continuously monitors competitors' strategies, predicts their upcoming moves, and identifies emerging threats and opportunities in the market. The platform aggregates and analyzes vast amounts of publicly available data, including competitor communications (earnings calls, press releases, social media), industry news, and market trends. By leveraging natural language processing (NLP) and machine learning (ML), StratAI delivers real-time alerts and actionable insights, enabling consultants to make proactive, data-driven decisions. This leads to improved competitive intelligence, enhanced strategic recommendations, and ultimately, increased client satisfaction and retention.",
+      "problems_addressed": [
+        "Difficulty in keeping up with rapidly changing competitive landscapes.",
+        "Inability to anticipate competitor actions effectively.",
+        "Lack of real-time insights for proactive decision-making.",
+        "Challenges in extracting meaningful information from unstructured data sources.",
+        "Inefficiency in manual competitive research processes."
+      ],
+      "target_users": [
+        "Strategy Consultants",
+        "Analysts",
+        "Partners at Strategy Boutiques"
+      ],
+      "core_features": [
+        "**Automated Data Aggregation:** Collects data from diverse sources, including competitor websites, news articles, social media platforms, and regulatory filings. This feature ensures consultants have access to a comprehensive view of the competitive landscape without manual effort.",
+        "**NLP-Powered Content Analysis:** Utilizes natural language processing to extract key insights from textual data, such as earnings call transcripts, press releases, and social media posts. This analysis identifies competitor strategies, sentiments, and emerging trends.",
+        "**Predictive Analytics:** Employs machine learning algorithms to predict competitor moves, such as new product launches, market expansions, and strategic partnerships. This enables consultants to proactively advise clients on how to respond to potential threats and capitalize on opportunities.",
+        "**Real-Time Alerts:** Provides immediate notifications of significant competitive events, such as major announcements, leadership changes, and regulatory changes. Consultants can customize alerts to focus on specific competitors or market segments.",
+        "**Interactive Dashboard:** Presents data and insights in a visually appealing and easily digestible format. Consultants can customize dashboards to track key metrics, monitor competitor performance, and generate reports for clients."
+      ],
+      "user_journeys": [
+        "A consultant logs into StratAI. They select a specific client and the relevant industry. The dashboard displays an overview of the competitive landscape, highlighting key competitors and their recent activities. The consultant clicks on a competitor to view a detailed analysis of their strategy, including strengths, weaknesses, opportunities, and threats. StratAI predicts that the competitor is planning to launch a new product in the next quarter. The consultant receives an alert and analyzes the potential impact on their client. Based on these insights, the consultant recommends that their client preemptively launch a competing product and adjust their marketing strategy."
+      ],
+      "ai_capabilities": [
+        "**NLP for Sentiment Analysis and Topic Extraction:** Utilizes transformer-based models like BERT or RoBERTa, fine-tuned on financial and business corpora, to analyze sentiment in competitor communications and extract key topics. This helps identify strategic priorities and potential risks.",
+        "**Time Series Forecasting:** Employs time series models like ARIMA or Prophet to predict competitor financial performance and market share based on historical data. This provides insights into their growth trajectory and potential future moves.",
+        "**Competitive Strategy Classification:** Uses supervised learning algorithms like Random Forest or Gradient Boosting to classify competitor strategies based on observed actions and communications. This enables consultants to benchmark client strategies against best practices.",
+        "**Embedding Generation:** Create embedding vectors of competitive documents and communications using OpenAI's text-embedding-ada-002 model.  These embeddings are used to find semantic similarities between competitors' activities and identify emerging trends."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Competitor websites",
+          "News articles",
+          "Social media posts (Twitter, LinkedIn, Facebook)",
+          "Press releases",
+          "Earnings call transcripts",
+          "Regulatory filings (SEC)",
+          "Market research reports",
+          "Patent filings"
+        ],
+        "data_schema_recommendations": [
+          "**Competitor Table:** competitor_id (INT, PK), competitor_name (VARCHAR), industry (VARCHAR), website_url (VARCHAR), headquarters (VARCHAR)",
+          "**News Article Table:** article_id (INT, PK), competitor_id (INT, FK), title (VARCHAR), publication_date (DATE), content (TEXT), source_url (VARCHAR)",
+          "**Social Media Post Table:** post_id (INT, PK), competitor_id (INT, FK), post_date (DATETIME), content (TEXT), platform (VARCHAR), likes (INT), shares (INT)",
+          "**Earnings Call Transcript Table:** transcript_id (INT, PK), competitor_id (INT, FK), call_date (DATE), content (TEXT)",
+          "**Embedding Table:** embedding_id (UUID, PK), document_id (UUID, FK), document_type (ENUM - ['news_article', 'social_media_post', 'earnings_call']), embedding (VECTOR(1536))"
+        ],
+        "data_sources": [
+          "Web scraping of competitor websites",
+          "News APIs (e.g., Google News API, NewsAPI.org)",
+          "Social media APIs (e.g., Twitter API, LinkedIn API)",
+          "SEC EDGAR database",
+          "Market research databases (e.g., IBISWorld, Statista)"
+        ],
+        "privacy_and_compliance": "Ensure compliance with GDPR, CCPA, and other data privacy regulations. Obtain consent for data collection where necessary. Anonymize or pseudonymize data to protect individual privacy."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "CRM systems (e.g., Salesforce, HubSpot) for client management",
+          "Business intelligence tools (e.g., Tableau, Power BI) for advanced data visualization",
+          "Email providers (e.g., SendGrid, Mailgun) for sending alerts and reports",
+          "Calendar integrations (e.g., Google Calendar, Outlook) for scheduling meetings based on alerts"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API integrations. JWT for user authentication within the platform. Consider Clerk or Auth0 for simplified user management and authentication workflows."
+      },
+      "technical_specifications": {
+        "architecture": "The system follows a microservices architecture, comprising data ingestion, NLP processing, predictive analytics, API layer, and frontend components. The data ingestion service collects data from various sources and stores it in a data lake. The NLP processing service extracts key insights from textual data. The predictive analytics service builds and deploys machine learning models to predict competitor moves. The API layer provides access to data and insights. The frontend component provides a user-friendly interface for consultants to interact with the platform.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (see data_schema_recommendations)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing large files, such as earnings call transcripts and market research reports",
+          "AI": "OpenAI API for NLP tasks, embeddings, and potentially fine-tuning models. Pinecone or Supabase vectors for vector database to store and query document embeddings.",
+          "APIs": "REST APIs for communication between microservices and the frontend. GraphQL can be considered for more flexible data querying on the frontend.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "**/competitors:** GET - Returns a list of all competitors. POST - Creates a new competitor.",
+          "**/competitors/{competitor_id}:** GET - Returns details of a specific competitor. PUT - Updates a competitor. DELETE - Deletes a competitor.",
+          "**/competitors/{competitor_id}/news:** GET - Returns a list of news articles related to a specific competitor.",
+          "**/competitors/{competitor_id}/social:** GET - Returns a list of social media posts related to a specific competitor.",
+          "**/competitors/{competitor_id}/earnings_calls:** GET - Returns a list of earnings call transcripts related to a specific competitor.",
+          "**/competitors/{competitor_id}/predictions:** GET - Returns predictions about a competitor's future moves."
+        ],
+        "frontend_components": [
+          "**Dashboard:** Displays an overview of the competitive landscape, including key competitors, recent activities, and emerging trends.",
+          "**Competitor Profile:** Provides a detailed analysis of a specific competitor's strategy, including strengths, weaknesses, opportunities, and threats.",
+          "**Alerts Center:** Displays real-time notifications of significant competitive events.",
+          "**Report Generator:** Allows consultants to generate customized reports for clients."
+        ]
+      },
+      "deployment_instructions": [
+        "**Directory Structure:** /frontend, /backend, /data_ingestion, /nlp_processing, /predictive_analytics, /docs",
+        "**Environment Variables:** OPENAI_API_KEY, DB_URL, NEWS_API_KEY, TWITTER_API_KEY, LINKEDIN_API_KEY, SALESFORCE_API_KEY (if integrated)",
+        "**Vercel Deployment:** Configure Vercel to automatically deploy the frontend and backend from the respective directories in the GitHub repository. Set up environment variables in Vercel.",
+        "**Build Outputs:** Ensure that the frontend builds a static site and the backend builds a serverless function. Configure runtime settings for the backend to allocate sufficient memory and processing power."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "**SaaS Subscription Tiers:** Basic, Standard, and Premium tiers with varying features and usage limits.",
+          "**Usage-Based Pricing:** Charge based on the number of competitors monitored or the amount of data analyzed.",
+          "**Per-Seat Pricing:** Charge per consultant using the platform.",
+          "**Add-ons:** Offer add-on services such as customized reports, dedicated support, and advanced training."
+        ],
+        "customer_segments": [
+          "Small Strategy Boutiques",
+          "Mid-Sized Consulting Firms",
+          "Enterprise-Level Consulting Organizations"
+        ]
+      },
+      "success_metrics": [
+        "**Operational KPIs:** Number of active users, data ingestion rate, API response time, system uptime.",
+        "**AI Performance KPIs:** Accuracy of competitor predictions, precision and recall of sentiment analysis, relevance of topic extraction.",
+        "**Adoption/Engagement KPIs:** User engagement (time spent on platform, features used), client satisfaction (NPS score), client retention rate, number of new clients acquired."
+      ]
+    }
+  ]
+}
+```

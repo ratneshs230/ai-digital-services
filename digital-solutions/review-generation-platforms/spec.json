@@ -1,0 +1,125 @@
+{
+  "industry": "E-commerce",
+  "services": [
+    {
+      "name": "Sentiment-Driven Review Booster",
+      "overview": "The Sentiment-Driven Review Booster is an AI-powered service designed to increase the volume of positive customer reviews for e-commerce businesses. It addresses the common problem of low review conversion rates by intelligently targeting review requests to customers who have demonstrably positive experiences with the company. By analyzing customer interactions using NLP, the system identifies customers with high sentiment scores and proactively prompts them for reviews, leading to improved online reputation, higher product ratings, and increased sales. This service minimizes the risk of negative reviews by excluding dissatisfied customers from automated review campaigns.\n\nThe core functionality revolves around real-time sentiment analysis of customer data, including support tickets, survey responses, and transactional data. This analysis is used to predict the likelihood of a customer leaving a positive review.  Customers who meet a predefined sentiment threshold are automatically enrolled in a review request sequence.  The system can be configured to personalize review requests based on the specific nature of the positive interaction, further increasing conversion rates.\n\nFurthermore, the service offers comprehensive analytics and reporting, allowing businesses to track the performance of their review campaigns.  Key metrics such as review request conversion rate, average review score, and overall review volume are tracked and displayed in a user-friendly dashboard. This data provides valuable insights into the effectiveness of the sentiment analysis and the overall impact of the review booster on the business's online reputation. The system integrates seamlessly with popular e-commerce platforms and review sites, ensuring a streamlined and efficient review generation process.",
+      "problems_addressed": [
+        "Low review conversion rates due to randomly requesting reviews.",
+        "Risk of generating negative reviews from dissatisfied customers.",
+        "Difficulty in identifying customers most likely to leave positive reviews.",
+        "Lack of automated solutions for proactive review generation."
+      ],
+      "target_users": [
+        "Marketing teams in e-commerce companies",
+        "Customer success managers",
+        "Small business owners selling online"
+      ],
+      "core_features": [
+        "Sentiment Analysis – Analyzes customer interactions (support tickets, surveys, etc.) to determine sentiment scores.",
+        "Automated Review Requests – Triggers automated review requests to customers with positive sentiment scores.  Requests can be customized based on the type of interaction (e.g., purchase, support interaction).",
+        "Review Request Segmentation – Allows users to segment customers based on factors like purchase history, product category, and sentiment score for targeted review campaigns.",
+        "Integration with E-commerce Platforms – Seamlessly integrates with popular e-commerce platforms like Shopify, WooCommerce, and Magento to access customer data and trigger review requests.",
+        "Reporting and Analytics – Provides comprehensive dashboards and reports on review request conversion rates, average review scores, and overall review volume."
+      ],
+      "user_journeys": [
+        "1. User logs into the Sentiment-Driven Review Booster platform.\n2. User configures the integration with their Shopify store.\n3. The system begins analyzing customer interactions (e.g., order confirmations, support tickets) to determine sentiment scores.\n4. A customer has a positive support interaction; the system flags them with a high sentiment score.\n5. The system automatically sends a personalized review request email to the customer a configured number of days after the interaction.\n6. The customer clicks the link in the email and leaves a positive review on the configured review platform (e.g., Google, Trustpilot).\n7. The user views the dashboard to track the performance of the review campaign."
+      ],
+      "ai_capabilities": [
+        "NLP for sentiment analysis of customer text data.",
+        "Machine learning model to predict the likelihood of a customer leaving a positive review based on sentiment scores and other factors.",
+        "Potential use of OpenAI models (e.g., `text-davinci-003` or `gpt-3.5-turbo`) for sentiment classification and personalized review request generation.",
+        "Embeddings may be needed if not using OpenAI, and for vector similarity search to find similar past positive interactions for improved targeting.",
+        "Fine-tuning a custom sentiment analysis model could improve accuracy on industry-specific language."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Customer support ticket text",
+          "Survey responses (text and numerical ratings)",
+          "Order history",
+          "Product reviews (existing)",
+          "Customer email interactions"
+        ],
+        "data_schema_recommendations": [
+          "Customer Table: customer_id (INT, PRIMARY KEY), email (VARCHAR), signup_date (TIMESTAMP), total_spent (DECIMAL)",
+          "Order Table: order_id (INT, PRIMARY KEY), customer_id (INT, FOREIGN KEY), order_date (TIMESTAMP), total_amount (DECIMAL)",
+          "Support Ticket Table: ticket_id (INT, PRIMARY KEY), customer_id (INT, FOREIGN KEY), create_date (TIMESTAMP), close_date (TIMESTAMP), subject (VARCHAR), body (TEXT), sentiment_score (FLOAT)",
+          "Review Request Table: request_id (INT, PRIMARY KEY), customer_id (INT, FOREIGN KEY), request_date (TIMESTAMP), review_url (VARCHAR), review_submitted (BOOLEAN), sentiment_score (FLOAT)"
+        ],
+        "data_sources": [
+          "Shopify API",
+          "WooCommerce API",
+          "Magento API",
+          "Zendesk API",
+          "SurveyMonkey API",
+          "Internal CRM systems"
+        ],
+        "privacy_and_compliance": "GDPR and CCPA compliance for handling customer data. Anonymization and pseudonymization techniques should be used where possible.  Obtain explicit consent for collecting and processing customer data for review generation purposes."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Shopify",
+          "WooCommerce",
+          "Magento",
+          "Zendesk",
+          "Klaviyo (or other email marketing platform)",
+          "Google Reviews",
+          "Trustpilot",
+          "Yotpo"
+        ],
+        "authentication_strategy": "OAuth for integrations with e-commerce platforms and review sites. JWT for internal API authentication. Consider Clerk for user authentication and management."
+      },
+      "technical_specifications": {
+        "architecture": "Microservices architecture with separate services for sentiment analysis, review request management, and reporting. API gateway for routing requests. Frontend for user interface and configuration. Backend services for data processing and integration.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes for tables described in data schema.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing processed data and analytics reports.",
+          "AI": "OpenAI API (for sentiment analysis and text generation), embeddings (optional), vector DB (Pinecone/Supabase vectors if using embeddings).",
+          "APIs": "REST APIs for communication between services and external integrations.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "/customers/{customer_id}/sentiment - GET - Returns the sentiment score for a given customer.",
+          "/review_requests - POST - Creates a new review request for a customer. Payload: {customer_id: INT, platform: STRING (e.g., 'google', 'trustpilot'), interaction_type: STRING}",
+          "/review_requests/{request_id} - GET - Returns details of a specific review request.",
+          "/analytics/overview - GET - Returns summary analytics data (review conversion rate, average review score)."
+        ],
+        "frontend_components": [
+          "Dashboard: Displays key metrics and performance data.",
+          "Integration Settings: Allows users to configure integrations with e-commerce platforms and review sites.",
+          "Review Request Configuration: Allows users to customize review request emails and scheduling.",
+          "Customer Sentiment View: Displays the sentiment scores and interaction history for individual customers."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /frontend, /backend, /ai_models, /database",
+        "Environment Variables: OPENAI_API_KEY, SHOPIFY_API_KEY, ZENDESK_API_KEY, DB_URL, NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET",
+        "Vercel Deployment: Configure Vercel to deploy the frontend and backend from the GitHub repository.  Set up environment variables in Vercel.",
+        "Build Outputs: Frontend: /frontend/.next, Backend: /backend/dist. Runtime settings should be configured in vercel.json to use Node.js 18 runtime."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of monthly active customers or the volume of review requests.",
+          "Usage-based pricing for sentiment analysis and review request generation.",
+          "Add-ons for advanced features like personalized review request templates and dedicated support."
+        ],
+        "customer_segments": [
+          "Small businesses selling on Shopify",
+          "Mid-sized e-commerce companies",
+          "Enterprise e-commerce platforms"
+        ]
+      },
+      "success_metrics": [
+        "Review request conversion rate",
+        "Average review score",
+        "Overall review volume",
+        "Customer lifetime value (CLTV)",
+        "Customer acquisition cost (CAC)",
+        "Sentiment score accuracy",
+        "Positive review rate (percentage of positive reviews received)"
+      ]
+    }
+  ]
+}

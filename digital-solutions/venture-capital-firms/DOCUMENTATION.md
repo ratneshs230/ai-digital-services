@@ -1,0 +1,142 @@
+# Deal Flow Scorer
+
+## Industry: Venture Capital Firms
+
+### Overview
+AI-powered platform that automatically scores and ranks incoming deal flow based on various factors to prioritize the most promising opportunities.
+
+### Problem It Solves
+Venture capital firms are inundated with deal proposals, making it difficult to efficiently identify and prioritize the best investment opportunities.
+
+### Core Solution
+Uses machine learning to analyze pitch decks, market data, team backgrounds, and other relevant information to generate a comprehensive score for each deal, highlighting potential winners.
+
+### Target Users
+Venture capital analysts, associates, and partners.
+
+### Business Impact
+Increases efficiency in deal sourcing, improves the quality of investment decisions, and reduces the risk of missing out on high-potential startups.
+
+### Example Use Case
+A VC firm uses Deal Flow Scorer to quickly sift through hundreds of pitch decks, identifying the top 10% for further evaluation, saving analysts significant time.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Venture Capital",
+  "services": [
+    {
+      "name": "Deal Flow Scorer",
+      "overview": "Deal Flow Scorer is an AI-powered platform designed to revolutionize how venture capital firms manage and prioritize incoming deal flow. Venture capitalists face the daunting task of sifting through vast numbers of pitch decks and investment proposals, a process that is often time-consuming and prone to human bias. This platform addresses these challenges by automating the initial assessment of deals, providing a comprehensive scoring system that highlights the most promising opportunities. By leveraging machine learning, Deal Flow Scorer analyzes a wide array of data points, including information extracted from pitch decks, market data, team backgrounds, and other relevant sources. This results in an objective and data-driven evaluation that helps VCs make more informed investment decisions. The ultimate goal is to enhance efficiency in deal sourcing, improve the quality of investment portfolios, and mitigate the risk of overlooking potential unicorns. The platform provides a user-friendly interface, allowing venture capital professionals to easily manage, track, and analyze their deal pipeline, ensuring they focus their resources on the most promising ventures.",
+      "problems_addressed": [
+        "Inefficient manual review of deal flow leads to wasted time and resources.",
+        "Subjectivity and bias in deal evaluation can result in missed opportunities.",
+        "Difficulty in scaling deal sourcing efforts due to limited analyst bandwidth."
+      ],
+      "target_users": [
+        "Venture Capital Analysts",
+        "Venture Capital Associates",
+        "Venture Capital Partners"
+      ],
+      "core_features": [
+        "Automated Deal Scoring – Utilizes machine learning models to automatically score each deal based on various factors such as market size, team quality, and product innovation.",
+        "Pitch Deck Analyzer – Extracts key information from pitch decks, including market analysis, competitive landscape, and financial projections, using NLP techniques.",
+        "Market Data Integration – Integrates with external market data sources to provide real-time insights into industry trends and competitive dynamics.",
+        "Team Background Assessment – Analyzes the backgrounds and experience of the founding team, assessing their track record and expertise.",
+        "Customizable Scoring Criteria – Allows users to customize the scoring criteria based on their specific investment focus and priorities.",
+        "Deal Pipeline Management – Provides a centralized dashboard to manage and track deals throughout the investment process, from initial screening to due diligence.",
+        "Reporting and Analytics – Generates reports and dashboards to provide insights into deal flow trends and investment performance."
+      ],
+      "user_journeys": [
+        "A VC analyst logs into Deal Flow Scorer. They upload a new batch of pitch decks. The system automatically extracts data, integrates market information, and assesses the team. Each deal receives a score. The analyst filters by score, focusing on the top 20%. They review the detailed analysis for those deals, marking promising ones for further due diligence, significantly reducing initial screening time."
+      ],
+      "ai_capabilities": [
+        "Machine Learning for Deal Scoring: Employs a regression model trained on historical investment data (success/failure metrics correlated with deal features) to predict the potential of new deals. Key features include market size, team experience, competitive landscape, and financial projections. The model outputs a score between 0 and 1, representing the probability of success.",
+        "Natural Language Processing for Pitch Deck Analysis: Uses NLP techniques, specifically transformer models (e.g., BERT, RoBERTa fine-tuned on venture capital documents), to extract key information from pitch decks, including market analysis, competitive advantages, and financial forecasts. Named Entity Recognition (NER) identifies key players, technologies, and market segments. Sentiment analysis gauges the overall tone of the pitch.",
+        "Model Selection Notes: OpenAI models are suitable for initial prototype and experimentation due to their ease of use and broad capabilities. For production, fine-tuning a smaller, more specialized model (e.g., DistilBERT) on a curated dataset of successful and unsuccessful venture deals will improve performance and reduce inference costs. Vector search (Pinecone) is used to compare new deals with historical deals based on semantic similarity of the pitch deck content and meta data. Embedding models like OpenAI's text-embedding-ada-002 or open source sentence transformers are suitable to create vector embeddings."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Pitch decks (PDFs, PPTs)",
+          "Team member profiles (LinkedIn URLs, CVs)",
+          "Market data (industry reports, market size estimates)",
+          "Financial projections (Excel spreadsheets)"
+        ],
+        "data_schema_recommendations": [
+          "Deals Table: deal_id (UUID), company_name (TEXT), submission_date (TIMESTAMP), pitch_deck_url (TEXT), market (TEXT), team_score (FLOAT), market_score (FLOAT), product_score (FLOAT), overall_score (FLOAT), notes (TEXT)",
+          "Team Members Table: team_member_id (UUID), deal_id (UUID), name (TEXT), title (TEXT), linkedin_url (TEXT), experience (TEXT)",
+          "Market Data Table: market_data_id (UUID), deal_id (UUID), market_size (FLOAT), growth_rate (FLOAT), competitive_intensity (FLOAT)"
+        ],
+        "data_sources": [
+          "Direct input from VC analysts",
+          "LinkedIn API for team background information",
+          "Crunchbase API for company and market data",
+          "Third-party market research reports"
+        ],
+        "privacy_and_compliance": "Ensure compliance with GDPR and CCPA regulations regarding the collection and processing of personal data, especially data scraped from LinkedIn profiles. Obtain consent where necessary and implement data anonymization techniques to protect privacy."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "LinkedIn API",
+          "Crunchbase API",
+          "Salesforce (CRM)",
+          "Gmail/Outlook (email integration for notifications)",
+          "Slack (team collaboration)"
+        ],
+        "authentication_strategy": "OAuth 2.0 for LinkedIn and Crunchbase APIs. JWT for internal API authentication. Clerk for user authentication and management."
+      },
+      "technical_specifications": {
+        "architecture": "The system follows a microservices architecture, comprising of an API layer, frontend, backend services, database, and AI pipeline. The API layer exposes endpoints for data ingestion, deal scoring, and reporting. The frontend provides a user interface for managing deal flow and visualizing insights. Backend services handle data processing and integration with external APIs. The database stores deal information, team member profiles, and market data. The AI pipeline performs pitch deck analysis and deal scoring.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, embeddings, vector DB (Pinecone/Supabase vectors)",
+          "APIs": "REST",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /deals – Upload a new deal (pitch deck, team info). Payload: { pitch_deck: file, team_members: [{name, title, linkedin_url}], market: string }",
+          "GET /deals/{deal_id} – Retrieve deal details and score. Response: { deal_id, company_name, score, analysis: {market_analysis, team_assessment} }",
+          "GET /deals?filter={}&sort={} – List deals with filtering and sorting options. Response: [{deal_id, company_name, score}, ...]",
+          "PUT /deals/{deal_id} - Update deal information or manually adjust the score. Payload: {notes: string, manual_score_adjustment: number}"
+        ],
+        "frontend_components": [
+          "Deal Dashboard – Displays a list of deals with their scores and key information.",
+          "Deal Details Page – Shows detailed information about a specific deal, including pitch deck analysis, team background assessment, and market data.",
+          "Scoring Configuration Page – Allows users to customize the scoring criteria and weights.",
+          "Report Generator – Enables users to generate reports on deal flow trends and investment performance."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /database, /ai_models",
+        "Environment variables: OPENAI_API_KEY, CRUNCHBASE_API_KEY, LINKEDIN_API_KEY, DATABASE_URL, CLERK_SECRET_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on push.",
+        "Build outputs: Next.js static site for frontend, Node.js serverless functions for backend.",
+        "Runtime settings: Node.js runtime for backend functions. Memory and timeout settings adjusted based on expected load and processing time."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic (limited features, limited deals per month), Pro (full features, unlimited deals), Enterprise (custom features, dedicated support)",
+          "Usage-based pricing: Charge per deal scored beyond the limits of the subscription tier",
+          "Add-ons: Premium market data integration, custom model training"
+        ],
+        "customer_segments": [
+          "Small venture capital firms (less than $100M AUM)",
+          "Mid-sized venture capital firms ($100M - $500M AUM)",
+          "Large venture capital firms (over $500M AUM)"
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of deals processed per month, time saved in deal screening process (percentage reduction), cost savings in analyst hours.",
+        "AI performance KPIs: Accuracy of deal scoring (correlation with investment outcomes), precision and recall of pitch deck analysis (information extraction), model drift detection.",
+        "Adoption/engagement KPIs: Number of active users, daily/weekly/monthly active users, deal flow processed through the platform, user satisfaction (Net Promoter Score)."
+      ]
+    }
+  ]
+}
+```

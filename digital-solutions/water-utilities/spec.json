@@ -1,0 +1,123 @@
+{
+  "industry": "Water Utilities",
+  "services": [
+    {
+      "name": "Leak Detection AI",
+      "overview": "Leak Detection AI is a real-time platform designed to detect and predict water pipeline leaks using advanced machine learning algorithms. By analyzing data from various sensors, including pressure, flow, and acoustic sensors, the system identifies anomalies that indicate potential leaks. This proactive approach enables water utilities to minimize water loss, reduce operational costs, and mitigate environmental impact. The platform provides timely alerts with precise location estimates and severity levels, allowing maintenance teams to address issues promptly and efficiently. Ultimately, Leak Detection AI enhances water resource management and improves the overall operational efficiency of water distribution networks.",
+      "problems_addressed": [
+        "High levels of non-revenue water (NRW) due to undetected leaks.",
+        "Reactive maintenance strategies leading to costly repairs and water wastage.",
+        "Inability to pinpoint leak locations accurately and quickly.",
+        "Difficulty in predicting potential leaks before they escalate into major bursts.",
+        "Inefficient water resource management and environmental impact from water loss."
+      ],
+      "target_users": [
+        "Water Utility Engineers",
+        "Operations Managers",
+        "Maintenance Teams"
+      ],
+      "core_features": [
+        "Real-time Anomaly Detection – Continuously analyzes sensor data to identify deviations from normal patterns, indicating potential leaks. Includes configurable sensitivity levels and threshold settings.",
+        "Predictive Leak Forecasting – Uses historical data and machine learning models to forecast the likelihood of future leaks in specific pipeline sections. This includes risk scoring based on environmental factors, pipe age, and historical leak data.",
+        "Location Estimation – Provides precise location estimates of detected leaks using sensor data triangulation and geographic information system (GIS) integration. This feature also visualizes leak locations on a map interface.",
+        "Severity Assessment – Evaluates the severity of detected leaks based on factors such as flow rate, pressure drop, and acoustic signal intensity, categorizing them into levels like low, medium, and high. Custom alert thresholds are configurable per utility.",
+        "Alerting and Notification System – Sends immediate alerts via SMS, email, and in-app notifications to relevant personnel upon leak detection, including detailed information on location and severity. Role-based alerting is supported.",
+        "Reporting and Analytics Dashboard - Generates comprehensive reports on leak events, water loss, and system performance. Provides data visualizations for trend analysis and decision-making. Includes custom report generation tools."
+      ],
+      "user_journeys": [
+        "A water utility engineer logs into the Leak Detection AI platform. The dashboard displays real-time sensor data, including pressure, flow, and acoustic readings across the water distribution network. An anomaly is detected in a specific pipeline section, triggering an alert. The engineer reviews the alert details, including the location estimate and severity level. The engineer dispatches a maintenance team to investigate the potential leak. The maintenance team confirms the leak using the provided location data. After repair, the engineer updates the system with repair details, which are then used to refine the predictive models."
+      ],
+      "ai_capabilities": [
+        "Anomaly Detection Model: Utilizes a combination of time-series analysis (ARIMA, LSTM) and anomaly detection algorithms (Isolation Forest, One-Class SVM) to identify deviations in sensor data that indicate potential leaks. Model selection will depend on data characteristics and performance metrics (precision, recall, F1-score).",
+        "Leak Localization Model: Employs machine learning techniques such as Support Vector Regression (SVR) or Random Forest Regression to estimate the leak location based on sensor data inputs. This model is trained on historical leak events with known locations and corresponding sensor readings.",
+        "Predictive Maintenance Model: Uses a classification model (e.g., XGBoost, Logistic Regression) to predict the likelihood of future leaks based on historical data, environmental factors, and pipe characteristics. Model selection is based on achieving high accuracy and interpretability.",
+        "Model Selection Notes: OpenAI models are not directly applicable here. We need specialized time-series and regression models. Embeddings and vector search are not primary requirements but could be used to compare current sensor patterns with historical leak signatures. Fine-tuning these models with utility-specific data is crucial for optimal performance. Use scikit-learn, TensorFlow, or PyTorch for model development and training. Evaluate models using cross-validation and appropriate metrics (e.g., RMSE for location estimation, F1-score for anomaly detection)."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Pressure sensor readings (PSI)",
+          "Flow sensor readings (Gallons per minute)",
+          "Acoustic sensor data (dB)",
+          "Pipeline GIS data (location, material, age)",
+          "Historical leak data (location, date, severity)",
+          "Weather data (temperature, rainfall)"
+        ],
+        "data_schema_recommendations": [
+          "Sensor_Readings (timestamp, sensor_id, pressure, flow, acoustic)",
+          "Pipeline_Data (pipe_id, location, material, diameter, installation_date)",
+          "Leak_Events (leak_id, location, date, severity, estimated_loss, repair_date)",
+          "Weather_Data (timestamp, location, temperature, rainfall)"
+        ],
+        "data_sources": [
+          "SCADA Systems",
+          "GIS Databases",
+          "Acoustic Leak Detection Devices",
+          "Weather APIs",
+          "Historical Leak Records"
+        ],
+        "privacy_and_compliance": "Compliance with local water regulations and data privacy laws. Implement data anonymization techniques to protect sensitive information."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "SCADA (Supervisory Control and Data Acquisition) Systems",
+          "GIS (Geographic Information System)",
+          "Work Order Management Systems",
+          "SMS Gateway (Twilio, Nexmo)",
+          "Email Providers (SendGrid, Mailgun)"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API access. Clerk recommended for user authentication and management."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-layered architecture consisting of a data ingestion layer, an AI processing layer, an API layer, and a frontend user interface. The data ingestion layer collects sensor data from various sources and stores it in a time-series database. The AI processing layer applies machine learning models to detect and predict leaks. The API layer exposes endpoints for accessing leak information and system functionalities. The frontend provides a user-friendly interface for visualizing data, managing alerts, and generating reports.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with time-series extensions (TimescaleDB) with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "scikit-learn, TensorFlow, PyTorch, integrated with backend via API calls",
+          "APIs": "REST APIs for frontend-backend communication and external integrations",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "GET /api/leaks - Returns a list of detected leaks with location, severity, and timestamp.",
+          "POST /api/alerts - Creates a new alert based on sensor data anomalies. Payload: {sensor_id, timestamp, pressure, flow, acoustic}",
+          "GET /api/pipes/{pipe_id} - Returns detailed information about a specific pipeline segment.",
+          "GET /api/reports - Generates a leak detection report based on specified parameters. Payload: {date_range, area}"
+        ],
+        "frontend_components": [
+          "Map Component – Displays leak locations on a map using GIS data.",
+          "Dashboard Component – Shows real-time sensor data and key performance indicators (KPIs).",
+          "Alerts Component – Lists active and historical alerts with filtering and sorting options.",
+          "Report Generation Component - Allows users to configure and generate custom leak detection reports."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /data, /models",
+        "Environment variables: OPENAI_API_KEY (not used, but present for template consistency), DB_URL, SCADA_API_KEY, GIS_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN",
+        "Vercel deployment: Connect GitHub repository to Vercel, configure environment variables, and enable automatic deployments on code changes.",
+        "Build outputs: Static frontend files in /frontend/out, serverless functions in /backend/api.",
+        "Runtime settings: Node.js runtime environment, necessary Python dependencies for AI models."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of pipeline miles monitored, data volume, and the level of support.",
+          "Usage-based pricing for additional features such as custom reporting and predictive analytics.",
+          "Enterprise licensing for large water utilities with customized solutions."
+        ],
+        "customer_segments": [
+          "Small to medium-sized water utilities",
+          "Large municipal water departments",
+          "Private water companies"
+        ]
+      },
+      "success_metrics": [
+        "Reduction in non-revenue water (NRW) loss percentage.",
+        "Increase in the number of leaks detected proactively before becoming major bursts.",
+        "Improvement in leak localization accuracy.",
+        "Reduction in repair costs and downtime.",
+        "Adoption rate of the platform by water utility personnel.",
+        "User engagement and satisfaction with the platform's features and performance."
+      ]
+    }
+  ]
+}

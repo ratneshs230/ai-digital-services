@@ -1,0 +1,144 @@
+# AI-Powered Avatar Stylist
+
+## Industry: Virtual world platforms
+
+### Overview
+Suggests avatar customization options (clothing, accessories, hairstyles) based on user preferences, current trends, and virtual world context.
+
+### Problem It Solves
+Users struggle to create unique and appealing avatars, leading to generic-looking virtual identities.
+
+### Core Solution
+AI analyzes user's style preferences (e.g., from connected social media profiles), current virtual world fashion trends, and avatar's existing attributes to recommend personalized customization options.
+
+### Target Users
+Virtual world users, avatar designers.
+
+### Business Impact
+Increases user engagement, drives sales of virtual items, improves avatar diversity.
+
+### Example Use Case
+A user wants a cyberpunk-themed avatar. The AI stylist suggests clothing, hairstyles, and accessories that fit the theme and complement their existing avatar features.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Virtual Worlds and Metaverse",
+  "services": [
+    {
+      "name": "AI-Powered Avatar Stylist",
+      "overview": "The AI-Powered Avatar Stylist is a digital service designed to personalize avatar creation and customization within virtual worlds and metaverse platforms. It addresses the common challenge users face in creating unique, appealing, and contextually relevant avatars. Leveraging advanced AI algorithms, the stylist analyzes user preferences, current fashion trends within the specific virtual environment, and the avatar's existing attributes to provide tailored recommendations for clothing, accessories, hairstyles, and other customization options. The service aims to enhance user engagement, drive sales of virtual items, and promote greater avatar diversity across the platform. By streamlining the avatar customization process and offering personalized suggestions, users can more easily express their virtual identity and immerse themselves in the digital world.",
+      "problems_addressed": [
+        "Difficulty in creating unique and appealing avatars.",
+        "Lack of awareness regarding current fashion trends within the virtual world.",
+        "Tedious and time-consuming manual customization process.",
+        "Generic-looking avatars that fail to reflect individual user preferences."
+      ],
+      "target_users": [
+        "Virtual world users seeking to personalize their avatars.",
+        "Avatar designers looking for AI-driven inspiration and trend insights.",
+        "New users onboarding to a virtual world, who need guidance in creating their initial avatar."
+      ],
+      "core_features": [
+        "Style Preference Analysis: Connects to user social media profiles or utilizes in-app questionnaires to understand style preferences and tastes.",
+        "Trend Analysis: Continuously monitors in-world fashion trends and incorporates real-time data on popular styles and items.",
+        "Avatar Attribute Analysis: Analyzes the user's existing avatar features (e.g., body type, skin tone, facial features) to recommend complementary customization options.",
+        "Personalized Recommendations: Generates tailored suggestions for clothing, accessories, hairstyles, and other customization options based on analyzed data.",
+        "Virtual Try-On: Allows users to virtually try on recommended items before purchasing or applying them to their avatar.",
+        "Theme-Based Styling: Provides themed style recommendations (e.g., cyberpunk, fantasy, futuristic) based on user requests or in-world events.",
+        "Integration with Virtual Item Marketplace: Seamlessly integrates with the virtual world's item marketplace to allow users to easily purchase and apply recommended items."
+      ],
+      "user_journeys": [
+        "1. User logs into the virtual world and navigates to the avatar customization section.\n2. The user initiates the AI-Powered Avatar Stylist.\n3. The stylist prompts the user to connect their social media profiles or answer a style questionnaire (optional).\n4. The AI analyzes the user's style preferences, current in-world trends, and existing avatar attributes.\n5. The stylist generates personalized recommendations for clothing, accessories, and hairstyles.\n6. The user virtually tries on the recommended items and makes their selections.\n7. The user purchases or applies the chosen items to their avatar.\n8. The user saves their updated avatar and returns to the virtual world with their newly styled look."
+      ],
+      "ai_capabilities": [
+        "Style Preference Analysis: Employs NLP models to analyze text from social media posts or questionnaire responses to identify style keywords and themes. Uses sentiment analysis to gauge user's positive or negative associations with different styles.",
+        "Trend Analysis: Utilizes computer vision models to analyze images of popular avatars and fashion items within the virtual world, identifying dominant trends and patterns. NLP is used to analyze in-world chat and forum discussions to identify emerging style preferences.",
+        "Recommendation Engine: Implements a collaborative filtering algorithm to recommend items based on the preferences of users with similar style profiles. Content-based filtering recommends items based on their attributes and the user's expressed preferences.",
+        "Model Selection Notes: Use OpenAI's GPT models for style preference analysis. Employ embeddings to represent avatar attributes and item characteristics for similarity matching. Vector search (Pinecone/Supabase vectors) allows for efficient retrieval of similar items based on user preferences. Fine-tuning might be required based on the specific style language and item vocabulary of the virtual world."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "User style preferences (text, images).",
+          "Avatar attributes (e.g., body type, skin tone, facial features).",
+          "Virtual item data (images, descriptions, attributes).",
+          "In-world trend data (chat logs, forum discussions, popular avatar styles)."
+        ],
+        "data_schema_recommendations": [
+          "User Preferences Table: user_id (INT), style_keywords (TEXT), style_images (TEXT), sentiment_scores (JSON).",
+          "Avatar Attributes Table: avatar_id (INT), body_type (ENUM), skin_tone (ENUM), facial_features (JSON).",
+          "Virtual Items Table: item_id (INT), item_name (TEXT), item_description (TEXT), item_image (TEXT), item_attributes (JSON), style_keywords (TEXT).",
+          "Trend Data Table: timestamp (TIMESTAMP), trend_keywords (TEXT), trend_images (TEXT), popularity_score (FLOAT)."
+        ],
+        "data_sources": [
+          "User social media profiles (with user consent).",
+          "In-app style questionnaires.",
+          "Virtual world item marketplace API.",
+          "In-world chat logs and forum discussions (anonymized).",
+          "Third-party fashion trend APIs (if available and relevant)."
+        ],
+        "privacy_and_compliance": "Adhere to virtual world platform's privacy policies. Ensure compliance with data privacy regulations (e.g., GDPR, CCPA) when handling user data. Obtain explicit user consent before accessing social media profiles or collecting personal information."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Virtual world platform API (for avatar customization and item marketplace access).",
+          "Social media APIs (for style preference analysis, with user consent).",
+          "Payment gateways (for purchasing virtual items).",
+          "Analytics tools (for tracking user engagement and service performance)."
+        ],
+        "authentication_strategy": "OAuth for social media integration. JWT for secure communication between the AI stylist service and the virtual world platform. Consider Clerk/Auth0 for simplified user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "A microservices architecture consisting of a frontend (user interface within the virtual world), a backend API (for handling requests and coordinating services), a style preference analysis service, a trend analysis service, a recommendation engine service, and a database for storing user preferences, avatar attributes, and item data. The AI pipeline processes data from various sources and feeds it into the recommendation engine.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions. Custom UI components to integrate seamlessly within the virtual world's interface.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions. REST API for communication between frontend and backend services.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes as defined in the data requirements section.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing avatar images, item images, and user-uploaded content.",
+          "AI": "OpenAI API for NLP tasks (style preference analysis). Embeddings and vector DB (Pinecone/Supabase vectors) for similarity matching and recommendations.",
+          "APIs": "REST APIs for all backend services. Consider GraphQL for the frontend to efficiently fetch required data.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline for continuous integration and deployment."
+        },
+        "API_design": [
+          "/api/v1/style_preferences (POST): Accepts user style preferences and updates the user's profile.",
+          "/api/v1/avatar_attributes (POST): Accepts avatar attributes and updates the avatar's profile.",
+          "/api/v1/recommendations (GET): Returns personalized item recommendations based on user preferences and avatar attributes. Payload: { user_id: INT, avatar_id: INT }.",
+          "/api/v1/trends (GET): Returns current fashion trends in the virtual world. Payload: None."
+        ],
+        "frontend_components": [
+          "Style Preference Questionnaire: Interactive form for users to express their style preferences.",
+          "Avatar Attribute Editor: UI for viewing and modifying avatar attributes.",
+          "Recommendation Carousel: Displays personalized item recommendations with virtual try-on functionality.",
+          "Theme Selector: Allows users to select a theme for style recommendations (e.g., cyberpunk, fantasy)."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /frontend, /backend, /ai_services, /database. Separate folders for each service within the ai_services directory.",
+        "Environment Variables: OPENAI_API_KEY, DB_URL, VIRTUAL_WORLD_API_KEY, SOCIAL_MEDIA_API_KEY (if applicable), CLERK_SECRET_KEY/AUTH0_CLIENT_ID/AUTH0_CLIENT_SECRET (if using Clerk/Auth0).",
+        "Vercel Deployment: Configure Vercel to deploy the frontend and backend applications from the GitHub repository. Set environment variables in Vercel project settings.",
+        "Build Outputs and Runtime Settings: Configure build scripts for frontend and backend. Define runtime environment (Node.js version) for backend functions. Ensure database connection is properly configured in the runtime environment."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers (Basic, Premium, Enterprise) based on the number of recommendations per month and access to advanced features.",
+          "Usage-based pricing (pay-per-recommendation) for casual users.",
+          "Add-ons for accessing premium style analysis reports and personalized styling consultations."
+        ],
+        "customer_segments": [
+          "Virtual world platforms seeking to enhance user engagement and drive sales.",
+          "Avatar designers looking for AI-driven inspiration and trend insights.",
+          "Individual virtual world users seeking personalized avatar styling."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Service uptime, API response time, resource utilization.",
+        "AI Performance KPIs: Recommendation accuracy (click-through rate, conversion rate), style preference analysis accuracy, trend analysis accuracy.",
+        "Adoption/Engagement KPIs: Number of active users, number of recommendations generated, virtual item sales attributed to recommendations, user satisfaction scores."
+      ]
+    }
+  ]
+}
+```

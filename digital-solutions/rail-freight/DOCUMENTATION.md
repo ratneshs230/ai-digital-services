@@ -1,0 +1,154 @@
+# Predictive Maintenance AI
+
+## Industry: Rail Freight
+
+### Overview
+AI-powered system predicting equipment failures to minimize downtime and optimize maintenance schedules.
+
+### Problem It Solves
+Unplanned equipment failures leading to delays, increased maintenance costs, and safety hazards.
+
+### Core Solution
+Uses sensor data (vibration, temperature, etc.) and machine learning to predict component failures before they occur, triggering proactive maintenance.
+
+### Target Users
+Maintenance managers, rail operators, fleet managers.
+
+### Business Impact
+Reduces downtime, lowers maintenance expenses, increases equipment lifespan, and improves safety.
+
+### Example Use Case
+Predicting bearing failure in a locomotive engine, allowing for replacement during scheduled maintenance instead of emergency repairs.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Transportation and Logistics",
+  "services": [
+    {
+      "name": "RailGuard Predictive Maintenance",
+      "overview": "RailGuard Predictive Maintenance is an AI-powered platform designed to minimize downtime, optimize maintenance schedules, and enhance safety for rail operators and fleet managers. By leveraging sensor data and machine learning, RailGuard accurately predicts equipment failures before they occur, enabling proactive maintenance interventions. The platform integrates seamlessly with existing sensor networks and maintenance management systems, providing real-time insights and actionable recommendations. This service reduces unplanned outages, lowers maintenance expenses, extends equipment lifespan, and improves overall operational efficiency.",
+      "problems_addressed": [
+        "Unplanned equipment failures leading to train delays and disruptions.",
+        "High maintenance costs associated with reactive repairs and emergency interventions.",
+        "Safety hazards resulting from unexpected equipment malfunctions.",
+        "Inefficient maintenance schedules that do not align with actual equipment health."
+      ],
+      "target_users": [
+        "Maintenance Managers: Responsible for overseeing maintenance operations and scheduling.",
+        "Rail Operators: Manage rail networks and ensure smooth transportation services.",
+        "Fleet Managers: Oversee the maintenance and performance of rolling stock."
+      ],
+      "core_features": [
+        "Real-time Sensor Data Integration: Collects and processes data from various sensors (vibration, temperature, pressure, etc.) in real-time.",
+        "AI-Powered Failure Prediction: Employs machine learning algorithms to predict component failures based on sensor data patterns and historical maintenance records.",
+        "Automated Maintenance Scheduling: Generates optimized maintenance schedules based on predicted failure probabilities, minimizing downtime and maintenance costs.",
+        "Predictive Alerting System: Sends automated alerts to maintenance personnel when a potential equipment failure is detected.",
+        "Historical Data Analysis: Provides comprehensive historical data analysis to identify trends, patterns, and root causes of equipment failures.",
+        "Customizable Reporting: Generates detailed reports on equipment health, maintenance activities, and cost savings.",
+        "Integration with Existing Systems: Integrates with existing maintenance management systems (e.g., SAP, Maximo) for seamless data exchange."
+      ],
+      "user_journeys": [
+        "A maintenance manager logs into the RailGuard dashboard. They view the status of all locomotives in the fleet, noting a 'warning' status on Locomotive 42. Clicking on Locomotive 42, they see a predicted bearing failure in the engine, with a 'high' probability within the next 7 days. The system suggests scheduling a bearing replacement during the next scheduled maintenance window. The manager confirms the maintenance task and dispatches the work order to the maintenance team."
+      ],
+      "ai_capabilities": [
+        "Time-series anomaly detection using LSTM networks to identify unusual patterns in sensor data indicative of potential failures.",
+        "Classification models (e.g., Random Forest, Gradient Boosting) to predict the probability of failure for specific components based on historical data and sensor readings.",
+        "Regression models to estimate the remaining useful life (RUL) of critical components.",
+        "Model Selection Notes: We recommend using time-series databases for managing sensor data and vector databases for storing and searching embeddings created from sensor data. Consider fine-tuning pre-trained models on specific rail equipment data to improve prediction accuracy. Initial models can leverage public datasets of industrial machinery failure, supplemented with operator-provided maintenance logs. OpenAI's embeddings can assist in clustering similar failure patterns and identifying relevant maintenance procedures."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Vibration data (acceleration, frequency)",
+          "Temperature readings from various engine components",
+          "Pressure readings (oil pressure, coolant pressure)",
+          "Engine RPM",
+          "Fuel consumption",
+          "Historical maintenance records (failure dates, repair types)",
+          "Equipment specifications (make, model, serial number)",
+          "Operational data (route, load, speed)"
+        ],
+        "data_schema_recommendations": [
+          "Sensor Data Table: (timestamp, sensor_id, value, unit)",
+          "Maintenance Records Table: (equipment_id, failure_date, repair_type, downtime, cost)",
+          "Equipment Specifications Table: (equipment_id, make, model, serial_number, installation_date)",
+          "Predictions Table: (equipment_id, component, predicted_failure_date, probability, RUL)"
+        ],
+        "data_sources": [
+          "Existing sensor networks on locomotives",
+          "Maintenance management systems (SAP, Maximo)",
+          "Operator logs and records",
+          "Potentially, external weather data APIs (affecting wear/tear)"
+        ],
+        "privacy_and_compliance": "Ensure compliance with data privacy regulations (e.g., GDPR) regarding the collection and use of sensor data. Implement appropriate data security measures to protect sensitive operational data."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Existing sensor networks (e.g., wireless sensor networks)",
+          "Maintenance management systems (SAP, Maximo)",
+          "Alerting platforms (e.g., SMS gateways, email providers)",
+          "Data visualization tools (e.g., Tableau, Power BI)"
+        ],
+        "authentication_strategy": "JWT authentication for API access, OAuth for integration with third-party systems, and potentially Clerk/Auth0 for user management depending on scale and features."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a layered architecture, consisting of a data ingestion layer, a data processing and storage layer, an AI model layer, an API layer, and a frontend user interface. Sensor data will be ingested in real-time and stored in a time-series database. Machine learning models will be trained and deployed to predict equipment failures. An API layer will provide access to the predicted failure probabilities and maintenance recommendations. The frontend user interface will allow maintenance managers to visualize equipment status, review maintenance schedules, and generate reports.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes. Time-series extension highly recommended (TimescaleDB).",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing historical sensor data and model artifacts.",
+          "AI": "OpenAI API for embeddings (potential use in failure pattern clustering). Scikit-learn, TensorFlow, or PyTorch for model training and deployment. Vector DB (Pinecone/Supabase vectors) for storing and searching embeddings.",
+          "APIs": "REST APIs for communication between frontend, backend, and AI model services.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "/api/equipment/{equipment_id}/status: GET - Returns the current status of the equipment, including predicted failure probabilities and RUL.",
+          "/api/equipment/{equipment_id}/maintenance_schedule: GET - Returns the optimized maintenance schedule for the equipment.",
+          "/api/alerts: POST - Accepts alert notifications from the AI model service and dispatches them to the appropriate maintenance personnel.",
+          "Payload examples will follow standard JSON formatting, including specific datatypes for all parameters and standardized error codes"
+        ],
+        "frontend_components": [
+          "Dashboard: Displays the overall status of the fleet, including the number of equipment in operation, under maintenance, and at risk of failure.",
+          "Equipment Status View: Provides detailed information about the status of a specific piece of equipment, including sensor readings, predicted failure probabilities, and maintenance history.",
+          "Maintenance Schedule View: Displays the optimized maintenance schedule for the fleet.",
+          "Alerting System: Notifies maintenance personnel of potential equipment failures."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /ai_models, /database.",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SENSOR_API_KEY, ALERTING_API_KEY",
+        "Vercel deployment: Configure Vercel to automatically deploy the frontend and backend from the GitHub repository. Set the appropriate environment variables in the Vercel dashboard. Ensure build outputs target /frontend/.next and /backend/dist (or equivalent for serverless functions).",
+        "Define build scripts for both frontend and backend in package.json.  Specify Node.js runtime version.",
+        "Setup TimescaleDB if using that extension to Postgres for handling time-series data efficiently."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of locomotives/rolling stock monitored.",
+          "Usage-based pricing for API calls and data storage.",
+          "Add-ons for advanced features, such as custom model training and integration with other systems."
+        ],
+        "customer_segments": [
+          "Small and medium-sized rail operators with limited in-house AI expertise.",
+          "Large rail operators with complex maintenance requirements.",
+          "Fleet management companies specializing in rail transportation."
+        ]
+      },
+      "success_metrics": [
+        "Reduction in unplanned downtime (percentage).",
+        "Decrease in maintenance costs (percentage).",
+        "Increase in equipment lifespan (percentage).",
+        "Improved safety record (number of incidents).",
+        "AI model accuracy (precision, recall, F1-score).",
+        "Adoption rate of the platform (number of users).",
+        "User engagement (daily/monthly active users).",
+        "Average time to resolution of maintenance alerts.",
+        "Cost savings from predictive maintenance vs reactive maintenance."
+      ]
+    }
+  ]
+}
+```

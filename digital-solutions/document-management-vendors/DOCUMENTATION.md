@@ -1,0 +1,173 @@
+# Smart Document Classifier
+
+## Industry: Document management vendors
+
+### Overview
+Automatically categorize and tag documents with high accuracy using machine learning.
+
+### Problem It Solves
+Manual document classification is time-consuming, error-prone, and costly.
+
+### Core Solution
+AI models analyze document content and metadata to predict the correct category and tags.
+
+### Target Users
+Records managers, legal teams, compliance officers.
+
+### Business Impact
+Reduces manual effort, improves document discoverability, and ensures compliance.
+
+### Example Use Case
+A law firm automatically classifies new contracts and legal briefs based on topic and jurisdiction.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Legal",
+  "services": [
+    {
+      "name": "Smart Legal Document Classifier",
+      "overview": "The Smart Legal Document Classifier is an AI-powered service designed to automatically categorize and tag legal documents with high accuracy. It addresses the critical need for efficient document management within law firms, corporate legal departments, and compliance teams. Manual document classification is often a time-consuming, error-prone, and costly process. This service leverages machine learning to analyze document content and metadata, predicting the appropriate category and relevant tags, thus significantly reducing manual effort, improving document discoverability, and ensuring compliance with legal and regulatory requirements.\n\nThe core functionality revolves around analyzing incoming legal documents, such as contracts, briefs, pleadings, and regulatory filings. The system automatically identifies key features, entities, and topics within the document. These features are then used to predict the document's type (e.g., contract, motion, deposition), subject matter (e.g., intellectual property, breach of contract, personal injury), and other relevant metadata (e.g., jurisdiction, court, client). This automated classification enables legal professionals to quickly locate, retrieve, and manage documents, streamlining workflows and improving productivity.\n\nBeyond simple categorization, the service also provides intelligent tagging capabilities. It can automatically identify and tag documents with relevant keywords, legal citations, entities (e.g., names of parties, judges, organizations), and other contextual information. These tags enhance searchability and enable users to filter and sort documents based on specific criteria. This feature is particularly valuable for legal research, discovery, and compliance audits.\n\nTo ensure accuracy and reliability, the Smart Legal Document Classifier is trained on a vast corpus of legal documents, encompassing a wide range of document types, subject matters, and jurisdictions. The AI models are continuously refined and updated to adapt to evolving legal standards and emerging trends. Integration with existing document management systems and legal research platforms further enhances its usability and value.\n\nIn summary, the Smart Legal Document Classifier offers a comprehensive solution for automating legal document classification and tagging. By reducing manual effort, improving document discoverability, and ensuring compliance, it empowers legal professionals to focus on higher-value tasks and deliver superior legal services.",
+      "problems_addressed": [
+        "Time-consuming manual document classification processes.",
+        "High error rates in manual tagging and categorization, leading to compliance risks.",
+        "Difficulties in quickly locating and retrieving relevant legal documents.",
+        "Increased costs associated with manual document management and legal research.",
+        "Inconsistent document tagging practices across different users and departments."
+      ],
+      "target_users": [
+        "Records managers in law firms and corporate legal departments.",
+        "Legal teams involved in litigation, transactional work, and regulatory compliance.",
+        "Compliance officers responsible for ensuring adherence to legal and regulatory requirements.",
+        "Paralegals assisting with legal research and document review.",
+        "Legal librarians managing and organizing legal resources."
+      ],
+      "core_features": [
+        "Automated Document Classification – Uses machine learning models to automatically classify legal documents based on content and metadata, assigning appropriate categories and subcategories (e.g., contract, brief, pleading, motion).",
+        "Intelligent Tagging – Automatically identifies and tags documents with relevant keywords, legal citations, entities (e.g., names of parties, judges, organizations), and other contextual information, enhancing searchability and filtering capabilities.",
+        "Customizable Categories and Tags – Allows users to define and customize document categories and tags to align with their specific organizational needs and legal practice areas.",
+        "Integration with Document Management Systems – Seamlessly integrates with popular document management systems (e.g., iManage, NetDocuments, SharePoint) to automate classification and tagging workflows.",
+        "Secure Data Handling – Employs robust security measures to protect sensitive legal information and ensure compliance with data privacy regulations (e.g., GDPR, CCPA).",
+        "Comprehensive Audit Trail – Maintains a detailed audit trail of all document classification and tagging activities, providing transparency and accountability.",
+        "Jurisdiction-Specific Classification – Classifies documents based on jurisdiction to ensure relevance of legal topics.",
+        "Optical Character Recognition (OCR) – Converts scanned documents and images into searchable text, enabling accurate classification and tagging of non-digital content."
+      ],
+      "user_journeys": [
+        "A paralegal uploads a batch of newly received legal documents into the system. The system automatically analyzes each document, identifies its type (e.g., contract, pleading), subject matter (e.g., breach of contract, intellectual property), and jurisdiction (e.g., California, New York). The system suggests appropriate categories and tags based on its analysis. The paralegal reviews the suggestions, makes any necessary adjustments, and confirms the classification. The documents are then automatically filed in the appropriate folders within the document management system, with the assigned tags enabling easy search and retrieval."
+      ],
+      "ai_capabilities": [
+        "Natural Language Processing (NLP) for analyzing document content and extracting key features, entities, and topics.",
+        "Machine Learning (ML) models for predicting document categories and tags based on extracted features and metadata.",
+        "Named Entity Recognition (NER) for identifying and classifying named entities (e.g., persons, organizations, locations) within the document.",
+        "Text Classification models trained on large datasets of legal documents to achieve high accuracy in categorization.",
+        "Topic Modeling for identifying dominant themes and topics within the document.",
+        "Sentence similarity and semantic search using embeddings to improve tag suggestions."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Legal documents in various formats (e.g., PDF, DOCX, TXT).",
+          "Metadata associated with legal documents (e.g., file name, date created, author).",
+          "Scanned images of legal documents.",
+          "Text extracted from images via OCR."
+        ],
+        "data_schema_recommendations": [
+          "Document ID (UUID)",
+          "Document Name (String)",
+          "Document Type (String: Contract, Brief, Pleading, etc.)",
+          "Jurisdiction (String: e.g., California, Federal)",
+          "Subject Matter (String: e.g., Intellectual Property, Breach of Contract)",
+          "Client Name (String)",
+          "Date Created (Date)",
+          "Author (String)",
+          "Content (Text)",
+          "Tags (Array of Strings)",
+          "Embedding (Vector representation of the document content)"
+        ],
+        "data_sources": [
+          "Existing document management systems (e.g., iManage, NetDocuments, SharePoint).",
+          "Legal research platforms (e.g., Westlaw, LexisNexis).",
+          "Internal document repositories.",
+          "Third-party legal datasets for model training and validation."
+        ],
+        "privacy_and_compliance": "Compliance with data privacy regulations such as GDPR and CCPA is crucial. Implement data anonymization and pseudonymization techniques where necessary. Ensure secure data storage and transmission. Obtain necessary consent for processing personal data. Adhere to legal hold requirements for preserving relevant documents during litigation."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "iManage (leading Document Management System)",
+          "NetDocuments (leading Document Management System)",
+          "SharePoint (Document Management and Collaboration Platform)",
+          "Westlaw (Legal Research Platform)",
+          "LexisNexis (Legal Research Platform)",
+          "Clerk/Auth0 (for user authentication)"
+        ],
+        "authentication_strategy": "OAuth 2.0 or JWT (JSON Web Tokens) are recommended for secure authentication and authorization. Consider using Clerk or Auth0 for managing user authentication and access control. Use SSO (Single Sign-On) where possible to provide a seamless user experience."
+      },
+      "technical_specifications": {
+        "architecture": "The architecture consists of a frontend for user interaction, a backend API for processing requests, a database for storing document metadata and model predictions, and an AI pipeline for document analysis and classification. The frontend interacts with the backend API via REST or GraphQL. The backend API integrates with the AI pipeline to process documents and retrieve predictions. The database stores document metadata, tags, and embeddings.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes for storing document metadata, tags, and embeddings.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing document files.",
+          "AI": "OpenAI API for embeddings, Sentence Transformers, fine-tuned legal-specific models, vector DB (Pinecone/Supabase vectors) for semantic search",
+          "APIs": "REST or GraphQL recommendations. REST is simpler to start with, GraphQL offers more flexibility for complex queries.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "POST /documents/upload – Uploads a new legal document for classification.",
+          "  Payload: { file: File, metadata: {client_name: string, case_id: string}}",
+          "  Response: { document_id: string }",
+          "GET /documents/{document_id} – Retrieves document details and classification results.",
+          "  Response: { document_id: string, document_type: string, subject_matter: string, tags: string[] }",
+          "POST /documents/{document_id}/classify – Manually trigger document classification (optional)",
+          "  Response: { document_id: string, document_type: string, subject_matter: string, tags: string[] }",
+          "GET /documents/search?query={query} – Searches for documents based on keywords or tags.",
+          "  Response: { documents: [{ document_id: string, document_name: string, document_type: string, tags: string[] }] }"
+        ],
+        "frontend_components": [
+          "Document Upload Form – Allows users to upload legal documents for classification.",
+          "Document Details Page – Displays document details, classification results, and suggested tags.",
+          "Search Results Page – Displays search results with document previews and filtering options.",
+          "Tag Management Interface – Allows users to manage and customize document tags.",
+          "Admin Dashboard – Provides administrators with insights into system usage and performance."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure should follow Next.js 14 conventions with /app for frontend, /pages for API routes (initially), and /lib for shared code.",
+        "Environment variables needed: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY",
+        "Steps for Vercel deployment: Connect GitHub repository to Vercel, configure environment variables, enable automatic deployments on Git push.",
+        "Build outputs: Ensure that all necessary files are included in the build output (e.g., static assets, serverless functions).",
+        "Runtime settings: Configure appropriate runtime settings for serverless functions (e.g., memory allocation, execution timeout)."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on document volume and features.",
+          "Usage-based pricing based on the number of documents classified per month.",
+          "Per-seat pricing based on the number of users accessing the service.",
+          "Add-ons for advanced features such as custom model training and priority support."
+        ],
+        "customer_segments": [
+          "Small law firms (1-10 attorneys)",
+          "Mid-sized law firms (11-50 attorneys)",
+          "Large law firms (50+ attorneys)",
+          "Corporate legal departments",
+          "Government agencies"
+        ]
+      },
+      "success_metrics": [
+        "Accuracy of document classification (precision, recall, F1-score).",
+        "Time savings achieved through automated classification.",
+        "Reduction in manual effort for document tagging and categorization.",
+        "User adoption and engagement (number of active users, documents classified).",
+        "Customer satisfaction (Net Promoter Score, customer feedback).",
+        "Operational KPIs: System uptime, API response time.",
+        "AI performance KPIs: Model training time, inference latency.",
+        "Adoption/engagement KPIs: Monthly active users, document classification rate."
+      ]
+    }
+  ]
+}
+```

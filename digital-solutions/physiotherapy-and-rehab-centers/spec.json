@@ -1,0 +1,123 @@
+{
+  "industry": "Healthcare/Sports Medicine",
+  "services": [
+    {
+      "name": "AI-Powered Gait Analysis System",
+      "overview": "This service provides real-time gait analysis using computer vision to identify biomechanical issues and track patient progress. It addresses the limitations of subjective gait assessments by offering objective, quantifiable data. The system analyzes video footage of patients walking or running, detecting deviations from optimal gait patterns and generating detailed reports. These reports include biomechanical metrics, visualizations of gait abnormalities, and personalized recommendations for treatment and training. The goal is to improve diagnostic accuracy, enable objective progress tracking, and facilitate the development of personalized intervention plans. By automating the analysis process, it also reduces the time and resources required for gait assessment, allowing clinicians to focus on patient care. The system integrates seamlessly into existing clinical workflows, providing a user-friendly interface for data capture, analysis, and reporting.",
+      "problems_addressed": [
+        "Subjective nature of traditional gait assessments",
+        "Difficulty in quantifying progress and treatment effectiveness",
+        "Time-consuming manual analysis of gait patterns",
+        "Inability to detect subtle biomechanical deviations"
+      ],
+      "target_users": [
+        "Physiotherapists",
+        "Sports medicine doctors",
+        "Rehabilitation specialists",
+        "Athletic trainers",
+        "Orthopedic surgeons"
+      ],
+      "core_features": [
+        "Real-time video capture and analysis: Records video of patients walking or running and analyzes it in real-time.",
+        "Biomechanical metric calculation: Calculates key gait parameters such as stride length, cadence, joint angles, and ground reaction forces.",
+        "Gait deviation detection: Identifies deviations from optimal gait patterns based on normative data and expert knowledge.",
+        "Automated report generation: Generates comprehensive reports summarizing the analysis results, including visualizations of gait abnormalities and personalized recommendations.",
+        "Progress tracking: Monitors patient progress over time, allowing clinicians to assess the effectiveness of treatment interventions.",
+        "Customizable protocols: Allows users to define custom gait analysis protocols based on their specific needs.",
+        "Secure data storage: Stores patient data securely and in compliance with relevant privacy regulations (HIPAA)."
+      ],
+      "user_journeys": [
+        "A physiotherapist logs into the system, initiates a new patient session, records video of the patient walking on a treadmill, the system automatically analyzes the gait, generates a report highlighting knee joint instability, the therapist reviews the report with the patient and develops a targeted exercise plan, and schedules a follow-up session to track progress."
+      ],
+      "ai_capabilities": [
+        "Computer vision for pose estimation and gait event detection (heel strike, toe-off).",
+        "Machine learning models trained on large datasets of gait data to identify deviations from normal gait patterns.",
+        "NLP for generating personalized recommendations based on the analysis results.",
+        "OpenAI models are not specifically required. Consider using open-source pose estimation models (e.g., OpenPose, MediaPipe) and train custom classification models. Embeddings and vector search are not necessary unless comparing a patient's gait to similar cases in a database. Fine-tuning may be necessary for specific patient populations (e.g., elderly, athletes)."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Video footage of patients walking or running",
+          "Patient demographics (age, gender, height, weight)",
+          "Medical history (relevant injuries, conditions)",
+          "Gait analysis protocol parameters (walking speed, treadmill incline)"
+        ],
+        "data_schema_recommendations": [
+          "Patients table: patient_id (INT, PRIMARY KEY), first_name (VARCHAR), last_name (VARCHAR), dob (DATE), gender (ENUM('Male', 'Female', 'Other')), height (FLOAT), weight (FLOAT), medical_history (TEXT)",
+          "Sessions table: session_id (INT, PRIMARY KEY), patient_id (INT, FOREIGN KEY references Patients(patient_id)), date (DATE), protocol (VARCHAR), video_url (VARCHAR)",
+          "GaitAnalysisResults table: result_id (INT, PRIMARY KEY), session_id (INT, FOREIGN KEY references Sessions(session_id)), stride_length (FLOAT), cadence (INT), joint_angles (JSON), deviations (JSON), recommendations (TEXT)"
+        ],
+        "data_sources": [
+          "Video camera",
+          "Patient intake forms",
+          "Electronic medical records (EMRs) - optional integration",
+          "Normative gait data datasets"
+        ],
+        "privacy_and_compliance": "HIPAA compliance for patient data privacy and security. GDPR compliance if serving patients in the EU. Data anonymization and de-identification techniques should be employed when using data for research purposes."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Electronic medical records (EMRs) - optional for data sharing and workflow integration",
+          "Wearable sensors (accelerometers, gyroscopes) - optional for enhanced data capture",
+          "Cloud storage (AWS S3, Google Cloud Storage) - for storing video footage and analysis reports",
+          "Analytics tools (Google Analytics, Mixpanel) - for tracking user engagement and system performance"
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for secure authentication and authorization. OAuth 2.0 for integration with third-party services. Consider Clerk or Auth0 for managed authentication solutions to simplify implementation and enhance security."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a modular architecture consisting of a frontend for user interaction, a backend for API management and data processing, a database for storing patient data and analysis results, and an AI pipeline for gait analysis. The frontend will communicate with the backend via REST APIs. The backend will orchestrate the AI pipeline and store the results in the database.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions. Leverage server components for data fetching and rendering. Use client components for interactive elements.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions. Implement API endpoints using Next.js API routes or serverless functions. Use a framework like Express.js for more complex backend logic.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes. Use an ORM like Prisma or Sequelize to interact with the database. Optimize database queries for performance.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob. Use object storage for storing video footage and analysis reports. Implement a robust file management system.",
+          "AI": "OpenCV, TensorFlow/PyTorch for computer vision tasks. Leverage pre-trained pose estimation models. Train custom classification models using labeled gait data. Explore using CUDA for GPU acceleration.",
+          "APIs": "REST APIs for communication between the frontend and backend. Use OpenAPI/Swagger for API documentation.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline. Automate the build, test, and deployment process using GitHub Actions and Vercel."
+        },
+        "API_design": [
+          "POST /api/sessions - Create a new patient session. Payload: { patient_id: INT, protocol: VARCHAR }",
+          "GET /api/sessions/{session_id} - Get session details. Response: { session_id: INT, patient_id: INT, date: DATE, protocol: VARCHAR, video_url: VARCHAR }",
+          "POST /api/analysis - Analyze a video and store the results. Payload: { session_id: INT, video_url: VARCHAR }",
+          "GET /api/results/{result_id} - Get gait analysis results. Response: { result_id: INT, session_id: INT, stride_length: FLOAT, cadence: INT, joint_angles: JSON, deviations: JSON, recommendations: TEXT }",
+          "GET /api/patients/{patient_id} - Get patient details. Response: { patient_id: INT, first_name: VARCHAR, last_name: VARCHAR, dob: DATE, gender: ENUM, height: FLOAT, weight: FLOAT, medical_history: TEXT }"
+        ],
+        "frontend_components": [
+          "PatientDashboard: Displays patient information, session history, and analysis results.",
+          "VideoCapture: Allows users to record video of patients walking or running.",
+          "ReportViewer: Displays the gait analysis report with visualizations and recommendations.",
+          "SettingsPanel: Allows users to configure system settings and customize protocols."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /database, /ai_models. Separate directories for frontend components, backend API routes, database migrations, and AI model files.",
+        "Environment variables: DATABASE_URL (PostgreSQL connection string), OPENAI_API_KEY (if using OpenAI models), VIDEO_STORAGE_URL (URL for storing video footage), JWT_SECRET (secret key for JWT authentication).",
+        "Vercel deployment: Configure Vercel to automatically deploy the frontend and backend from the GitHub repository. Set up environment variables in the Vercel dashboard. Configure build outputs and runtime settings.",
+        "Build outputs: /frontend/.next, /backend/dist. Runtime settings: Node.js version, memory limits."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of sessions per month (e.g., Basic, Standard, Premium).",
+          "Usage-based pricing for additional sessions beyond the subscription limit.",
+          "Add-ons for EMR integration, wearable sensor support, and custom protocol development."
+        ],
+        "customer_segments": [
+          "Small physiotherapy clinics",
+          "Large hospitals and rehabilitation centers",
+          "Sports medicine practices",
+          "Universities and research institutions"
+        ]
+      },
+      "success_metrics": [
+        "Number of active users (clinicians)",
+        "Number of gait analysis sessions performed",
+        "Patient satisfaction with the system",
+        "Improvement in patient outcomes (e.g., reduced pain, improved mobility)",
+        "Accuracy of gait deviation detection (precision, recall)",
+        "Time saved per gait analysis session",
+        "Adoption rate among target users",
+        "Engagement metrics (e.g., report views, feature usage)"
+      ]
+    }
+  ]
+}

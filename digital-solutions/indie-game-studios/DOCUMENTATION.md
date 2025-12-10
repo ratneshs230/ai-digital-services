@@ -1,0 +1,145 @@
+# AI Game Tester
+
+## Industry: Indie game studios
+
+### Overview
+Automated game testing service that uses AI agents to find bugs and gameplay issues.
+
+### Problem It Solves
+Manual game testing is time-consuming and expensive, especially for small teams.
+
+### Core Solution
+AI agents explore the game world, perform actions, and identify bugs, glitches, and balance issues based on predefined rules and learned patterns.
+
+### Target Users
+Indie game developers, QA teams.
+
+### Business Impact
+Reduces testing time, improves game quality, and lowers development costs.
+
+### Example Use Case
+An indie studio uses the AI Game Tester to automatically test a new level, identifying several collision bugs and balance issues before release.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Game Development",
+  "services": [
+    {
+      "name": "AI Game Tester",
+      "overview": "The AI Game Tester is an automated service designed to revolutionize game quality assurance. It leverages advanced AI agents to autonomously explore game environments, execute a wide array of actions, and proactively identify bugs, glitches, and balance inconsistencies. This service offers a comprehensive solution for game developers, particularly indie studios and QA teams, by significantly reducing testing time, improving overall game quality, and substantially lowering development costs associated with traditional manual testing processes. The AI Game Tester integrates seamlessly into existing game development workflows, providing detailed reports and actionable insights to streamline bug fixing and game balancing efforts. By continuously learning and adapting to new game content, the AI agents ensure consistent and thorough testing coverage, allowing developers to focus on creative aspects while maintaining high standards of quality.",
+      "problems_addressed": [
+        "High cost and time consumption associated with manual game testing.",
+        "Difficulty in thoroughly testing large and complex game environments.",
+        "Balancing gameplay elements and identifying exploits.",
+        "Inconsistent testing coverage due to human error and fatigue.",
+        "Lack of objective and data-driven insights into game quality."
+      ],
+      "target_users": [
+        "Indie Game Developers: Small teams with limited QA resources.",
+        "QA Teams: Professional testers seeking to automate repetitive tasks and increase efficiency.",
+        "Game Studios: Companies looking to reduce development costs and improve game quality."
+      ],
+      "core_features": [
+        "Automated Exploration: AI agents autonomously navigate and interact with the game world, covering a wide range of scenarios.",
+        "Bug Detection: Proactively identifies bugs, glitches, and collision issues based on predefined rules and learned patterns using computer vision and rule-based systems.",
+        "Gameplay Balancing: Analyzes gameplay data to identify balance issues, such as overpowered weapons or unfair level design, using statistical analysis and reinforcement learning.",
+        "Detailed Reporting: Generates comprehensive reports with detailed information about detected issues, including screenshots, logs, and reproduction steps.",
+        "Customizable Testing Parameters: Allows users to define specific testing parameters, such as focus areas, testing duration, and acceptable performance thresholds."
+      ],
+      "user_journeys": [
+        "A game developer uploads a new game build to the AI Game Tester platform.",
+        "The developer configures testing parameters, such as specifying which areas of the game to focus on and setting performance thresholds.",
+        "AI agents autonomously explore the game environment, performing actions and interacting with objects.",
+        "The AI agents identify a collision bug where the player character can walk through a wall.",
+        "The AI Game Tester generates a detailed report, including screenshots, logs, and steps to reproduce the bug.",
+        "The developer reviews the report, fixes the bug, and uploads a new build for further testing."
+      ],
+      "ai_capabilities": [
+        "Reinforcement Learning: Trains AI agents to effectively explore and interact with game environments.",
+        "Computer Vision: Detects visual anomalies, such as graphical glitches and texture errors, using convolutional neural networks (CNNs).",
+        "Natural Language Processing (NLP): Analyzes in-game text and dialogue for errors, inconsistencies, and offensive content using transformer models.",
+        "Anomaly Detection: Identifies unusual gameplay patterns or performance metrics that may indicate bugs or balance issues using statistical models."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Game builds (executable files)",
+          "Game configuration files",
+          "Game logs",
+          "User-defined testing parameters"
+        ],
+        "data_schema_recommendations": [
+          "Bug reports: bug_id (INT, primary key), game_version (VARCHAR), timestamp (TIMESTAMP), bug_type (ENUM: 'collision', 'graphical', 'functional', 'balance'), description (TEXT), reproduction_steps (TEXT), severity (ENUM: 'critical', 'major', 'minor', 'cosmetic'), status (ENUM: 'open', 'in_progress', 'resolved', 'closed'), screenshot_url (VARCHAR)"
+        ],
+        "data_sources": [
+          "Game builds uploaded by users",
+          "Game logs generated by the game engine",
+          "AI agent exploration data"
+        ],
+        "privacy_and_compliance": "Ensure compliance with data privacy regulations such as GDPR and CCPA when handling user data. Anonymize or pseudonymize sensitive data whenever possible. Obtain necessary consent for data collection and usage."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Game engines (Unity, Unreal Engine): For direct access to game data and events.",
+          "Bug tracking systems (Jira, Asana, Trello): For seamless bug report submission.",
+          "CI/CD pipelines (Jenkins, CircleCI): For automated testing as part of the build process.",
+          "Version control systems (Git): For tracking game build versions and changes.",
+          "Discord/Slack: For notifications and reporting."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) for secure API access. OAuth 2.0 for third-party integrations."
+      },
+      "technical_specifications": {
+        "architecture": "Microservices architecture: Separate services for AI agents, bug detection, gameplay balancing, reporting, and user management. API gateway for routing requests to appropriate services. Message queue for asynchronous communication between services.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions, Python for AI/ML components",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, reinforcement learning libraries (TensorFlow, PyTorch), computer vision libraries (OpenCV), NLP libraries (NLTK, SpaCy)",
+          "APIs": "REST APIs for communication between services and external integrations",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "/api/upload_build (POST): Uploads a new game build for testing. Payload: { game_name: string, game_version: string, build_file: file }",
+          "/api/configure_test (POST): Configures testing parameters. Payload: { game_name: string, game_version: string, test_parameters: object }",
+          "/api/get_report (GET): Retrieves a testing report. Query parameters: game_name, game_version, report_id"
+        ],
+        "frontend_components": [
+          "Build Upload Form: Allows users to upload game builds and specify game details.",
+          "Test Configuration Panel: Allows users to configure testing parameters, such as focus areas and performance thresholds.",
+          "Report Dashboard: Displays detailed testing reports with interactive visualizations and filtering options.",
+          "Settings Panel: Manages user accounts, API keys, and integration settings."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend (Next.js frontend), /backend (Node.js backend), /ai (Python AI/ML components)",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, GAME_ENGINE_API_KEY",
+        "Vercel deployment: Deploy frontend and backend as separate Vercel projects. Configure environment variables in Vercel settings.",
+        "Build outputs: Frontend: static HTML, CSS, and JavaScript files. Backend: serverless functions."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Free (limited testing hours), Basic, Pro, Enterprise (unlimited testing hours and dedicated support)",
+          "Usage-based pricing: Pay per testing hour or number of bugs detected.",
+          "Add-ons: Additional features, such as priority support and custom AI agent training."
+        ],
+        "customer_segments": [
+          "Indie Game Developers",
+          "Small to Medium-sized Game Studios",
+          "Enterprise-level Game Publishers"
+        ]
+      },
+      "success_metrics": [
+        "Reduction in manual testing time",
+        "Improvement in game quality (fewer bugs reported by players)",
+        "Increase in testing coverage",
+        "Adoption rate among target users",
+        "Customer satisfaction (measured through surveys and feedback)"
+      ]
+    }
+  ]
+}
+```

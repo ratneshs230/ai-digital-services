@@ -1,0 +1,138 @@
+# Predictive Maintenance AI
+
+## Industry: Factory Consultancies
+
+### Overview
+AI-powered predictive maintenance platform that analyzes sensor data to forecast equipment failures and optimize maintenance schedules.
+
+### Problem It Solves
+Unexpected equipment breakdowns leading to production downtime and costly repairs.
+
+### Core Solution
+Utilizes machine learning algorithms to analyze real-time sensor data (vibration, temperature, pressure) and historical maintenance records to predict equipment failures and recommend proactive maintenance.
+
+### Target Users
+Factory managers, maintenance engineers, operations directors.
+
+### Business Impact
+Reduces downtime, lowers maintenance costs, extends equipment lifespan, and improves overall equipment effectiveness (OEE).
+
+### Example Use Case
+A manufacturing plant uses the system to predict bearing failures in its conveyor belts, preventing a major production halt.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Manufacturing",
+  "services": [
+    {
+      "name": "Predictive Maintenance AI Platform",
+      "overview": "The Predictive Maintenance AI Platform is a SaaS solution designed to minimize equipment downtime, reduce maintenance costs, and extend equipment lifespan within manufacturing facilities. This platform leverages real-time sensor data, historical maintenance records, and advanced machine learning algorithms to predict equipment failures before they occur. By identifying potential issues in advance, the system enables proactive maintenance scheduling, minimizing disruptions to production and optimizing resource allocation. The platform's intuitive interface provides actionable insights to factory managers, maintenance engineers, and operations directors, empowering them to make data-driven decisions that improve overall equipment effectiveness (OEE).",
+      "problems_addressed": [
+        "Unexpected equipment breakdowns causing production downtime",
+        "High maintenance costs due to reactive repairs",
+        "Reduced equipment lifespan due to inadequate maintenance"
+      ],
+      "target_users": [
+        "Factory Managers – Responsible for overall plant efficiency and minimizing downtime.",
+        "Maintenance Engineers – Tasked with maintaining equipment and responding to failures.",
+        "Operations Directors – Focused on optimizing production processes and reducing operational costs."
+      ],
+      "core_features": [
+        "Real-time Sensor Data Analysis – Continuous monitoring and analysis of sensor data (vibration, temperature, pressure, flow rate, etc.) from various equipment components.",
+        "Failure Prediction Modeling – Utilizes machine learning algorithms (e.g., Random Forest, Gradient Boosting, Neural Networks) trained on historical data to predict the probability of equipment failure within a specified timeframe.",
+        "Maintenance Schedule Optimization – Recommends optimal maintenance schedules based on predicted failure probabilities, minimizing downtime and maximizing resource utilization.",
+        "Alerting and Notification System – Provides timely alerts and notifications to relevant personnel when potential equipment failures are detected, allowing for proactive intervention.",
+        "Reporting and Analytics Dashboard – Offers comprehensive reports and analytics dashboards that visualize equipment health, failure predictions, and maintenance performance metrics."
+      ],
+      "user_journeys": [
+        "A maintenance engineer logs into the platform, reviews the dashboard, and identifies a conveyor belt bearing with a high probability of failure within the next week. The engineer schedules a maintenance task to replace the bearing during a planned downtime window, preventing an unexpected production halt."
+      ],
+      "ai_capabilities": [
+        "Machine learning models for predicting equipment failure based on sensor data and historical maintenance records. Specifically, algorithms like Random Forest, Gradient Boosting Machines (GBM), and Recurrent Neural Networks (RNNs) are used to model time-series data and predict failure probabilities.",
+        "Anomaly detection algorithms to identify unusual patterns in sensor data that may indicate early signs of equipment malfunction.",
+        "Model selection notes: Leverage time-series forecasting models like LSTMs for sequential sensor data. Consider fine-tuning a pre-trained model for specific equipment types if sufficient data is available. Embeddings can be used to represent different equipment types or failure modes for improved model generalization.  Vector search isn't directly applicable, but consider using embeddings of equipment failure signatures to find similar past failures. OpenAI models are not directly applicable but can be integrated for natural language processing of maintenance logs."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Real-time sensor data (vibration, temperature, pressure, flow rate, current, voltage)",
+          "Historical maintenance records (dates, tasks performed, parts replaced)",
+          "Equipment specifications (manufacturer, model, serial number, installation date)",
+          "Operating conditions (production rate, environmental factors)"
+        ],
+        "data_schema_recommendations": [
+          "Sensor Data Table: (timestamp, equipment_id, sensor_type, sensor_value)",
+          "Maintenance Records Table: (maintenance_id, equipment_id, date, task_description, parts_replaced)",
+          "Equipment Specifications Table: (equipment_id, manufacturer, model, serial_number, installation_date)",
+          "Failure Predictions Table: (equipment_id, prediction_timestamp, failure_probability, predicted_failure_date)"
+        ],
+        "data_sources": [
+          "PLC systems, SCADA systems, IIoT platforms, CMMS (Computerized Maintenance Management Systems), manually entered maintenance logs"
+        ],
+        "privacy_and_compliance": "Compliance with data privacy regulations (e.g., GDPR, CCPA) is essential when collecting and storing sensor data. Ensure data is anonymized and securely stored. Consider using edge computing for local data processing to minimize data transfer and enhance privacy."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "CMMS (Computerized Maintenance Management Systems) – For seamless integration of maintenance schedules and work orders.",
+          "SCADA (Supervisory Control and Data Acquisition) systems – For real-time access to sensor data from industrial equipment.",
+          "ERP (Enterprise Resource Planning) systems – For integration with inventory management and procurement processes.",
+          "IIoT Platforms (e.g., AWS IoT, Azure IoT Hub) – For secure data ingestion and device management."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) with OAuth 2.0 for secure API access.  Consider Clerk or Auth0 for managing user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The platform follows a three-tier architecture: (1) Data Ingestion Layer (collects and processes sensor data from various sources), (2) AI Model Layer (trains and deploys machine learning models for failure prediction), (3) Presentation Layer (provides a user-friendly interface for accessing insights and managing maintenance schedules).  Data flows from the edge (sensors, PLCs) to the cloud for processing and analysis.  The API layer enables integration with external systems.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions for building a responsive and interactive user interface.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions for handling API requests and data processing.",
+          "database": "Planetscale / Supabase / PostgreSQL with optimized schemas for storing sensor data, maintenance records, and failure predictions.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing large volumes of historical sensor data and model artifacts.",
+          "AI": "OpenAI API is not directly applicable.  Use scikit-learn, TensorFlow, or PyTorch for building and training machine learning models.  Consider Pinecone or Supabase vectors for storing and querying equipment embeddings (if applicable).",
+          "APIs": "REST APIs for data ingestion, model deployment, and user interface interactions.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline for continuous integration and deployment."
+        },
+        "API_design": [
+          "/api/sensors/ingest (POST): Accepts sensor data from edge devices. Payload: {equipment_id: string, sensor_type: string, sensor_value: float, timestamp: datetime}",
+          "/api/predictions/get (GET): Retrieves failure predictions for a specific equipment.  Query params: equipment_id: string.  Response: {equipment_id: string, predicted_failure_date: datetime, failure_probability: float}",
+          "/api/maintenance/schedule (POST): Schedules a maintenance task.  Payload: {equipment_id: string, task_description: string, scheduled_date: datetime}"
+        ],
+        "frontend_components": [
+          "Dashboard: Displays overall equipment health, key performance indicators (KPIs), and pending maintenance tasks.",
+          "Equipment View: Provides detailed information about a specific piece of equipment, including sensor data, failure predictions, and maintenance history.",
+          "Alerts Panel: Shows a list of active alerts and notifications related to potential equipment failures."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: / (root), /components (React components), /pages/api (API endpoints), /lib (utility functions), /models (database models)",
+        "Environment variables: DATABASE_URL, OPENAI_API_KEY (if using OpenAI for NLP), SENSOR_DATA_API_KEY, ALERT_EMAIL_ADDRESS, ALERT_EMAIL_PASSWORD",
+        "Vercel deployment: Connect the GitHub repository to Vercel and configure environment variables.  Ensure the build command is set to `next build` and the output directory is set to `.next`.",
+        "Build outputs: Static HTML, serverless functions for API endpoints.",
+        "Runtime settings: Configure Vercel serverless function memory and execution timeout settings as needed."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of connected equipment, data volume, and features included.",
+          "Usage-based pricing based on the amount of sensor data processed.",
+          "Add-ons for premium features such as custom model training and integration with specific CMMS systems."
+        ],
+        "customer_segments": [
+          "Small to medium-sized manufacturing businesses with limited in-house AI expertise.",
+          "Large enterprises with complex manufacturing operations and a focus on operational efficiency.",
+          "Industrial equipment manufacturers looking to offer predictive maintenance services to their customers."
+        ]
+      },
+      "success_metrics": [
+        "Reduction in unplanned downtime (percentage).",
+        "Decrease in maintenance costs (percentage).",
+        "Increase in overall equipment effectiveness (OEE).",
+        "Accuracy of failure predictions (precision and recall).",
+        "Adoption rate of the platform among target users.",
+        "User engagement (e.g., daily/monthly active users)."
+      ]
+    }
+  ]
+}
+```

@@ -1,0 +1,149 @@
+# Predictive Maintenance Advisor
+
+## Industry: Telematics providers
+
+### Overview
+AI-driven service that analyzes telematics data to predict vehicle maintenance needs, preventing breakdowns and reducing downtime.
+
+### Problem It Solves
+Unscheduled vehicle maintenance leads to downtime, increased repair costs, and logistical disruptions.
+
+### Core Solution
+Uses machine learning to analyze real-time data from vehicle sensors (engine temperature, oil pressure, mileage) to predict component failure and recommend proactive maintenance.
+
+### Target Users
+Fleet managers, logistics companies, transportation businesses.
+
+### Business Impact
+Reduces vehicle downtime, lowers maintenance costs, improves vehicle lifespan, and optimizes maintenance scheduling.
+
+### Example Use Case
+A trucking company receives an alert that a specific truck's turbocharger is likely to fail within the next 1,000 miles, allowing them to schedule a repair during planned downtime instead of experiencing a breakdown on the road.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Transportation and Logistics",
+  "services": [
+    {
+      "name": "Predictive Maintenance Advisor",
+      "overview": "The Predictive Maintenance Advisor is an AI-powered service designed to analyze telematics data from commercial vehicles to forecast maintenance needs. By leveraging machine learning algorithms, the service identifies potential component failures before they occur, enabling proactive maintenance scheduling. This prevents unexpected breakdowns, minimizes downtime, reduces repair costs, and extends the lifespan of vehicles. The system integrates seamlessly with existing telematics systems and provides actionable insights through a user-friendly dashboard and API, empowering fleet managers and maintenance personnel to make data-driven decisions. The advisor goes beyond simple threshold-based alerts by considering complex patterns and correlations within the data to provide accurate and timely maintenance recommendations.",
+      "problems_addressed": [
+        "Unscheduled vehicle downtime and associated logistical disruptions.",
+        "High repair costs due to reactive maintenance.",
+        "Reduced vehicle lifespan due to neglected or delayed maintenance.",
+        "Inefficient maintenance scheduling based on fixed intervals rather than actual vehicle condition."
+      ],
+      "target_users": [
+        "Fleet Managers responsible for maintaining vehicle uptime and minimizing maintenance costs.",
+        "Maintenance Technicians tasked with diagnosing and repairing vehicle issues.",
+        "Logistics Coordinators who need to ensure timely delivery of goods and minimize disruptions to transportation schedules.",
+        "Transportation Business Owners looking to optimize operational efficiency and reduce overall expenses."
+      ],
+      "core_features": [
+        "Real-Time Data Analysis: Continuously monitors telematics data streams from vehicle sensors, including engine temperature, oil pressure, mileage, fuel consumption, and diagnostic trouble codes (DTCs).",
+        "Predictive Modeling: Employs machine learning models to forecast the remaining useful life (RUL) of critical vehicle components, such as engines, transmissions, brakes, tires, and turbochargers. These models are trained on historical data and continuously refined with new information.",
+        "Alerting and Notifications: Generates proactive alerts and notifications when a potential component failure is detected, providing sufficient lead time for scheduling maintenance. Alerts are customizable and can be delivered via email, SMS, or through the integrated dashboard.",
+        "Maintenance Recommendations: Provides specific maintenance recommendations based on the predicted failure mode, including suggested repairs, parts replacements, and estimated labor costs. These recommendations are tailored to the specific vehicle model and operating conditions.",
+        "Reporting and Analytics: Offers comprehensive reporting and analytics dashboards that visualize vehicle health trends, maintenance costs, and downtime metrics. Users can generate custom reports to track key performance indicators (KPIs) and identify areas for improvement."
+      ],
+      "user_journeys": [
+        "A fleet manager logs into the Predictive Maintenance Advisor dashboard. They see a list of vehicles sorted by predicted maintenance needs. They click on a specific truck and see that the system predicts a turbocharger failure within the next 1,000 miles. The system recommends replacing the turbocharger and provides an estimated cost. The fleet manager schedules the repair during a planned downtime, avoiding a potential breakdown on the road. They update the system with the repair details, which are then used to refine the predictive models."
+      ],
+      "ai_capabilities": [
+        "Time Series Forecasting: Uses LSTM or Transformer models to predict the future values of sensor data based on historical trends. This is used to identify anomalies and forecast component degradation.",
+        "Anomaly Detection: Employs isolation forests or one-class SVMs to detect unusual patterns in sensor data that may indicate a developing problem. This helps to identify potential failures early on.",
+        "Remaining Useful Life (RUL) Prediction: Uses regression models (e.g., Random Forest, Gradient Boosting) to estimate the remaining lifespan of critical components based on sensor data and historical failure data. Feature engineering is crucial, deriving features like rolling averages, standard deviations, and derivatives from sensor readings.",
+        "Fault Code Analysis: NLP models to categorize and interpret diagnostic trouble codes (DTCs), linking them to potential component failures and recommending appropriate actions."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Telematics data streams from vehicle sensors (e.g., engine temperature, oil pressure, mileage, fuel consumption, speed, RPM).",
+          "Diagnostic trouble codes (DTCs) from the vehicle's onboard diagnostic system.",
+          "Vehicle identification number (VIN) and other vehicle-specific information.",
+          "Maintenance history data (e.g., repair dates, parts replaced, labor costs).",
+          "Environmental data (e.g., weather conditions, road conditions)."
+        ],
+        "data_schema_recommendations": [
+          "Telemetry Table: (timestamp, vehicle_id, sensor_name, sensor_value)",
+          "DTC Table: (timestamp, vehicle_id, dtc_code, dtc_description)",
+          "Vehicle Table: (vehicle_id, vin, make, model, year, engine_type, transmission_type)",
+          "Maintenance Table: (repair_id, vehicle_id, repair_date, part_replaced, labor_cost, mechanic_id)",
+          "Weather Table: (timestamp, location, temperature, humidity, precipitation)"
+        ],
+        "data_sources": [
+          "Existing telematics systems (e.g., Geotab, Samsara, Verizon Connect).",
+          "Vehicle onboard diagnostic systems (OBD-II).",
+          "Maintenance management systems.",
+          "Third-party weather data providers (e.g., OpenWeatherMap)."
+        ],
+        "privacy_and_compliance": "Data privacy regulations (e.g., GDPR, CCPA) need to be considered, especially when collecting and processing personal data related to vehicle operators. Data anonymization and secure data storage practices are essential."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Telematics systems: Integrate with existing telematics platforms to access real-time vehicle data.",
+          "Maintenance management systems: Integrate with maintenance management systems to track repair history and schedule maintenance tasks.",
+          "Email and SMS providers: Integrate with email and SMS providers to send alerts and notifications to fleet managers and maintenance personnel.",
+          "Mapping and navigation services: Integrate with mapping and navigation services to provide location-based information and routing recommendations."
+        ],
+        "authentication_strategy": "JWT (JSON Web Tokens) are recommended for API authentication. OAuth 2.0 can be used for integrations with third-party services. Consider using Clerk or Auth0 for user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture. Key components include a data ingestion service, a data processing service, a machine learning service, an API gateway, a frontend application, and a database. The data ingestion service collects data from various sources and stores it in a data lake. The data processing service cleans, transforms, and enriches the data. The machine learning service trains and deploys predictive models. The API gateway provides a secure and scalable interface for accessing the system's functionality. The frontend application provides a user-friendly interface for managing vehicles, viewing alerts, and generating reports.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes for schema design",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API (for NLP tasks like fault code analysis), embeddings, vector DB (Pinecone/Supabase vectors) if needed for fault code similarity search",
+          "APIs": "REST APIs for internal communication and external integrations. GraphQL can be considered for the frontend API to optimize data fetching.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "GET /vehicles: Returns a list of all vehicles in the fleet.",
+          "GET /vehicles/{vehicle_id}: Returns details for a specific vehicle.",
+          "GET /vehicles/{vehicle_id}/alerts: Returns a list of alerts for a specific vehicle.",
+          "GET /vehicles/{vehicle_id}/predictions: Returns maintenance predictions for a specific vehicle.",
+          "POST /vehicles/{vehicle_id}/maintenance: Records a maintenance event for a specific vehicle.",
+          "POST /telemetry: Ingests telemetry data from vehicles. Payload: {vehicle_id, timestamp, sensor_name, sensor_value}"
+        ],
+        "frontend_components": [
+          "Vehicle List: Displays a list of vehicles with their current status and predicted maintenance needs.",
+          "Vehicle Details: Displays detailed information about a specific vehicle, including sensor data, maintenance history, and predicted failures.",
+          "Alerts Dashboard: Displays a list of active alerts, sorted by severity and urgency.",
+          "Maintenance Scheduler: Allows users to schedule maintenance tasks and track their progress."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory Structure: /frontend, /backend, /database, /ai_models, /scripts",
+        "Environment Variables: OPENAI_API_KEY, DATABASE_URL, TELEMATICS_API_KEY, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD",
+        "Vercel Deployment: Configure Vercel to automatically deploy the frontend and backend applications from the GitHub repository. Set the environment variables in the Vercel project settings.",
+        "Build Outputs: The frontend build output should be configured to serve static assets from the /public directory. The backend build output should be configured to run the Node.js server."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of vehicles managed.",
+          "Usage-based pricing based on the volume of data processed.",
+          "Add-ons for advanced features, such as custom reporting and API access."
+        ],
+        "customer_segments": [
+          "Small businesses with a few vehicles.",
+          "Mid-market businesses with a medium-sized fleet.",
+          "Enterprises with a large and complex fleet."
+        ]
+      },
+      "success_metrics": [
+        "Reduction in vehicle downtime (percentage).",
+        "Reduction in maintenance costs (percentage).",
+        "Increase in vehicle lifespan (years).",
+        "Adoption rate of the Predictive Maintenance Advisor among fleet managers (percentage).",
+        "Accuracy of the predictive models (precision, recall, F1-score).",
+        "Number of proactive maintenance actions taken based on system recommendations."
+      ]
+    }
+  ]
+}
+```

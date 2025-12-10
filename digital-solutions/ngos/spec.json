@@ -1,0 +1,125 @@
+{
+  "industry": "Non-Profit / NGO",
+  "services": [
+    {
+      "name": "AI-Powered Grant Proposal Writer",
+      "overview": "This service automates the grant proposal writing process for non-governmental organizations (NGOs), significantly reducing the time and resources spent on securing funding. It leverages AI to match NGO projects with relevant grant opportunities and generates compelling, customized proposal drafts. The system analyzes project details, funding databases, and successful grant proposals to identify optimal matches and craft persuasive narratives, ultimately increasing the likelihood of securing funding for critical NGO programs.",
+      "problems_addressed": [
+        "High time investment in grant proposal writing, diverting resources from core NGO missions.",
+        "Low success rates in grant applications due to lack of expertise or resources.",
+        "Difficulty identifying relevant grant opportunities aligned with specific project goals.",
+        "Inconsistent proposal quality leading to missed funding opportunities."
+      ],
+      "target_users": [
+        "Grant writers at NGOs",
+        "Program managers responsible for securing funding",
+        "Development directors overseeing fundraising efforts",
+        "Executive directors seeking to maximize funding acquisition"
+      ],
+      "core_features": [
+        "Grant Opportunity Matching – Automatically identifies relevant grant opportunities based on project details, geographic focus, and thematic areas.",
+        "AI-Powered Proposal Generation – Generates customized proposal drafts, including project summaries, needs statements, project descriptions, evaluation plans, and budget narratives, using persuasive language tailored to the specific grant opportunity.",
+        "Content Library – Provides access to a library of pre-written content, including templates, examples, and best practices for grant writing.",
+        "Compliance Check – Ensures proposals adhere to the specific guidelines and requirements of each grant opportunity.",
+        "Collaboration Tools – Facilitates collaboration among team members through shared document editing, version control, and communication features.",
+        "Performance Tracking – Monitors proposal submission rates, success rates, and funding amounts secured over time."
+      ],
+      "user_journeys": [
+        "User logs in to the platform using Clerk authentication.",
+        "User inputs project details, including goals, activities, budget, and target population.",
+        "The AI model analyzes the project details and identifies relevant grant opportunities from a database of funding sources.",
+        "The user reviews the list of matched grant opportunities and selects the most promising options.",
+        "The AI model generates a customized proposal draft based on the selected grant opportunity and the project details.",
+        "The user reviews and edits the proposal draft, utilizing the content library and collaboration tools as needed.",
+        "The user submits the completed proposal through the platform or downloads it for manual submission.",
+        "The system tracks the submission status and outcome of the proposal."
+      ],
+      "ai_capabilities": [
+        "Natural Language Processing (NLP) – Used for analyzing project details, grant opportunity descriptions, and successful grant proposals to identify relevant matches and generate compelling narratives.",
+        "Machine Learning (ML) – Trained on a dataset of successful grant proposals and funding databases to predict the likelihood of success and optimize proposal content.",
+        "Text Summarization – Used to automatically generate concise summaries of project details and grant opportunity descriptions.",
+        "Sentiment Analysis – Used to assess the tone and persuasiveness of proposal content."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Project details (goals, activities, budget, target population)",
+          "Grant opportunity descriptions (eligibility criteria, funding priorities, submission guidelines)",
+          "Organization information (mission, history, programs, financials)"
+        ],
+        "data_schema_recommendations": [
+          "Project Table: project_id (INT, Primary Key), project_name (VARCHAR), description (TEXT), goals (TEXT), budget (DECIMAL), start_date (DATE), end_date (DATE), organization_id (INT, Foreign Key)",
+          "GrantOpportunity Table: grant_id (INT, Primary Key), grant_name (VARCHAR), description (TEXT), funding_amount (DECIMAL), deadline (DATE), eligibility_criteria (TEXT), funding_organization (VARCHAR)",
+          "Proposal Table: proposal_id (INT, Primary Key), project_id (INT, Foreign Key), grant_id (INT, Foreign Key), proposal_text (TEXT), submission_date (DATE), status (VARCHAR)"
+        ],
+        "data_sources": [
+          "Foundation Center API",
+          "Grants.gov API",
+          "Internal databases of NGO projects and funding sources",
+          "Publicly available datasets of successful grant proposals"
+        ],
+        "privacy_and_compliance": "Compliance with GDPR and other data privacy regulations is critical, especially concerning sensitive project data and donor information. Secure data storage and anonymization techniques should be implemented."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "Salesforce (CRM) for managing donor relationships and tracking funding opportunities.",
+          "Mailchimp (Email Marketing) for communicating with donors and stakeholders.",
+          "Google Analytics for tracking user engagement and platform performance.",
+          "Payment Gateways (Stripe, PayPal) for accepting online donations.",
+          "Grants.gov API for real-time grant opportunity data."
+        ],
+        "authentication_strategy": "Clerk.dev for secure user authentication and authorization. Enables social login and multi-factor authentication."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-tiered architecture comprising a frontend user interface, a backend API layer, a database for storing project and grant opportunity data, and an AI pipeline for generating proposal drafts.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions for a modern, responsive user experience.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions for handling API requests and business logic.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes for robust data storage and retrieval.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing proposal documents and other assets.",
+          "AI": "OpenAI API (GPT-4) for text generation, embeddings for semantic search of grant opportunities, Pinecone/Supabase vectors for efficient vector storage and retrieval.",
+          "APIs": "REST API for communication between frontend and backend.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline for continuous integration and deployment."
+        },
+        "API_design": [
+          "/api/projects (POST): Creates a new project.",
+          "Payload: { project_name: string, description: string, goals: string, budget: number }",
+          "/api/projects/{project_id} (GET): Retrieves a project by ID.",
+          "/api/grants (GET): Retrieves a list of relevant grant opportunities based on project details.",
+          "/api/proposals (POST): Generates a grant proposal draft.",
+          "Payload: { project_id: int, grant_id: int }",
+          "/api/proposals/{proposal_id} (GET): Retrieves a proposal by ID."
+        ],
+        "frontend_components": [
+          "ProjectForm: A form for inputting project details.",
+          "GrantOpportunityList: A list of relevant grant opportunities.",
+          "ProposalEditor: A rich text editor for reviewing and editing the proposal draft.",
+          "Dashboard: A user dashboard for tracking proposal submission rates and funding amounts secured."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /app (Next.js frontend), /api (Next.js API routes), /db (Database schema definitions).",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, CLERK_SECRET_KEY, CLERK_PUBLISHABLE_KEY.",
+        "Vercel deployment: Connect GitHub repository to Vercel, configure environment variables, and enable automatic deployments.",
+        "Build outputs: Next.js static files and serverless functions.",
+        "Runtime settings: Node.js version, memory allocation."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Free (limited features), Basic, Premium, Enterprise.",
+          "Usage-based pricing: Charge per proposal generated or grant opportunity matched.",
+          "Add-ons: Premium support, custom integrations, access to proprietary datasets."
+        ],
+        "customer_segments": [
+          "Small NGOs with limited resources.",
+          "Mid-sized NGOs seeking to scale their fundraising efforts.",
+          "Large NGOs with complex funding needs."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of active users, number of projects created, number of grant opportunities matched.",
+        "AI performance KPIs: Accuracy of grant opportunity matching, quality of proposal drafts (measured by expert review), time saved per proposal.",
+        "Adoption/engagement KPIs: Proposal submission rate, grant success rate, funding amounts secured, user satisfaction."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+# Predictive Maintenance AI
+
+## Industry: Petrochemical companies
+
+### Overview
+Predicts equipment failures in petrochemical plants using sensor data and AI, minimizing downtime.
+
+### Problem It Solves
+Unplanned equipment shutdowns cause significant production losses and safety risks.
+
+### Core Solution
+AI models analyze real-time sensor data (temperature, pressure, vibration) from equipment to predict potential failures before they occur, triggering maintenance alerts.
+
+### Target Users
+Maintenance engineers, plant managers, operations teams.
+
+### Business Impact
+Reduces downtime, lowers maintenance costs, improves safety, increases production output.
+
+### Example Use Case
+The AI predicts a pump failure based on vibration data, allowing maintenance to replace it during a scheduled downtime, avoiding a costly emergency shutdown.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Petrochemical",
+  "services": [
+    {
+      "name": "Predictive Maintenance AI",
+      "overview": "The Predictive Maintenance AI service leverages real-time sensor data and advanced machine learning algorithms to predict equipment failures in petrochemical plants. This proactive approach minimizes unplanned downtime, reduces maintenance costs, improves safety, and ultimately increases production output. By continuously monitoring critical equipment parameters such as temperature, pressure, and vibration, the AI identifies anomalies and patterns indicative of impending failures. The system generates timely alerts, enabling maintenance teams to address potential issues during scheduled downtime, thereby preventing costly and disruptive emergency shutdowns.\n\nThe core of the service is a sophisticated AI model trained on historical equipment performance data, failure logs, and sensor readings. This model learns to recognize subtle indicators of equipment degradation and predict the likelihood of failure within a specified timeframe. The system integrates seamlessly with existing plant monitoring systems, ingesting data from various sensors and devices. It also provides a user-friendly interface for maintenance engineers and plant managers to visualize equipment health, review predictions, and manage maintenance schedules.\n\nThe service employs a combination of time-series analysis, anomaly detection, and predictive modeling techniques. Data preprocessing and feature engineering are crucial steps to ensure data quality and model accuracy. The AI model is continuously retrained and refined as new data becomes available, improving its predictive capabilities over time. The system also includes a feedback mechanism that allows maintenance teams to provide input on the accuracy of predictions, further enhancing the model's performance.\n\nSecurity and data privacy are paramount. The system incorporates robust security measures to protect sensitive sensor data and prevent unauthorized access. Data transmission is encrypted, and access controls are strictly enforced. The service complies with relevant industry regulations and standards for data privacy and security.\n\nThe deployment process is streamlined and non-intrusive, minimizing disruption to plant operations. The system can be deployed on-premises or in the cloud, depending on the plant's infrastructure and security requirements. The service is designed to be scalable and adaptable to the evolving needs of the petrochemical industry.",
+      "problems_addressed": [
+        "Unplanned equipment shutdowns leading to production losses",
+        "High maintenance costs associated with reactive repairs",
+        "Safety risks associated with unexpected equipment failures"
+      ],
+      "target_users": [
+        "Maintenance Engineers",
+        "Plant Managers",
+        "Operations Teams"
+      ],
+      "core_features": [
+        "Real-time Sensor Data Monitoring – Continuously collects and analyzes data from various sensors (temperature, pressure, vibration, etc.) to provide a comprehensive view of equipment health.",
+        "Predictive Failure Analysis – Employs advanced machine learning algorithms to predict potential equipment failures based on historical data and real-time sensor readings.",
+        "Maintenance Alerting – Generates timely alerts when potential failures are detected, allowing maintenance teams to proactively address issues before they escalate.",
+        "Equipment Health Visualization – Provides a user-friendly interface for visualizing equipment health, reviewing predictions, and managing maintenance schedules.",
+        "Integration with Existing Systems – Seamlessly integrates with existing plant monitoring systems and maintenance management software."
+      ],
+      "user_journeys": [
+        "A maintenance engineer logs into the system, views the equipment health dashboard, identifies a pump predicted to fail within the next week based on vibration data, schedules a maintenance task to replace the pump during the next scheduled downtime, and confirms the replacement, avoiding a potential emergency shutdown."
+      ],
+      "ai_capabilities": [
+        "Time-series analysis of sensor data to identify trends and anomalies.",
+        "Anomaly detection algorithms (e.g., Isolation Forest, One-Class SVM) to detect unusual sensor readings.",
+        "Predictive modeling using machine learning algorithms (e.g., Random Forest, Gradient Boosting, Neural Networks) to predict equipment failure probability.",
+        "Root cause analysis using explainable AI techniques to identify the factors contributing to predicted failures.",
+        "Model selection: Start with Random Forest or Gradient Boosting due to their robustness and interpretability. Consider Neural Networks for complex patterns if data volume is sufficient. Use anomaly detection algorithms for initial alerts, followed by predictive models for failure probability assessment. Embeddings and vector search are not directly applicable here."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Sensor readings (temperature, pressure, vibration, flow rate, etc.)",
+          "Equipment specifications (make, model, serial number, installation date, etc.)",
+          "Maintenance logs (repair history, replacement dates, failure descriptions, etc.)",
+          "Operational data (production rates, operating hours, load factors, etc.)"
+        ],
+        "data_schema_recommendations": [
+          "Equipment Table: equipment_id (INT, PRIMARY KEY), make (VARCHAR), model (VARCHAR), serial_number (VARCHAR), installation_date (DATE)",
+          "Sensor Data Table: sensor_data_id (INT, PRIMARY KEY), equipment_id (INT, FOREIGN KEY), timestamp (TIMESTAMP), temperature (FLOAT), pressure (FLOAT), vibration (FLOAT), flow_rate (FLOAT)",
+          "Maintenance Log Table: maintenance_id (INT, PRIMARY KEY), equipment_id (INT, FOREIGN KEY), date (DATE), description (TEXT), repair_type (VARCHAR)"
+        ],
+        "data_sources": [
+          "Existing plant monitoring systems (e.g., SCADA, DCS)",
+          "Maintenance management software (e.g., SAP PM, Maximo)",
+          "Sensor data historians",
+          "External weather data providers (for environmental factors)"
+        ],
+        "privacy_and_compliance": "Compliance with industry-specific regulations such as OSHA and environmental protection standards. Data security measures to protect sensitive plant operational data."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "SCADA/DCS systems for real-time sensor data ingestion",
+          "Maintenance Management Software (e.g., SAP PM, Maximo) for work order integration",
+          "Email providers for alert notifications",
+          "Analytics tools for performance monitoring"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure API access. JWT for internal service authentication. Consider Clerk/Auth0 for user management."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-layered architecture consisting of a data ingestion layer, a data processing and storage layer, an AI model layer, and a presentation layer. The data ingestion layer collects data from various sensors and systems. The data processing and storage layer cleans, transforms, and stores the data in a structured format. The AI model layer trains and deploys machine learning models for predictive failure analysis. The presentation layer provides a user-friendly interface for visualizing equipment health and managing maintenance schedules.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (consider TimescaleDB for time-series data)",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing model artifacts and logs",
+          "AI": "OpenAI API (for potential text analysis of maintenance logs), TensorFlow/PyTorch for model training, anomaly detection libraries (e.g., scikit-learn), vector DB (Pinecone/Supabase vectors not directly applicable, but consider for storing embeddings of maintenance logs for semantic search)",
+          "APIs": "REST APIs for communication between frontend and backend services",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "/api/equipment/{equipment_id}/health – GET: Retrieves the health status of a specific equipment. Payload: { equipment_id: string }",
+          "/api/equipment/{equipment_id}/predictions – GET: Retrieves failure predictions for a specific equipment. Payload: { equipment_id: string, time_window: string (e.g., '7d', '30d') }",
+          "/api/alerts – GET: Retrieves a list of active maintenance alerts. Payload: None",
+          "/api/alerts/{alert_id}/resolve – POST: Resolves a specific maintenance alert. Payload: { alert_id: string, resolution_notes: string }"
+        ],
+        "frontend_components": [
+          "Equipment Health Dashboard: Displays the overall health status of all equipment.",
+          "Equipment Details Page: Provides detailed information about a specific equipment, including sensor data, predictions, and maintenance history.",
+          "Alerts Center: Displays a list of active maintenance alerts and allows users to resolve them.",
+          "Maintenance Schedule Calendar: Displays scheduled maintenance tasks and allows users to create new tasks."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend (Next.js app), /backend (Node.js API), /models (trained AI models), /data (sample data)",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, SENSOR_DATA_API_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel. Configure environment variables in Vercel settings. Enable automatic deployments on Git push.",
+        "Build outputs: Next.js static files for frontend, serverless functions for backend APIs.",
+        "Runtime settings: Node.js version, memory allocation for serverless functions."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers based on the number of equipment monitored, the frequency of data analysis, and the level of support provided.",
+          "Usage-based pricing based on the amount of data processed and the number of predictions generated.",
+          "Add-ons for advanced features such as root cause analysis and integration with specific maintenance management software."
+        ],
+        "customer_segments": [
+          "Small to medium-sized petrochemical plants with limited IT resources",
+          "Large petrochemical plants with complex monitoring and maintenance requirements",
+          "Equipment manufacturers offering predictive maintenance services to their customers"
+        ]
+      },
+      "success_metrics": [
+        "Reduction in unplanned equipment downtime (percentage)",
+        "Reduction in maintenance costs (percentage)",
+        "Improvement in equipment reliability (mean time between failures)",
+        "Accuracy of failure predictions (precision, recall)",
+        "Adoption rate among maintenance engineers",
+        "Time to resolution of maintenance alerts"
+      ]
+    }
+  ]
+}
+```

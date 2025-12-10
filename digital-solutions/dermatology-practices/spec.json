@@ -1,0 +1,136 @@
+{
+  "industry": "Healthcare - Dermatology",
+  "services": [
+    {
+      "name": "AI-Powered Teledermatology Triage",
+      "overview": "This service provides an AI-driven initial assessment of patient-submitted images and symptom questionnaires to streamline virtual dermatology consultations. The primary goal is to automate the triage process, enabling dermatologists to focus on high-priority cases while improving patient access to timely care. By analyzing submitted data, the AI identifies potential skin conditions, assesses their severity, and automatically prioritizes patients for scheduling. This reduces the administrative burden on dermatologists, optimizes consultation scheduling, and enhances the overall efficiency of teledermatology practices. The system integrates seamlessly with existing EMR/EHR systems and telemedicine platforms, ensuring a cohesive and streamlined workflow. It also includes features for continuous monitoring and improvement of AI model accuracy through feedback loops and regular retraining.",
+      "problems_addressed": [
+        "High volume of initial dermatology inquiries leading to dermatologist overload.",
+        "Delays in patient care due to inefficient manual triage processes.",
+        "Suboptimal use of dermatologists' time on low-priority cases.",
+        "Inconsistent and subjective initial assessments of skin conditions.",
+        "Lack of standardized process for prioritizing patients for virtual consultations."
+      ],
+      "target_users": [
+        "Dermatology practices seeking to improve efficiency and patient access.",
+        "Patients seeking initial dermatology consultations or second opinions.",
+        "Telemedicine providers looking to enhance their dermatology services."
+      ],
+      "core_features": [
+        "Image Analysis: AI-powered analysis of patient-submitted images using computer vision to identify potential skin conditions and anomalies (e.g., moles, rashes, lesions). The AI will need to differentiate images of moles from other similar marks on the body.",
+        "Symptom Assessment: Automated analysis of patient-submitted questionnaires regarding symptoms, medical history, and risk factors. The AI must be able to interpret user input related to existing conditions and other health metrics.",
+        "Severity Scoring: Generation of a severity score based on image analysis and symptom assessment to prioritize patients based on the urgency of their condition. For example, a user submitting images of Melanoma would be triaged as high-priority.",
+        "Automated Triage: Automatic categorization of patients into different priority tiers for scheduling virtual consultations with dermatologists.",
+        "Integration with EMR/EHR: Seamless integration with existing Electronic Medical Records (EMR) and Electronic Health Records (EHR) systems to streamline data management and workflow.",
+        "Patient Portal: Secure patient portal for submitting images, completing questionnaires, and receiving triage results and scheduling information.",
+        "Dermatologist Dashboard: A dashboard for dermatologists to review triage results, patient data, and schedule consultations efficiently.",
+        "Feedback Loop: Mechanism for dermatologists to provide feedback on triage results to improve AI model accuracy over time."
+      ],
+      "user_journeys": [
+        "1. Patient registers on the platform and creates a secure account.",
+        "2. Patient uploads images of the skin condition of concern, along with completing a detailed questionnaire about symptoms, medical history, and risk factors.",
+        "3. The AI analyzes the submitted images and questionnaire data.",
+        "4. The AI assigns a severity score and triage level to the patient.",
+        "5. The patient receives a notification with the triage result and recommended next steps (e.g., schedule a virtual consultation).",
+        "6. If a consultation is recommended, the patient can schedule a virtual appointment with an available dermatologist through the platform.",
+        "7. The dermatologist reviews the patient's submitted information and triage results prior to the virtual consultation.",
+        "8. After the consultation, the dermatologist can provide feedback on the accuracy of the AI triage to improve future performance."
+      ],
+      "ai_capabilities": [
+        "Computer Vision (CV) for image analysis: Convolutional Neural Networks (CNNs) for identifying and classifying skin conditions in patient-submitted images.",
+        "Natural Language Processing (NLP) for symptom assessment: Analyzing patient-submitted text from questionnaires to extract relevant information about symptoms, medical history, and risk factors.",
+        "Machine Learning (ML) for severity scoring and triage: Training a classification model to predict the severity of skin conditions and assign appropriate triage levels based on image analysis and symptom assessment.",
+        "Active Learning: Implementing an active learning strategy to continuously improve the AI model's accuracy by selecting the most informative cases for dermatologists to review and provide feedback on."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Patient-submitted images of skin conditions (JPEG, PNG).",
+          "Patient-completed questionnaires in text format (JSON, CSV).",
+          "Metadata associated with images (e.g., date taken, camera settings)."
+        ],
+        "data_schema_recommendations": [
+          "Patient table: patient_id (UUID), name (string), date_of_birth (date), gender (string), medical_history (JSON), contact_information (JSON)",
+          "Image table: image_id (UUID), patient_id (UUID), image_url (string), upload_date (timestamp), metadata (JSON)",
+          "Questionnaire table: questionnaire_id (UUID), patient_id (UUID), submission_date (timestamp), answers (JSON)",
+          "Triage table: triage_id (UUID), patient_id (UUID), image_id (UUID), questionnaire_id (UUID), severity_score (float), triage_level (string), ai_assessment (JSON), dermatologist_feedback (JSON, optional)"
+        ],
+        "data_sources": [
+          "Patient-submitted data via web/mobile application.",
+          "Integration with EMR/EHR systems to access patient medical history.",
+          "Publicly available datasets of dermatological images for pre-training AI models (e.g., ISIC Archive)."
+        ],
+        "privacy_and_compliance": "HIPAA compliance for handling protected health information (PHI). Data encryption at rest and in transit. Audit logs for data access and modifications.  User consent for data collection and usage."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "EMR/EHR systems (e.g., Epic, Cerner) via HL7 or FHIR APIs.",
+          "Telemedicine platforms (e.g., Zoom, Teladoc) for virtual consultations.",
+          "Payment gateways (e.g., Stripe, PayPal) for online payments.",
+          "Email providers (e.g., SendGrid, Mailgun) for notifications and reminders.",
+          "Analytics tools (e.g., Google Analytics, Mixpanel) for tracking user engagement and platform performance."
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure authentication and authorization. JWT (JSON Web Tokens) for managing user sessions. Clerk or Auth0 for user management and authentication."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-tiered architecture consisting of a frontend (patient portal and dermatologist dashboard), a backend API, a database for storing patient data, and an AI pipeline for image analysis, symptom assessment, and triage.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API for NLP tasks, pre-trained CNN models for image analysis (e.g., ResNet, EfficientNet), vector DB (Pinecone/Supabase vectors) for embeddings related to diagnoses",
+          "APIs": "REST APIs for communication between frontend and backend.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "/api/patients (POST): Create a new patient record.",
+          "  Payload: { name: string, date_of_birth: date, gender: string, medical_history: object, contact_information: object }",
+          "  Response: { patient_id: UUID }",
+          "/api/images (POST): Upload a new image for a patient.",
+          "  Payload: { patient_id: UUID, image_data: base64 encoded string, metadata: object }",
+          "  Response: { image_id: UUID }",
+          "/api/questionnaires (POST): Submit a questionnaire for a patient.",
+          "  Payload: { patient_id: UUID, answers: object }",
+          "  Response: { questionnaire_id: UUID }",
+          "/api/triage (POST): Trigger the triage process for a patient based on submitted images and questionnaires.",
+          "  Payload: { patient_id: UUID, image_id: UUID, questionnaire_id: UUID }",
+          "  Response: { triage_id: UUID, severity_score: float, triage_level: string, ai_assessment: object }",
+          "/api/triage/{triage_id} (GET): Retrieve triage results by ID.",
+          "  Response: { triage_id: UUID, patient_id: UUID, image_id: UUID, questionnaire_id: UUID, severity_score: float, triage_level: string, ai_assessment: object, dermatologist_feedback: object }"
+        ],
+        "frontend_components": [
+          "Image Uploader: Component for patients to upload images of their skin condition.",
+          "Questionnaire Form: Dynamic form for patients to answer questions about their symptoms and medical history.",
+          "Triage Results Display: Component to display the triage results, including severity score, triage level, and recommended next steps.",
+          "Dermatologist Dashboard: Dashboard for dermatologists to review patient data and triage results, schedule consultations, and provide feedback on AI performance."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /database, /ai_models",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, STRIPE_SECRET_KEY, SENDGRID_API_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel and configure environment variables.  Enable automatic deployments on push.",
+        "Build outputs: Next.js frontend build output in /frontend/.next.  Node.js backend API deployed as serverless functions.",
+        "Runtime settings: Node.js version 18.x or higher.  Ensure sufficient memory and CPU resources are allocated to AI model inference tasks."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic, Premium, Enterprise based on the number of consultations per month and features included.",
+          "Usage-based pricing: Charge per triage assessment or consultation.",
+          "Per-seat pricing: Charge per dermatologist using the platform.",
+          "Add-ons: Additional fees for integrations with specific EMR/EHR systems or access to advanced AI features."
+        ],
+        "customer_segments": [
+          "Small dermatology practices.",
+          "Mid-sized dermatology clinics.",
+          "Large hospital systems with dermatology departments.",
+          "Telemedicine providers offering dermatology services."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of triage assessments completed per month, reduction in dermatologist workload (hours saved), time to consultation (days), patient satisfaction scores.",
+        "AI performance KPIs: AI model accuracy (precision, recall, F1-score) for skin condition classification, dermatologist feedback on AI triage results, percentage of cases requiring dermatologist review.",
+        "Adoption/engagement KPIs: Number of registered patients, active users (monthly/weekly), consultation booking rate, platform usage time."
+      ]
+    }
+  ]
+}

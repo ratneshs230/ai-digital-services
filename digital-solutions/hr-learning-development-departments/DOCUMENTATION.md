@@ -1,0 +1,151 @@
+# Skills Gap Navigator
+
+## Industry: HR learning & development departments
+
+### Overview
+AI-powered platform that identifies employee skills gaps and recommends personalized learning paths to bridge them.
+
+### Problem It Solves
+Difficulty in accurately assessing employee skills and creating relevant training programs.
+
+### Core Solution
+Uses machine learning to analyze employee performance data, job descriptions, and industry trends to pinpoint skills gaps and suggest tailored learning resources (courses, mentors, projects).
+
+### Target Users
+HR managers, L&D professionals, employees.
+
+### Business Impact
+Improved employee performance, reduced training costs, faster time-to-proficiency, increased employee retention.
+
+### Example Use Case
+A sales team's performance dips. The system identifies a weakness in closing techniques and assigns relevant online courses and role-playing exercises.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Human Resources / Learning and Development",
+  "services": [
+    {
+      "name": "Skills Gap Navigator",
+      "overview": "The Skills Gap Navigator is an AI-powered platform designed to identify skills gaps within an organization and provide personalized learning paths for employees to address those gaps. It leverages machine learning to analyze various data points, including employee performance metrics, job descriptions, industry trends, and individual skill profiles, to pinpoint areas where employees may lack proficiency. By understanding these gaps, the platform can then recommend tailored learning resources such as online courses, mentorship programs, internal projects, and external certifications. The ultimate goal is to empower employees with the skills they need to succeed, improve overall organizational performance, and reduce the costs associated with ineffective or generalized training programs.\n\nThe platform provides a comprehensive solution for HR managers, Learning and Development (L&D) professionals, and employees themselves to proactively manage skills development. For HR and L&D, it offers data-driven insights into the skills landscape of the organization, enabling strategic planning for training initiatives and resource allocation. For employees, it provides a personalized and engaging learning experience that helps them stay relevant and competitive in their roles. Furthermore, it fosters a culture of continuous learning and development within the organization, contributing to increased employee retention and satisfaction.\n\nThe Skills Gap Navigator integrates seamlessly with existing HR and learning management systems (LMS) to ensure a smooth data flow and avoid data silos. It utilizes a robust API architecture to facilitate integration with various third-party platforms and tools. The platform is designed with scalability in mind, capable of handling large datasets and supporting a growing number of users. Privacy and security are paramount, with strict adherence to industry standards and compliance regulations such as GDPR and CCPA. The system incorporates role-based access control to ensure that sensitive employee data is protected and only accessible to authorized personnel.\n\nThe user interface is intuitive and user-friendly, providing clear visualizations of skills gaps and progress towards learning goals. Employees can easily access their personalized learning paths, track their progress, and engage with recommended resources. HR and L&D professionals can monitor overall skills development trends, identify emerging skills gaps, and measure the impact of training programs. The platform also includes reporting and analytics capabilities to provide actionable insights for decision-making. The platform is built using a modern technology stack, ensuring high performance, reliability, and maintainability.",
+      "problems_addressed": [
+        "Difficulty in accurately assessing individual and organizational skills gaps.",
+        "Ineffective or generic training programs that fail to address specific employee needs.",
+        "Lack of visibility into the skills landscape of the organization.",
+        "High costs associated with inefficient training and development initiatives.",
+        "Difficulty in keeping employee skills up-to-date with rapidly changing industry trends."
+      ],
+      "target_users": [
+        "HR Managers: Responsible for overall workforce planning and skills development strategies.",
+        "L&D Professionals: Designing and delivering training programs to address identified skills gaps.",
+        "Employees: Seeking to improve their skills and advance their careers within the organization."
+      ],
+      "core_features": [
+        "Skills Gap Analysis: Utilizes machine learning to analyze employee performance data, job descriptions, and industry trends to identify skills gaps. This analysis provides a comprehensive view of areas where employees may lack proficiency, considering both current roles and future organizational needs.",
+        "Personalized Learning Paths: Recommends tailored learning resources (courses, mentors, projects) based on individual skills gaps and career goals. This ensures that employees receive targeted training that directly addresses their specific needs, maximizing the effectiveness of learning initiatives.",
+        "Skills Tracking and Reporting: Monitors employee progress towards learning goals and provides detailed reports on skills development trends. This allows HR and L&D professionals to track the impact of training programs and make data-driven decisions about future initiatives.",
+        "Integration with HR/LMS Systems: Seamlessly integrates with existing HR and learning management systems to ensure a smooth data flow and avoid data silos. This integration streamlines the process of managing employee skills and training, reducing administrative overhead.",
+        "AI-Powered Recommendation Engine: Continuously learns from employee performance and feedback to improve the accuracy of skills gap analysis and learning path recommendations. This ensures that the platform remains relevant and effective over time, adapting to changing organizational needs and industry trends."
+      ],
+      "user_journeys": [
+        "An employee logs into the Skills Gap Navigator platform using SSO. The system analyzes their role, performance data, and self-assessed skills. The AI identifies a gap in 'Data Analysis' compared to the requirements of their next career goal. The system recommends a curated learning path including an online course on Python, a mentorship with a senior data scientist, and a project involving analyzing customer churn data. The employee completes the course and project, marking them as complete in the system. The system automatically updates their skills profile and recommends a follow-up course on machine learning. The HR manager can track the employee's progress and the overall skills improvement within the data science team."
+      ],
+      "ai_capabilities": [
+        "Skills Gap Identification: Uses machine learning algorithms (e.g., regression, classification) to predict skills gaps based on employee data, job descriptions, and industry benchmarks. Model selection will consider both accuracy and explainability, potentially favoring models like XGBoost or Random Forests.",
+        "Learning Path Recommendation: Employs collaborative filtering and content-based filtering techniques to recommend personalized learning resources based on identified skills gaps and employee preferences. The system will leverage embeddings of course descriptions and job requirements to match employees with relevant resources. Fine-tuning may be necessary to optimize recommendations for specific roles or skill areas.",
+        "Skills Extraction from Job Descriptions: Utilizes NLP techniques (e.g., Named Entity Recognition, keyword extraction) to extract required skills from job descriptions and industry standards. OpenAI’s GPT models can be used for this task, fine-tuned on HR-specific vocabulary to improve accuracy. Extracted skills will be stored in a vector database for efficient querying and comparison.",
+        "Performance Prediction: Predicts employee performance based on their skills profile and learning progress. This allows for proactive intervention and personalized support to ensure employee success. Model selection will depend on the availability of historical performance data, with options ranging from linear regression to more complex neural networks."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Employee performance reviews",
+          "Job descriptions",
+          "Employee skill profiles (self-assessed and manager-assessed)",
+          "Learning activity data (courses completed, certifications earned)",
+          "Industry benchmarks and skill standards"
+        ],
+        "data_schema_recommendations": [
+          "Employee Table: employee_id (INT, PK), first_name (VARCHAR), last_name (VARCHAR), job_title (VARCHAR), department (VARCHAR), hire_date (DATE)",
+          "Skills Table: skill_id (INT, PK), skill_name (VARCHAR), skill_description (TEXT)",
+          "EmployeeSkills Table: employee_id (INT, FK), skill_id (INT, FK), skill_level (INT), last_updated (TIMESTAMP)",
+          "JobDescriptions Table: job_id (INT, PK), job_title (VARCHAR), job_description (TEXT)",
+          "JobSkills Table: job_id (INT, FK), skill_id (INT, FK), skill_importance (INT)",
+          "LearningResources Table: resource_id (INT, PK), resource_name (VARCHAR), resource_type (VARCHAR), resource_url (VARCHAR), skill_id (INT, FK)"
+        ],
+        "data_sources": [
+          "HRIS systems (e.g., Workday, BambooHR)",
+          "LMS platforms (e.g., Coursera, Udemy, internal learning portals)",
+          "Performance management systems",
+          "Industry skills databases (e.g., O*NET)"
+        ],
+        "privacy_and_compliance": "GDPR, CCPA, and other relevant data privacy regulations. Data anonymization and pseudonymization techniques should be employed where possible. Compliance with industry-specific standards such as SOC 2 is also crucial."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "HRIS systems (Workday, BambooHR) for employee data synchronization",
+          "LMS platforms (Coursera, Udemy, internal learning portals) for accessing learning resources",
+          "Performance management systems for accessing performance review data",
+          "SSO providers (Okta, Azure AD) for secure authentication",
+          "Email providers (SendGrid, Mailgun) for notifications and updates"
+        ],
+        "authentication_strategy": "OAuth 2.0 for secure integration with third-party systems. Clerk or Auth0 are recommended for managing user authentication and authorization."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a microservices architecture. The frontend will be a Next.js application, the backend will consist of Node.js serverless functions, the database will be a Planetscale or Supabase PostgreSQL database, and AI models will be served via the OpenAI API. A vector database (Pinecone or Supabase vectors) will be used for storing and querying skill embeddings.  The API layer will expose RESTful endpoints for communication between the frontend and backend services.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob",
+          "AI": "OpenAI API, embeddings, vector DB (Pinecone/Supabase vectors)",
+          "APIs": "REST",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline"
+        },
+        "API_design": [
+          "GET /api/employees: Returns a list of all employees",
+          "GET /api/employees/{employee_id}: Returns the details of a specific employee",
+          "GET /api/skills: Returns a list of all skills",
+          "GET /api/skills/{skill_id}: Returns the details of a specific skill",
+          "GET /api/learning_resources: Returns a list of all learning resources",
+          "GET /api/learning_resources/{resource_id}: Returns the details of a specific learning resource",
+          "POST /api/skills_gap_analysis: Analyzes skills gaps for a given employee and returns a list of recommended learning resources. Request body: { employee_id: INT }",
+          "POST /api/learning_path: Creates a personalized learning path for an employee. Request body: { employee_id: INT, resource_ids: [INT] }"
+        ],
+        "frontend_components": [
+          "Dashboard: Displays an overview of skills gaps and learning progress.",
+          "Skills Profile: Shows an individual employee's skills profile and recommended learning resources.",
+          "Learning Path: Presents a personalized learning path with progress tracking.",
+          "Skills Catalog: Allows employees to browse and search for available skills and learning resources."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /database",
+        "Environment variables: OPENAI_API_KEY, DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, CLERK_SECRET_KEY",
+        "Vercel deployment: Connect GitHub repository to Vercel, configure environment variables, enable automatic deployments on Git push.",
+        "Build outputs: /frontend/.next, /backend/api",
+        "Runtime settings: Node.js version 18.x or later"
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Based on the number of employees or features used.",
+          "Usage-based pricing: Pay-per-employee or pay-per-learning-resource access.",
+          "Add-ons: Premium support, custom integrations, or advanced analytics."
+        ],
+        "customer_segments": [
+          "Small businesses (1-50 employees)",
+          "Mid-market (51-500 employees)",
+          "Enterprises (500+ employees)"
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of active users, platform uptime, response time.",
+        "AI performance KPIs: Accuracy of skills gap analysis, relevance of learning path recommendations, click-through rate on recommended resources.",
+        "Adoption/engagement KPIs: Number of employees completing learning paths, employee satisfaction with the platform, reduction in time-to-proficiency, increased employee retention."
+      ]
+    }
+  ]
+}
+```

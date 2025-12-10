@@ -1,0 +1,157 @@
+# AI-Powered Predictive Maintenance Advisor
+
+## Industry: Smart factory consultants
+
+### Overview
+Predicts equipment failures using sensor data and AI to optimize maintenance schedules and reduce downtime.
+
+### Problem It Solves
+Unplanned equipment downtime and inefficient maintenance practices.
+
+### Core Solution
+Analyzes real-time sensor data (vibration, temperature, pressure) using machine learning algorithms to predict potential equipment failures and recommend optimal maintenance schedules. Integrates with existing CMMS systems.
+
+### Target Users
+Maintenance managers, plant operators, reliability engineers.
+
+### Business Impact
+Reduces downtime, lowers maintenance costs, extends equipment lifespan, and improves overall equipment effectiveness (OEE).
+
+### Example Use Case
+A manufacturing plant uses the service to predict a pump failure, allowing them to proactively replace it during a scheduled downtime, avoiding a costly production halt.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Manufacturing",
+  "services": [
+    {
+      "name": "AI-Powered Predictive Maintenance Advisor",
+      "overview": "The AI-Powered Predictive Maintenance Advisor is a SaaS platform designed to optimize maintenance schedules, reduce unplanned equipment downtime, and extend the lifespan of critical assets within manufacturing facilities. The service ingests real-time sensor data from industrial equipment, applies advanced machine learning algorithms to predict potential failures, and provides actionable recommendations to maintenance personnel. By integrating with existing Computerized Maintenance Management Systems (CMMS), the Predictive Maintenance Advisor streamlines workflows and empowers organizations to transition from reactive to proactive maintenance strategies. The platform aims to minimize disruptions to production schedules, reduce maintenance costs, and improve overall equipment effectiveness (OEE).",
+      "problems_addressed": [
+        "Unplanned equipment downtime causing production losses.",
+        "Inefficient, reactive maintenance practices leading to unnecessary costs.",
+        "Lack of visibility into equipment health and potential failure points.",
+        "Suboptimal maintenance schedules resulting in either premature or delayed interventions.",
+        "Difficulty in accurately predicting equipment lifespan and replacement timing."
+      ],
+      "target_users": [
+        "Maintenance Managers responsible for overseeing maintenance operations and budgets.",
+        "Plant Operators who need to ensure smooth production processes and minimize disruptions.",
+        "Reliability Engineers focused on improving equipment reliability and reducing failure rates.",
+        "CMMS Administrators who manage maintenance data and workflows within the CMMS system."
+      ],
+      "core_features": [
+        "Real-Time Sensor Data Ingestion: Connects to various industrial sensors (vibration, temperature, pressure, flow, etc.) to continuously collect equipment data. Supports multiple data formats and communication protocols (MQTT, OPC-UA, REST API).",
+        "AI-Powered Failure Prediction: Employs machine learning models (e.g., Random Forest, Gradient Boosting, Neural Networks) to analyze sensor data and predict potential equipment failures based on historical patterns and anomalies. Provides failure probability scores and estimated time-to-failure.",
+        "Optimal Maintenance Schedule Recommendation: Generates optimized maintenance schedules based on predicted failure probabilities, equipment criticality, and maintenance resource availability. Recommends specific maintenance tasks (e.g., inspection, lubrication, repair, replacement) and their optimal timing.",
+        "CMMS Integration: Seamlessly integrates with existing CMMS systems (e.g., SAP PM, Maximo, Infor EAM) to automatically create work orders, update equipment records, and track maintenance activities.  Supports bi-directional data synchronization.",
+        "Customizable Alerting and Reporting: Configurable alerts notify maintenance personnel of impending equipment failures. Generates detailed reports on equipment health, maintenance performance, and cost savings.  Reports can be customized based on user roles and preferences.",
+        "Equipment Health Dashboard: Provides a visual overview of equipment health status, including key performance indicators (KPIs) such as mean time between failures (MTBF), mean time to repair (MTTR), and overall equipment effectiveness (OEE).",
+        "Anomaly Detection: Identifies unusual patterns in sensor data that may indicate early signs of equipment degradation or impending failure.  Uses statistical methods and machine learning algorithms to detect anomalies.",
+        "Root Cause Analysis: Provides tools to investigate the underlying causes of equipment failures based on historical data and expert knowledge. Uses fault tree analysis and other techniques to identify potential root causes.",
+        "Digital Twin Integration: Integrates with digital twin platforms to provide a virtual representation of physical equipment, enabling more accurate failure prediction and maintenance optimization.  Supports 3D visualization and simulation."
+      ],
+      "user_journeys": [
+        "A maintenance manager logs into the Predictive Maintenance Advisor dashboard. They review the equipment health overview and notice a pump showing a high probability of failure within the next two weeks. They drill down into the pump's details, review the sensor data and failure prediction analysis, and accept the recommended maintenance schedule. The system automatically creates a work order in their CMMS, scheduling a pump replacement during the next planned downtime. The pump is replaced proactively, avoiding an unplanned production shutdown."
+      ],
+      "ai_capabilities": [
+        "Predictive Failure Modeling:  Uses supervised machine learning techniques to predict equipment failures based on historical sensor data and failure events. Models are trained using labeled data (failure vs. no failure) and evaluated using metrics such as precision, recall, and F1-score.  Consider using time-series forecasting models such as LSTM or ARIMA for time-dependent data.",
+        "Anomaly Detection:  Employs unsupervised machine learning algorithms to identify anomalous patterns in sensor data that may indicate early signs of equipment degradation or impending failure.  Models are trained on normal operating data and identify deviations from the norm. Consider using Isolation Forest, One-Class SVM, or autoencoders.",
+        "Remaining Useful Life (RUL) Prediction:  Estimates the remaining useful life of equipment based on current sensor data and historical failure patterns. Uses survival analysis techniques to predict the time until the next failure. Consider using Cox proportional hazards model or random survival forests.",
+        "Clustering: Used to group similar equipment based on operational characteristics. This can help identify patterns and common failure modes within specific equipment groups.",
+        "Root Cause Analysis:  Leverages NLP techniques to analyze maintenance logs and identify potential root causes of equipment failures.  Uses text mining and sentiment analysis to extract relevant information from textual data.",
+        "Sensor Data Preprocessing: Feature extraction, cleaning, normalization, handling missing values."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Time-series sensor data (vibration, temperature, pressure, flow, etc.)",
+          "Equipment metadata (make, model, serial number, installation date, operating parameters)",
+          "Maintenance history (work orders, repairs, replacements, inspections)",
+          "Failure logs (failure date, failure mode, root cause analysis)",
+          "Environmental data (ambient temperature, humidity)"
+        ],
+        "data_schema_recommendations": [
+          "Equipment Table: equipment_id (INT, PRIMARY KEY), make (VARCHAR), model (VARCHAR), serial_number (VARCHAR), installation_date (DATE), operating_parameters (JSONB)",
+          "Sensor Data Table: sensor_data_id (INT, PRIMARY KEY), equipment_id (INT, FOREIGN KEY), timestamp (TIMESTAMP), sensor_type (VARCHAR), sensor_value (NUMERIC)",
+          "Maintenance History Table: work_order_id (INT, PRIMARY KEY), equipment_id (INT, FOREIGN KEY), start_date (DATE), end_date (DATE), maintenance_type (VARCHAR), description (TEXT), cost (NUMERIC)",
+          "Failure Log Table: failure_id (INT, PRIMARY KEY), equipment_id (INT, FOREIGN KEY), failure_date (DATE), failure_mode (VARCHAR), root_cause (VARCHAR)",
+          "Sensor Metadata Table: sensor_id (INT, PRIMARY KEY), sensor_type (VARCHAR), unit_of_measure (VARCHAR), data_type (VARCHAR), min_value (NUMERIC), max_value (NUMERIC)"
+        ],
+        "data_sources": [
+          "Existing CMMS systems (SAP PM, Maximo, Infor EAM)",
+          "Industrial sensors (vibration sensors, temperature sensors, pressure sensors, flow meters)",
+          "Programmable Logic Controllers (PLCs)",
+          "Supervisory Control and Data Acquisition (SCADA) systems",
+          "Historian databases",
+          "IoT platforms (e.g., AWS IoT, Azure IoT Hub, Google Cloud IoT Core)"
+        ],
+        "privacy_and_compliance": "HIPAA (if dealing with medical device manufacturing), GDPR (if processing personal data from EU citizens), CCPA (if processing personal data from California residents), Industry-specific regulations (e.g., FDA regulations for pharmaceutical manufacturing). Data encryption at rest and in transit is essential. Anonymization and pseudonymization techniques may be required."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "CMMS systems (SAP PM, Maximo, Infor EAM) for work order management and maintenance tracking.",
+          "IoT platforms (AWS IoT, Azure IoT Hub, Google Cloud IoT Core) for sensor data ingestion.",
+          "Historian databases (OSIsoft PI, AspenTech InfoPlus.21) for historical data retrieval.",
+          "Email providers (SendGrid, Mailgun) for sending alerts and notifications.",
+          "Analytics tools (Tableau, Power BI) for data visualization and reporting.",
+          "Active Directory / LDAP for user authentication."
+        ],
+        "authentication_strategy": "OAuth 2.0 or JWT for secure API authentication.  Consider using Clerk or Auth0 for user management and authentication.  SSO integration with existing corporate identity providers is recommended for enterprise deployments."
+      },
+      "technical_specifications": {
+        "architecture": "A multi-tiered architecture consisting of a frontend (user interface), backend (API and business logic), database (data storage), and AI pipeline (data processing and machine learning). Sensor data is ingested through an IoT platform and stored in the database. The AI pipeline processes the data and generates failure predictions, which are then exposed through the API. The frontend consumes the API to display equipment health information and recommendations to users. The backend integrates with external CMMS systems.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions.  Consider using a charting library like Chart.js or Recharts for data visualization.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions.  Express.js or NestJS can be used for building the API.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes (as defined in data_schema_recommendations).  TimescaleDB can be used for time-series data storage.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing large files such as sensor data archives.",
+          "AI": "OpenAI API for experimentation, scikit-learn, TensorFlow, or PyTorch for machine learning.  Consider using a vector database (Pinecone/Supabase vectors) for storing embeddings generated from maintenance logs.",
+          "APIs": "RESTful API for communication between frontend and backend.  GraphQL can be used for more complex data queries.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline for continuous integration and continuous deployment."
+        },
+        "API_design": [
+          "/api/equipment/{equipment_id}/health: GET - Retrieves the health status of a specific equipment.  Payload: { equipment_id: string }. Response: { status: string (healthy, warning, critical), failure_probability: number, time_to_failure: string }",
+          "/api/equipment/{equipment_id}/sensors: GET - Retrieves the latest sensor data for a specific equipment. Payload: { equipment_id: string }. Response: { sensors: [{ sensor_type: string, sensor_value: number, timestamp: string }] }",
+          "/api/equipment/{equipment_id}/recommendations: GET - Retrieves maintenance recommendations for a specific equipment. Payload: { equipment_id: string }. Response: { recommendations: [{ task: string, timing: string, priority: string }] }",
+          "/api/cmms/workorders: POST - Creates a work order in the CMMS system. Payload: { equipment_id: string, task: string, description: string, priority: string, due_date: string }. Response: { work_order_id: string }"
+        ],
+        "frontend_components": [
+          "Equipment Health Dashboard: Displays a visual overview of equipment health status, including key performance indicators (KPIs).",
+          "Equipment Details Page: Provides detailed information about a specific equipment, including sensor data, failure predictions, and maintenance recommendations.",
+          "Alerting and Notification Center: Displays alerts and notifications related to impending equipment failures.",
+          "CMMS Integration Interface: Allows users to create and manage work orders in the CMMS system.",
+          "Report Generation Tool: Generates detailed reports on equipment health, maintenance performance, and cost savings."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend (Next.js frontend), /backend (Node.js API), /ai_pipeline (Python scripts for data processing and machine learning), /database (SQL scripts for database schema creation)",
+        "Environment variables: OPENAI_API_KEY (OpenAI API key), DB_URL (Database connection string), CMMS_API_URL (CMMS API endpoint), CMMS_API_KEY (CMMS API key), IOT_PLATFORM_URL (IoT platform endpoint), IOT_PLATFORM_KEY (IoT platform key)",
+        "Vercel deployment steps: 1. Create a Vercel account. 2. Connect your GitHub repository to Vercel. 3. Configure environment variables in Vercel. 4. Deploy the frontend and backend projects to Vercel. 5. Configure the AI pipeline to run as a serverless function or a scheduled job.",
+        "Build outputs and runtime settings: Frontend: Next.js build output. Backend: Node.js server. AI pipeline: Python scripts executed using a serverless function or a scheduled job."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic, Standard, Premium.  Tiered pricing based on the number of equipment monitored, the number of users, and the level of support.",
+          "Usage-based pricing: Pay-per-sensor data processed.",
+          "Per-seat pricing: Charge per user account.",
+          "Add-ons: Custom reporting, advanced analytics, integration with specific CMMS systems."
+        ],
+        "customer_segments": [
+          "Small businesses: Manufacturing plants with limited resources and basic maintenance needs.",
+          "Mid-market: Manufacturing plants with established maintenance programs and a need for improved efficiency.",
+          "Enterprises: Large manufacturing organizations with complex equipment and a focus on predictive maintenance and operational excellence."
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Reduction in unplanned equipment downtime, decrease in maintenance costs, increase in equipment lifespan, improvement in overall equipment effectiveness (OEE).",
+        "AI performance KPIs: Accuracy of failure predictions (precision, recall, F1-score), lead time for failure predictions (time between prediction and actual failure), reduction in false positives.",
+        "Adoption/engagement KPIs: Number of active users, frequency of dashboard visits, number of maintenance recommendations accepted, number of work orders created through the system, user satisfaction scores."
+      ]
+    }
+  ]
+}
+```

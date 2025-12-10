@@ -1,0 +1,152 @@
+# Trial Eligibility Predictor
+
+## Industry: Clinical research organizations (CROs)
+
+### Overview
+AI-powered tool to predict patient eligibility for clinical trials based on medical records and trial protocols.
+
+### Problem It Solves
+Time-consuming and inefficient patient screening process, leading to delays and increased costs.
+
+### Core Solution
+Uses NLP to analyze patient medical records and structured data against trial inclusion/exclusion criteria, predicting eligibility scores.
+
+### Target Users
+Clinical trial recruiters, site investigators, CRO project managers.
+
+### Business Impact
+Reduces screening time and costs, accelerates patient enrollment, and improves trial success rates.
+
+### Example Use Case
+A CRO uses the tool to quickly identify potentially eligible patients from a large database of electronic health records for a new oncology trial.
+
+---
+
+## Technical Documentation
+
+```json
+{
+  "industry": "Pharmaceuticals/Clinical Research",
+  "services": [
+    {
+      "name": "Trial Eligibility Predictor",
+      "overview": "The Trial Eligibility Predictor is an AI-powered tool designed to streamline and accelerate the patient screening process for clinical trials. By leveraging natural language processing (NLP) and machine learning (ML), the predictor analyzes patient medical records, including unstructured text data and structured clinical data, against clinical trial protocols to predict patient eligibility. This service addresses the critical pain points of time-consuming manual screening, high costs associated with identifying eligible candidates, and potential delays in trial enrollment. The tool provides eligibility scores and justifications, enabling clinical trial recruiters, site investigators, and CRO project managers to prioritize patients and improve overall trial efficiency. The platform will be designed with a secure, HIPAA-compliant architecture, ensuring patient data privacy and regulatory adherence.",
+      "problems_addressed": [
+        "Time-consuming and inefficient manual patient screening processes.",
+        "High costs associated with identifying eligible trial candidates.",
+        "Delays in clinical trial enrollment due to slow screening.",
+        "Difficulty in processing unstructured data from medical records.",
+        "Risk of human error in assessing complex inclusion/exclusion criteria."
+      ],
+      "target_users": [
+        "Clinical trial recruiters",
+        "Site investigators",
+        "CRO project managers",
+        "Pharmaceutical company clinical operations teams"
+      ],
+      "core_features": [
+        "Medical Record Parsing – Automatically extracts relevant information from diverse medical record formats (PDF, HL7, FHIR, etc.) using OCR and NLP.",
+        "Trial Protocol Processing – Parses trial protocols to identify inclusion/exclusion criteria, endpoints, and other key trial parameters.",
+        "Eligibility Prediction Engine – Uses ML models trained on historical trial data to predict patient eligibility scores based on medical records and trial protocols.",
+        "Justification Generation – Provides detailed justifications for eligibility predictions, highlighting specific criteria met or unmet by each patient.",
+        "Patient Prioritization – Ranks patients based on their predicted eligibility scores, allowing recruiters to focus on the most promising candidates.",
+        "HIPAA-Compliant Data Storage - Secure, encrypted storage of patient data with role-based access controls and audit logging.",
+        "API Integration - Allows seamless integration with existing clinical trial management systems (CTMS) and electronic health record (EHR) systems."
+      ],
+      "user_journeys": [
+        "A clinical trial recruiter logs into the system, uploads a new trial protocol, and uploads a batch of patient medical records. The system automatically processes the protocol and records, predicts eligibility scores for each patient, and ranks them by eligibility. The recruiter reviews the top candidates and their justification reports, then contacts the site investigators with a pre-screened list of potential participants."
+      ],
+      "ai_capabilities": [
+        "NLP is used for extracting information from unstructured medical records, including doctor's notes, discharge summaries, and radiology reports. Models like BERT, RoBERTa, or BioBERT can be fine-tuned for named entity recognition (NER) and relation extraction tasks to identify relevant medical concepts and their relationships.",
+        "ML models, such as gradient boosting machines (XGBoost, LightGBM) or deep neural networks, are used for predicting patient eligibility. The models are trained on historical clinical trial data, including patient characteristics, medical history, and trial outcomes.",
+        "Consider using OpenAI's API for zero-shot classification to quickly assess patient data against inclusion/exclusion criteria. Embeddings from OpenAI or specialized biomedical embeddings (e.g., BioWordVec) can be used for semantic similarity matching between patient records and trial criteria. For fine-tuning eligibility prediction models, use a vector database like Pinecone or Supabase vectors to store and retrieve patient embeddings."
+      ],
+      "data_requirements": {
+        "input_data_types": [
+          "Patient medical records (PDF, HL7, FHIR, text files)",
+          "Clinical trial protocols (PDF, text files, structured data)",
+          "Patient demographic data",
+          "Medication history",
+          "Lab results",
+          "Diagnosis codes (ICD-10)",
+          "Procedure codes (CPT)"
+        ],
+        "data_schema_recommendations": [
+          "Patient Table: patient_id (UUID), medical_record_id (UUID), date_of_birth (DATE), gender (VARCHAR), race (VARCHAR), ethnicity (VARCHAR)",
+          "MedicalRecord Table: medical_record_id (UUID), patient_id (UUID), record_type (VARCHAR), record_date (DATE), record_text (TEXT)",
+          "TrialProtocol Table: trial_id (UUID), protocol_name (VARCHAR), inclusion_criteria (TEXT), exclusion_criteria (TEXT)",
+          "EligibilityPrediction Table: patient_id (UUID), trial_id (UUID), eligibility_score (FLOAT), justification (TEXT)"
+        ],
+        "data_sources": [
+          "Electronic Health Records (EHR) systems",
+          "Clinical Trial Management Systems (CTMS)",
+          "Pharmaceutical company databases",
+          "Third-party data providers (e.g., Flatiron Health, TriNetX)",
+          "Claims Data (with proper de-identification and permissions)"
+        ],
+        "privacy_and_compliance": "HIPAA compliance is critical. Implement data encryption, access controls, audit logging, and de-identification techniques. Adhere to GDPR requirements if processing data from European patients. Secure data transfer protocols are required."
+      },
+      "integration_plan": {
+        "required_integrations": [
+          "EHR systems (e.g., Epic, Cerner)",
+          "CTMS (e.g., Veeva Vault, Medidata Rave)",
+          "Data lakes and warehouses (e.g., AWS S3, Snowflake)",
+          "Identity management providers (e.g., Okta, Azure AD)"
+        ],
+        "authentication_strategy": "OAuth 2.0 or JWT for secure API access. Consider Clerk or Auth0 for user authentication and authorization. Implement role-based access control (RBAC) to restrict access to sensitive data."
+      },
+      "technical_specifications": {
+        "architecture": "The system will follow a multi-tier architecture: Frontend (React/Next.js), Backend (Node.js with Express/NestJS), Database (PostgreSQL), and AI Pipeline (Python with ML libraries). API layer for communication between frontend and backend. A separate AI pipeline will handle data preprocessing, model training, and inference.",
+        "recommended_tech_stack": {
+          "frontend": "Next.js 14 App Router, TailwindCSS, shadcn/ui, Vercel conventions. Use React Hook Form for form management.",
+          "backend": "Node.js / Next.js server actions / Vercel serverless functions. Implement RESTful APIs using Express or NestJS. Utilize a message queue (e.g., RabbitMQ, Kafka) for asynchronous processing of medical records.",
+          "database": "Planetscale / Supabase / PostgreSQL with schema notes above. Use an ORM like Prisma or Sequelize for database interactions.",
+          "storage": "Supabase storage / AWS S3 / Vercel Blob for storing medical records and other files.",
+          "AI": "OpenAI API for initial data analysis, embeddings, and zero-shot classification. Fine-tune models using TensorFlow or PyTorch. Use Pinecone or Supabase vectors for vector storage and similarity search.",
+          "APIs": "RESTful APIs for all backend services. GraphQL can be considered for more complex data requirements.",
+          "CI_CD": "GitHub → Vercel automatic deploy pipeline for continuous integration and continuous deployment."
+        },
+        "API_design": [
+          "POST /trials - Create a new clinical trial protocol (payload: trial details, inclusion/exclusion criteria)",
+          "GET /trials/{trial_id} - Retrieve a clinical trial protocol by ID",
+          "POST /patients - Upload a new patient medical record (payload: patient details, medical record data)",
+          "GET /patients/{patient_id} - Retrieve a patient medical record by ID",
+          "POST /eligibility - Predict patient eligibility for a specific trial (payload: patient_id, trial_id)",
+          "GET /eligibility/{patient_id}/{trial_id} - Retrieve eligibility prediction results for a patient and trial"
+        ],
+        "frontend_components": [
+          "Trial Protocol Upload Form: Component for uploading and parsing trial protocols.",
+          "Patient Record Upload Form: Component for uploading patient medical records.",
+          "Eligibility Prediction Results Table: Component for displaying eligibility scores and justifications.",
+          "Patient Prioritization List: Component for ranking patients based on eligibility scores."
+        ]
+      },
+      "deployment_instructions": [
+        "Directory structure: /frontend, /backend, /ai_pipeline, /database",
+        "Environment variables: OPENAI_API_KEY, DB_URL, SUPABASE_URL, SUPABASE_ANON_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY",
+        "Vercel deployment: Configure automatic deployments from GitHub. Set environment variables in Vercel.",
+        "Build outputs: Next.js frontend build output in /frontend/.next, Node.js backend server.js in /backend",
+        "Configure health checks on API endpoints. Set up logging and monitoring using tools like Sentry or Datadog."
+      ],
+      "business_model": {
+        "pricing_strategy": [
+          "SaaS subscription tiers: Basic, Standard, Premium, based on the number of trials processed per month or the number of users.",
+          "Usage-based pricing: Charge per patient record processed or per eligibility prediction request.",
+          "Per-seat pricing: Charge per user accessing the platform."
+        ],
+        "customer_segments": [
+          "Small to medium-sized CROs",
+          "Large pharmaceutical companies",
+          "Academic research institutions",
+          "Individual clinical trial sites"
+        ]
+      },
+      "success_metrics": [
+        "Operational KPIs: Number of trials processed per month, reduction in screening time, cost savings per trial.",
+        "AI performance KPIs: Accuracy of eligibility predictions (precision, recall, F1-score), model training time, inference latency.",
+        "Adoption/engagement KPIs: Number of active users, user engagement (time spent on the platform), customer satisfaction (Net Promoter Score)."
+      ]
+    }
+  ]
+}
+```
