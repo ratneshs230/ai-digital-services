@@ -48,8 +48,8 @@ export async function POST(request: NextRequest) {
     // Get industry data for context
     const industryData = getIndustryBySlug(industry)
 
-    // Check if OpenAI API key is configured
-    const apiKey = process.env.OPENAI_API_KEY
+    // Check if Gemini API key is configured
+    const apiKey = process.env.GEMINI_API_KEY
 
     if (!apiKey) {
       // Return mock response if no API key
@@ -59,39 +59,68 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Call OpenAI API
-    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'system',
-            content: `You are an AI assistant specialized in ${industryData?.industry || industry}.
-            You help with: ${industryData?.idea || 'industry-specific tasks'}.
-            ${industryData?.coreSolution || ''}
-            Provide helpful, accurate, and professional responses.`,
-          },
-          {
-            role: 'user',
-            content: input,
-          },
-        ],
-        max_tokens: 500,
-        temperature: 0.7,
-      }),
-    })
+    // Build the prompt for Gemini
+    const systemPrompt = `You are an AI assistant specialized in ${industryData?.industry || industry}.
+You help with: ${industryData?.idea || 'industry-specific tasks'}.
+${industryData?.coreSolution || ''}
+Provide helpful, accurate, and professional responses.`
 
-    if (!openaiResponse.ok) {
-      throw new Error('OpenAI API error')
+    // Call Gemini 2.5 Flash API
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `${systemPrompt}\n\nUser Query: ${input}`,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 1024,
+            topP: 0.95,
+            topK: 40,
+          },
+          safetySettings: [
+            {
+              category: 'HARM_CATEGORY_HARASSMENT',
+              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+            },
+            {
+              category: 'HARM_CATEGORY_HATE_SPEECH',
+              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+            },
+            {
+              category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+            },
+            {
+              category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+            },
+          ],
+        }),
+      }
+    )
+
+    if (!geminiResponse.ok) {
+      const errorData = await geminiResponse.json().catch(() => ({}))
+      console.error('Gemini API error:', errorData)
+      throw new Error('Gemini API error')
     }
 
-    const data = await openaiResponse.json()
-    const aiResponse = data.choices?.[0]?.message?.content || 'No response generated'
+    const data = await geminiResponse.json()
+    const aiResponse =
+      data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated'
 
     return NextResponse.json({ response: aiResponse })
   } catch (error) {
