@@ -1,0 +1,40 @@
+{
+  "name": "ai-digital-services",
+  "version": "1.0.0",
+  "description": "AI-powered digital services portfolio for multiple industries",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate": "tsx scripts/run-pipeline.ts"
+  },
+  "keywords": [
+    "ai",
+    "digital-services",
+    "portfolio"
+  ],
+  "author": "ratneshs230",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.22",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "csv-parse": "^5.6.0",
+    "lucide-react": "^0.303.0",
+    "next": "^14.2.33",
+    "postcss": "^8.5.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}
