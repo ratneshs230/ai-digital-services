@@ -1,0 +1,28 @@
+# Asset Valuation AI
+
+AI-driven tool that accurately estimates the fair market value of in-game assets based on rarity, stats, demand, and historical sales data.
+
+## Features
+
+- Interactive multi-step wizard
+- AI-powered analysis
+- Real-time dashboard
+- Chat assistant
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+## Pages
+
+- `/` - Home page with features overview
+- `/tools` - Interactive analysis wizard
+- `/dashboard` - Analytics dashboard
+
+---
+Built with Next.js 14 + Tailwind CSS
